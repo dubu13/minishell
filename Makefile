@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+         #
+#    By: dkremer <dkremer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 20:17:05 by dhasan            #+#    #+#              #
-#    Updated: 2024/05/23 16:12:55 by dhasan           ###   ########.fr        #
+#    Updated: 2024/05/26 18:18:48 by dkremer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ RL_FLAGS = -lreadline
 
 # INCLUDE =  -L $(LIBFT_PATH) -lft
 
-SRCS = echo.c main.c signal.c
+SRCS = cd.c echo.c main.c pwd.c signal.c
 
 OBJS = $(SRCS:.c=.o)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/05/26 18:54:03 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/05/27 14:17:14 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@ int	main(int argc, char **argv)
 	// char	*prompt;
 
 	// prompt = readline(CYN "Minishell$ " RED);
-
+	(void)argv;
 	//for ft_cd
 	// use getenv :
 	// use getcwd :get the pathname of the current working directory
-
+	if (argc == 2)
+		ft_cd(argv);
 	// signal(SIGQUIT, &signal_handle);
 	// add_history(prompt);
 }

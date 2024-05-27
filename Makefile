@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dkremer <dkremer@student.42.fr>            +#+  +:+       +#+         #
+#    By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 20:17:05 by dhasan            #+#    #+#              #
-#    Updated: 2024/05/26 18:18:48 by dkremer          ###   ########.fr        #
+#    Updated: 2024/05/27 18:44:08 by dhasan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,10 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3
 RL_FLAGS = -lreadline
 
-# LIBFT_PATH = ./libft
-# LIBFT = $(LIBFT_PATH)/libft.a
+LIBFT_PATH = ./libft
+LIBFT = $(LIBFT_PATH)/libft.a
 
-# INCLUDE =  -L $(LIBFT_PATH) -lft
+INCLUDE = -L $(LIBFT_PATH) -lft
 
 SRCS = cd.c echo.c main.c pwd.c signal.c
 
@@ -26,22 +26,25 @@ OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	@cc $(CFLAGS)  -o $(NAME) $(OBJS) $(INCLUDE) $(RL_FLAGS)
-# $(LIBFT) $(LIBFT)
-# $(LIBFT):
-# 	@make -C $(LIBFT_PATH)
+$(NAME):$(LIBFT) $(OBJS)
+	@cc $(CFLAGS) $(LIBFT) -o $(NAME) $(OBJS) $(INCLUDE) $(RL_FLAGS)
+
+$(LIBFT):
+	@make -C $(LIBFT_PATH)
 
 %.o : %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
+submodule:
+	git submodule update --init --recursive
+
 clean:
-# @make clean -C $(LIBFT_PATH)
+	@make clean -C $(LIBFT_PATH)
 	@rm -f $(OBJS)
 
 fclean: clean
 	@rm -f $(NAME)
-# @make fclean -C $(LIBFT_PATH)
+	@make fclean -C $(LIBFT_PATH)
 
 re: fclean all
 

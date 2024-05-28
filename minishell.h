@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/05/27 13:00:45 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/05/28 22:33:50 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@
 
 # define CYN "\001\033[36m\002" //	Cyan
 # define RED "\001\033[31m\002" // Red
+
+typedef struct s_mini
+{
+	char	**env;
+}			t_mini;
 
 void	signal_handle(int sig);
 int		ft_echo(char **args);

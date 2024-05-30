@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 13:41:56 by dhasan            #+#    #+#             */
-/*   Updated: 2024/05/29 15:54:36 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/05/30 19:44:50 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,18 @@ int	index_env(char *type, char **env)
 		i++;
 	}
 	return (-1);
+}
+
+void	update_env(char *type, char *path, t_mini *mini)
+{
+	char	*temp;
+	int		i;
+
+	i = index_env(type, mini->env);
+	if (i == -1)
+		exit (EXIT_FAILURE);
+	free(mini->env[i]);
+	temp = ft_strjoin(type, '=');
+	mini->env[i] = ft_strjoin(temp, path);
+	free(temp);
 }

@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 13:41:56 by dhasan            #+#    #+#             */
-/*   Updated: 2024/05/30 19:44:50 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/05/31 15:12:15 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // else return empty string
 //ex: type is "HOME"
 //env -> [i] = "HOME=/Users/dhasan" -> returns /Users/dhasan
-char	get_env(char **env, char *type)
+char	*get_env(char **env, char *type)
 {
 	int	i;
 	int	len;
@@ -25,7 +25,7 @@ char	get_env(char **env, char *type)
 	len = ft_strlen(type);
 	while (env[i])
 	{
-		if (!ft_strncmp(env, type, len) && env[i][len] == '=')
+		if (!ft_strncmp(*env, type, len) && env[i][len] == '=')
 			return (ft_strdup(env[i] + len + 1));
 		i++;
 	}
@@ -44,7 +44,7 @@ int	index_env(char *type, char **env)
 	len = ft_strlen(type);
 	while (env[i])
 	{
-		if (!ft_strncmp(env, type, len) && env[i][len] == '=')
+		if (!ft_strncmp(*env, type, len) && env[i][len] == '=')
 			return (i);
 		i++;
 	}
@@ -60,7 +60,7 @@ void	update_env(char *type, char *path, t_mini *mini)
 	if (i == -1)
 		exit (EXIT_FAILURE);
 	free(mini->env[i]);
-	temp = ft_strjoin(type, '=');
+	temp = ft_strjoin(type, "=");
 	mini->env[i] = ft_strjoin(temp, path);
 	free(temp);
 }

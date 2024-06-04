@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/03 16:34:27 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/04 21:26:20 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,14 @@ typedef struct s_mini
 }			t_mini;
 
 void	signal_handle(int sig);
+//builtin
 int		ft_echo(char **args);
 int		ft_cd(char **path, t_mini *mini);
 int		ft_pwd(void);
-char	*get_env(char **env, char *type);
+// env_utils.c
 int		index_env(char *type, char **env);
 void	update_env(char *type, char *path, t_mini *mini);
+char	*get_env(char **env, char *type);
+char	**save_env(void);
 
 #endif

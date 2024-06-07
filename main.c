@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/04 21:27:23 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/07 18:16:02 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void	*parse(t_mini *mini)
 t_mini	*init_mini(void)
 {
 	t_mini	*mini;
-	char	**env;
 
 	mini = malloc(sizeof(t_mini));
 	if (!mini)

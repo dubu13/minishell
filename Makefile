@@ -6,7 +6,7 @@
 #    By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/31 15:40:08 by dhasan            #+#    #+#              #
-#    Updated: 2024/06/02 20:44:59 by dhasan           ###   ########.fr        #
+#    Updated: 2024/06/07 18:14:49 by dhasan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS = -Wall -Wextra -Werror -g3
 RL_FLAGS = -lreadline
 INCLUDE = -L $(LIBFT_PATH) -lft
 
-LIBFT_PATH = ./libft
+LIBFT_PATH = ./lib
 LIBFT = $(LIBFT_PATH)/libft.a
 
 BINDIR = bin

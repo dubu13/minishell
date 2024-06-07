@@ -6,14 +6,14 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/04 21:26:20 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/07 18:15:13 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft/inc/libft.h"
+# include "lib/inc/libft.h"
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>

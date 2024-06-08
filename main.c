@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/07 18:16:02 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/08 20:14:31 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,16 @@
 // 	// 	return ();
 // }
 
+void	error(t_error_type type)
+{
+	if (type == E_SYNTAX)
+		perror("Syntax error\n");
+	if (type == E_CMD)
+		perror("Command not found\n");
+	if (type == E_PERMISSION)
+		perror("Permission denied\n");
+}
+
 char	*get_prompt(t_mini *mini)
 {
 	char	*prompt;
@@ -41,11 +51,12 @@ char	*get_prompt(t_mini *mini)
 	if (!cwf)
 		cwf = ft_strdup(cwd);
 	prompt = get_env(mini->env, "USER");
-	ft_strjoin(prompt, "@minishell:");
-	ft_strjoin(prompt, cwf);
-	ft_strjoin(prompt, "$");
-	free(cwf);
-	free(cwd);
+	prompt = ft_strjoin(CYN, prompt);
+	prompt = ft_strjoin(prompt, "@minishell:" YLW);
+	prompt = ft_strjoin(prompt, cwf);
+	prompt = ft_strjoin(prompt, CYN "$ " RESET);
+	// free(cwf);
+	// free(cwd);
 	return (prompt);
 }
 
@@ -69,11 +80,12 @@ char	*get_input(t_mini *mini)
 	return (input);
 }
 
-void	*parse(t_mini *mini)
+void	parse(t_mini *mini)
 {
-	char	*input;
-
-	input = get_input(mini);
+	mini->input = get_input(mini);
+	if (!is_str_closed(mini->input))
+		error(E_SYNTAX);
+	tokenize();
 }
 
 t_mini	*init_mini(void)

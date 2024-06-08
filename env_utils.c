@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 13:41:56 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/04 21:12:48 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/08 17:37:08 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	index_env(char *type, char **env)
 	len = ft_strlen(type);
 	while (env[i])
 	{
-		if (!ft_strncmp(*env, type, len) && env[i][len] == '=')
+		if (!ft_strncmp(env[i], type, len) && env[i][len] == '=')
 			return (i);
 		i++;
 	}
@@ -47,15 +47,11 @@ char	*get_env(char **env, char *type)
 	int	i;
 	int	len;
 
-	i = 0;
+	i = index_env(type, env);
+	if (i == -1)
+		return (ft_strdup(""));
 	len = ft_strlen(type);
-	while (env[i])
-	{
-		if (!ft_strncmp(*env, type, len) && env[i][len] == '=')
-			return (ft_strdup(env[i] + len + 1));
-		i++;
-	}
-	return (ft_strdup(""));
+	return (ft_strdup(env[i] + len + 1));
 }
 
 char	**save_env(void)

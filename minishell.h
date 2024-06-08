@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/07 18:15:13 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/08 19:48:26 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,17 @@
 # include <stdlib.h>
 # include <stdbool.h>
 
-# define CYN "\001\033[36m\002" //	Cyan
+# define RESET "\033[0m"
+# define CYN "\033[1;33m"  // Bold Yellow
+# define YLW "\001\033[36m\002" //	Cyan
 # define RED "\001\033[31m\002" // Red
+
+typedef enum e_error_type
+{
+	E_SYNTAX,
+	E_CMD,
+	E_PERMISSION,
+}	t_error_type;
 
 typedef enum e_token_type
 {
@@ -36,11 +45,23 @@ typedef enum e_token_type
 	RDIR_HEREDOC,
 }	t_token_type;
 
+typedef struct s_token
+{
+	t_token_type	type;
+	char			*value;
+	struct s_token	*next;
+}	t_token;
+
 typedef struct s_mini
 {
 	char	**env;
+	char	*input;
 }			t_mini;
 
+//utils
+int		is_str_closed(char *str);
+//error
+void	error(t_error_type type);
 void	signal_handle(int sig);
 //builtin
 int		ft_echo(char **args);

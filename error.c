@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/08 20:13:06 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/08 20:22:08 by dhasan           ###   ########.fr       */
+/*   Created: 2024/06/09 15:42:14 by dhasan            #+#    #+#             */
+/*   Updated: 2024/06/09 15:42:39 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	tokenize(char *input)
+void	error(t_error_type type)
 {
-	t_token	*token;
-
-	//skip whitespace
-	//check current type
-	//-> redirect, pipe, word
-	//depending on type, create token
-	//add token to linked list
-	//until end of input
+	if (type == E_SYNTAX)
+		perror("Syntax error\n");
+	if (type == E_CMD)
+		perror("Command not found\n");
+	if (type == E_PERMISSION)
+		perror("Permission denied\n");
 }
-

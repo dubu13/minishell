@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:40:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/05/31 14:57:50 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/10 14:55:43 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int	ft_cd(char **path, t_mini *mini)
 
 	if (!getcwd(old_path, PATH_MAX))
 		return (perror("cd: error getting current directory"), EXIT_FAILURE);
-	if (!*path || ((**path == '~' || **path == '.')
-			&& (**path == '\0' || **path == '/')))
+	if (!*path || ((**path == '~' || **path == '.') \
+		&& **path == '\0'))
 		new_path = get_env(mini->env, "HOME");
 	else if (**path == '-' && !*(*path + 1))
 		new_path = get_env(mini->env, "OLDPWD");

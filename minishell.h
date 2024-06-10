@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/09 16:53:35 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/10 23:09:02 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@ void	signal_handle(int sig);
 int		ft_echo(char **args);
 int		ft_cd(char **path, t_mini *mini);
 int		ft_pwd(void);
+void	ft_export(char *args, t_mini *mini);
+//parse
+char	*get_input(t_mini *mini);
 // env_utils.c
 int		index_env(char *type, char **env);
 void	update_env(char *type, char *path, t_mini *mini);

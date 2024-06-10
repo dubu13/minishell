@@ -6,7 +6,7 @@
 #    By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/31 15:40:08 by dhasan            #+#    #+#              #
-#    Updated: 2024/06/07 18:14:49 by dhasan           ###   ########.fr        #
+#    Updated: 2024/06/10 23:24:19 by dhasan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ LIBFT = $(LIBFT_PATH)/libft.a
 
 BINDIR = bin
 
-SRCS =  $(wildcard *.c) $(wildcard builtin/*.c)
+SRCS = $(wildcard *.c) $(wildcard parsing/*.c) $(wildcard builtins/*.c)
 OBJS = $(SRCS:%.c=$(BINDIR)/%.o)
 
 all: $(NAME)

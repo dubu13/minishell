@@ -45,6 +45,8 @@ t_mini	*init_mini(void)
 	if (!mini)
 		return (perror("Malloc"), NULL);
 	mini->env = save_env();
+	mini->input = NULL;
+	mini->token_list = NULL;
 	return (mini);
 }
 

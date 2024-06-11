@@ -58,6 +58,7 @@ typedef struct s_mini
 {
 	char	**env;
 	char	*input;
+	t_token	*token_list;
 }			t_mini;
 
 //utils
@@ -77,5 +78,7 @@ int		index_env(char *type, char **env);
 void	update_env(char *type, char *path, t_mini *mini);
 char	*get_env(char **env, char *type);
 char	**save_env(void);
+
+void	tokenize(char *input, t_token **token_list);
 
 #endif

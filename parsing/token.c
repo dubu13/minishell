@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 20:13:06 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/09 22:59:03 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/11 22:38:30 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_token	*create_token(t_token_type type, char *value)
 
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
-		return(NULL);
+		return (NULL);
 	new_token->type = type;
 	new_token->value = ft_strdup(value);
 	new_token->next = NULL;
@@ -51,28 +51,28 @@ t_token	*create_token(t_token_type type, char *value)
 	return (new_token);
 }
 
-void add_back_token(t_token **head, t_token *new_token)
+void	add_back_token(t_token **head, t_token *new_token)
 {
-    t_token *current;
+	t_token *current;
 
-    if (!(*head))
-        *head = new_token;
-    else
-    {
-        current = *head;
-        while (current->next)
-            current = current->next;
-        current->next = new_token;
-        new_token->prev = current;
-    }
+	if (!(*head))
+		*head = new_token;
+	else
+	{
+		current = *head;
+		while (current->next)
+			current = current->next;
+		current->next = new_token;
+		new_token->prev = current;
+	}
 }
 
 void	handle_append_heredoc(char *input, int *i, t_token **token_list)
 {
-	int	length;
-	char value[3];
+	int				length;
+	char			value[3];
 	t_token_type	type;
-	t_token	*new_token;
+	t_token			*new_token;
 
 	length = 2;
 	if (input[*i] == '>')
@@ -153,7 +153,7 @@ void	tokenize(char *input, t_token **token_list)
 			break;
 		token_type(input, &i, token_list);
 	}
-	
+
 
 	//check current type
 	//-> redirect, pipe, word

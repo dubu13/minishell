@@ -6,73 +6,14 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:31:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/11 19:25:13 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/11 22:33:41 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 //lets say args[0] = export
 //args[1] = NAME=VALUE
-
-char	**sort_env(char **env)
-{
-	int		i;
-	int		j;
-	char	*temp;
-
-	i = 0;
-	while (env[i])
-	{
-		j = i + 1;
-		while (env[j])
-		{
-			if (ft_strncmp(env[i], env[j], ft_strlen(env[i])) > 0)
-			{
-				temp = env[i];
-				env[i] = env[j];
-				env[j] = temp;
-			}
-			j++;
-		}
-		i++;
-	}
-	return (env);
-}
-
-char	*put_quotes(char *env)
-{
-	char	*key;
-	char	*value;
-	int		i;
-
-	i = 0;
-	while (env[i] && env[i] != '=')
-		i++;
-	key = ft_substr(env, 0, i);
-	value = ft_strdup(env + i + 1);
-	value = ft_strjoin("\"", value);
-	value = ft_strjoin(value, "\"");
-	key = ft_strjoin(key, "=");
-	env = ft_strjoin(key, value);
-	free(key);
-	free(value);
-	return (env);
-}
-
-void	only_export(char **env)
-{
-	int		i;
-	char	*quoted_env;
-
-	i = 0;
-	env = sort_env(*env);
-	while (env[i])
-	{
-		quoted_env = put_quotes(env[i]);
-		printf("declare -x %s\n", quoted_env);
-		i++;
-	}
-}
+//change the params
 
 char	*get_key(char *env)
 {
@@ -93,11 +34,43 @@ char	*get_key(char *env)
 	return (key);
 }
 
-void	*check_key(char *key, char *env, t_mini *mini)
+void	export_w_arg(char *key, char *env, t_mini *mini)
+{
+	char	*exist_env;
+	int		index;
+
+	index = index_env(key, mini->env);
+	if ((ft_strchr(env, '+') && ft_strchr(env, '=')) == ft_strchr(env, '+') + 1)
+	{
+		if (index != -1)
+		{
+			exist_env = get_env(mini->env, key);
+			mini->env[index] = ft_strjoin(exist_env, ft_strchr(env, '=') + 1);
+			free(exist_env);
+		}
+	}
+	else
+	{
+		if (index != -1)
+			update_env(key, ft_strchr(env, '=') + 1, mini);
+		else
+			mini->env = new_env(mini->env, env);
+	}
+}
+
+void	export_print(char **env)
 {
 	int		i;
+	char	*quoted_env;
 
-	if (ft_strchr(env, '+') && ft_strchr(env, '=') == ft_strchr(env, '+') + 1)
+	i = 0;
+	env = sort_env(*env);
+	while (env[i])
+	{
+		quoted_env = put_quotes(env[i]);
+		printf("declare -x %s\n", quoted_env);
+		i++;
+	}
 }
 
 void	ft_export(char **args, t_mini *mini)
@@ -105,16 +78,10 @@ void	ft_export(char **args, t_mini *mini)
 	char	*key;
 
 	if (args[1] == NULL)
-		only_export(mini->env);
+		export_print(mini->env);
 	else
 	{
 		key = get_key(args[1]);
-		check_key(key, args[1], mini);
+		export_w_arg(key, args[1], mini);
 	}
-	//if its with arg, get the NAME
-	//check the name
-	//should start with a letter or an underscore
-	//if there is + before =,
-	//check if the variable already exists
-	//if it does, append the value else create a new variable
 }

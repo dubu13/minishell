@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/11 17:31:19 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/11 22:40:48 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef enum e_error_type
 	E_CMD,
 	E_PERMISSION,
 	E_EXPORT,
+	E_ALLOC,
 }	t_error_type;
 
 typedef enum e_token_type
@@ -70,7 +71,12 @@ void	signal_handle(int sig);
 int		ft_echo(char **args);
 int		ft_cd(char **path, t_mini *mini);
 int		ft_pwd(void);
-void	ft_export(char *args, t_mini *mini);
+void	ft_env(char **env);
+void	ft_export(char **args, t_mini *mini);
+//builtin_utils
+char	*put_quotes(char *env);
+char	**sort_env(char **env);
+char	**new_env(char **env, char *new);
 //parse
 char	*get_input(t_mini *mini);
 // env_utils.c

@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:31:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/10 23:25:51 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/11 16:43:50 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,33 @@ char	**sort_env(char **env)
 	}
 	return (env);
 }
+char	*put_quotes(char *env)
+{
+	int		i;
+
+	i = 0;
+	while (env[i] && env[i] != '=')
+		i++;
+	if (env[i] == '\0')
+
+}
 
 void	only_export(char **env)
 {
-	int	i;
+	int		i;
+	char	*quoted_env;
 
 	i = 0;
 	env = sort_env(*env);
 	//add value in double quotes
 	while (env[i])
 	{
-		printf("declare -x %s\n", env[i]);
+		quoted_env = put_quotes(env[i]);
+		printf("declare -x %s\n", quoted_env);
 		i++;
 	}
 }
-void	ft_export(char *args, t_mini *mini)
+void	ft_export(char **args, t_mini *mini)
 {
 	//without arg, print env for export
 	//declare -x and put value in double quotes

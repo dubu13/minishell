@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/09 15:42:52 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/11 15:46:31 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	parse(t_mini *mini)
 	mini->input = get_input(mini);
 	if (!is_str_closed(mini->input))
 		error(E_SYNTAX);
-	tokenize();
 }
 
 t_mini	*init_mini(void)

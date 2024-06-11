@@ -6,11 +6,11 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:57:05 by dhasan            #+#    #+#             */
-/*   Updated: 2024/05/23 17:18:14 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/11 17:09:20 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	check_n(char *args)
 {

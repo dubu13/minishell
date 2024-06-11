@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 15:42:14 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/09 15:42:39 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/11 17:31:11 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,6 @@ void	error(t_error_type type)
 		perror("Command not found\n");
 	if (type == E_PERMISSION)
 		perror("Permission denied\n");
+	if (type == E_EXPORT)
+		perror("Not a valid identifier\n");
 }

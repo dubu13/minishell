@@ -6,11 +6,11 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:40:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/10 14:55:43 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/11 17:09:15 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	cd_path(char *new_path, char *old_path, t_mini *mini)
 {

@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/10 23:09:02 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/11 17:31:19 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef enum e_error_type
 	E_SYNTAX,
 	E_CMD,
 	E_PERMISSION,
+	E_EXPORT,
 }	t_error_type;
 
 typedef enum e_token_type

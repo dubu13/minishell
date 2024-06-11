@@ -82,7 +82,7 @@ void	handle_append_heredoc(char *input, int *i, t_token **token_list)
 	ft_strlcpy(value, &input[*i], length + 1);
 	new_token = create_token(type, value);
 	add_back_token(token_list, new_token);
-	*i += length;
+	(*i) += length;
 }
 
 void	handle_meta_char(char *input, int *i, t_token **token_list)
@@ -102,7 +102,7 @@ void	handle_meta_char(char *input, int *i, t_token **token_list)
 	ft_strlcpy(value, &input[*i], length + 1);
 	new_token = create_token(type, value);
 	add_back_token(token_list, new_token);
-	i += length;
+	(*i) += length;
 }
 
 void	handle_word(char *input, int *i, t_token **token_list)
@@ -121,7 +121,7 @@ void	handle_word(char *input, int *i, t_token **token_list)
 	value[length] = '\0';
 	new_token = create_token(WORD, value);
 	add_back_token(token_list, new_token);
-	
+	(*i)++;
 }
 
 void	token_type(char *input, int *i, t_token **token_list)
@@ -134,12 +134,9 @@ void	token_type(char *input, int *i, t_token **token_list)
 		else if (is_meta_char(input[*i]))
 			handle_meta_char(input, i, token_list);
 			//handle meta char
-		else
+		else if (input[*i] != '|' && input[*i] != '<' && input[*i] != '>')
 			handle_word(input, i, token_list);
 			//word
-		if (input[*i] == ' ' && (input[*i] >= 9 && input[*i] <= 13))
-			(*i)++;
-		(*i)++;
 	}
 }
 

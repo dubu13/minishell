@@ -22,6 +22,8 @@ LIBFT_PATH = ./lib
 LIBFT = $(LIBFT_PATH)/libft.a
 
 BINDIR = bin
+PARSEDIR = $(BINDIR)/parsing
+BUILDDIR = $(BINDIR)/builtins
 
 SRCS = $(wildcard *.c) $(wildcard parsing/*.c) $(wildcard builtins/*.c)
 OBJS = $(SRCS:%.c=$(BINDIR)/%.o)
@@ -37,11 +39,10 @@ $(NAME): $(LIBFT) $(OBJS)
 $(LIBFT):
 	make -C $(LIBFT_PATH)
 
-$(BINDIR):
-	echo $(GREEN)"Creating $(BINDIR) directory"$(DEFAULT);
-	mkdir -p $(BINDIR)
+$(BINDIR) $(PARSEDIR) $(BUILDDIR):
+	mkdir -p $@
 
-$(BINDIR)/%.o: %.c | $(BINDIR)
+$(BINDIR)/%.o: %.c | $(BINDIR) $(PARSEDIR) $(BUILDDIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 submodule:
@@ -49,12 +50,11 @@ submodule:
 
 clean:
 	make clean -C $(LIBFT_PATH)
-	rm -f $(BINDIR)/*.o
+	rm -rf $(BINDIR)
 	echo $(RED)"Removing $(NAME) object files"$(DEFAULT);
 
 fclean: clean
 	rm -f $(NAME)
-	rm -rf $(BINDIR)
 	make fclean -C $(LIBFT_PATH)
 	echo $(RED)"Removing $(NAME)"$(DEFAULT);
 

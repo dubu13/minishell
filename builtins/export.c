@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:31:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/11 22:33:41 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/12 22:44:21 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,18 @@ void	export_print(char **env)
 void	ft_export(char **args, t_mini *mini)
 {
 	char	*key;
+	int		i;
 
-	if (args[1] == NULL)
-		export_print(mini->env);
-	else
+	i = 1;
+	while (args[i])
 	{
-		key = get_key(args[1]);
-		export_w_arg(key, args[1], mini);
+		if (args[i] == NULL)
+			export_print(mini->env);
+		else
+		{
+			key = get_key(args[i]);
+			export_w_arg(key, args[i], mini);
+		}
+		i++;
 	}
 }

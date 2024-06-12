@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 20:13:06 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/11 22:38:30 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/12 14:56:50 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,10 +142,8 @@ void	token_type(char *input, int *i, t_token **token_list)
 
 void	tokenize(char *input, t_token **token_list)
 {
-	// t_token	*token;
 	int		i;
 
-	//skip whitespace
 	while (input[i])
 	{
 		i += skip_ws(&input[i]);
@@ -153,11 +151,4 @@ void	tokenize(char *input, t_token **token_list)
 			break;
 		token_type(input, &i, token_list);
 	}
-
-
-	//check current type
-	//-> redirect, pipe, word
-	//depending on type, create token
-	//add token to linked list
-	//until end of input
 }

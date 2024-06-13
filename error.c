@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 15:42:14 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/11 22:04:18 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/13 15:02:39 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,6 @@ void	error(t_error_type type)
 		perror("Not a valid identifier\n");
 	if (type == E_ALLOC)
 		perror("Allocation failed\n");
+	if (type == E_UNSET)
+		perror("Not a valid identifier\n");
 }

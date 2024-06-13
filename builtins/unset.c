@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:35:17 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/12 22:44:13 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/13 15:02:55 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,44 @@ int	is_valid_key(char *key)
 	return (1);
 }
 
+void	finish_rm_env(char **env, char **new_env)
+{
+	int	i;
+
+	i = -1;
+	while (env[++i])
+		free(env[i]);
+	free(env);
+	env = new_env;
+}
+
 void	rm_env(char **env, int index)
 {
 	char	**new_env;
+	int		i;
+	int		j;
+
+	i = 0;
+	while (env[i])
+		i++;
+	new_env = ft_calloc(i, sizeof(char *));
+	if (!new_env)
+		error(E_ALLOC);
+	i = 0;
+	j = 0;
+	while (env[i])
+	{
+		if (i == index)
+		{
+			free(env[i]);
+			i++;
+			continue ;
+		}
+		new_env[j++] = ft_strdup(env[i++]);
+		if (!new_env[j])
+			error(E_ALLOC);
+	}
+	finish_rm_env(env, new_env);
 }
 
 void	ft_unset(char **args, t_mini *mini)
@@ -47,7 +82,7 @@ void	ft_unset(char **args, t_mini *mini)
 			return ;
 		if (args[i])
 			if (!is_valid_key(args[i]))
-				error();
+				error(E_UNSET);
 		rm_env(mini->env, index);
 		i++;
 	}

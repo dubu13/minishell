@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/11 22:40:48 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/13 15:02:46 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef enum e_error_type
 	E_PERMISSION,
 	E_EXPORT,
 	E_ALLOC,
+	E_UNSET,
 }	t_error_type;
 
 typedef enum e_token_type

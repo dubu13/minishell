@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 20:13:06 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/12 14:56:50 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/06/14 14:30:18 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	handle_meta_char(char *input, int *i, t_token **token_list)
 	new_token = create_token(type, value);
 	add_back_token(token_list, new_token);
 	(*i) += length;
+	*i += skip_ws(&input[*i]);
 }
 
 void	handle_word(char *input, int *i, t_token **token_list)
@@ -121,7 +122,10 @@ void	handle_word(char *input, int *i, t_token **token_list)
 	value[length] = '\0';
 	new_token = create_token(WORD, value);
 	add_back_token(token_list, new_token);
-	(*i)++;
+    if (input[*i] && is_meta_char(input[*i])) // Check if next character is a metacharacter
+        handle_meta_char(input, i, token_list); // Handle the metacharacter
+    else
+        (*i)++;
 }
 
 void	token_type(char *input, int *i, t_token **token_list)

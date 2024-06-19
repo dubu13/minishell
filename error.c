@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 15:42:14 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/18 17:20:54 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/19 15:24:09 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 void	error(t_error_type type, char *input)
 {
 	if (type == E_SYNTAX)
-		perror("Syntax error\n");
+	{
+		ft_putstr_fd("syntax error\n", 2);
+		ft_putstr_fd(input, 2);
+		ft_putstr_fd("\n", 2);
+	}
 	if (type == E_CMD)
 		perror("Command not found\n");
 	if (type == E_PERMISSION)

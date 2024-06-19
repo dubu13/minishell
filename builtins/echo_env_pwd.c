@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_pwd.c                                          :+:      :+:    :+:   */
+/*   echo_env_pwd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:39:30 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/11 22:39:45 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/19 15:21:33 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,43 +24,53 @@ int	check_n(char *args)
 	return (args[i] == '\0');
 }
 
-int	ft_echo(char **args)
+int	ft_echo(t_token *input)
 {
 	int		option;
-	int		i;
 	bool	flag;
 
-	i = 1;
 	flag = false;
-	option = check_n(args[i]);
-	while (args[i] && check_n(args[i]))
-		i++;
-	while (args[i])
+	option = check_n(input->value);
+	while (input && check_n(input->value))
+		input = input->next;
+	while (input && input->type == WORD)
 	{
 		if (flag)
 		{
 			if (printf(" ") == -1)
 				return (EXIT_FAILURE);
 		}
-		if (printf("%s", args[i]) == -1)
+		if (printf("%s", input->value) == -1)
 			return (EXIT_FAILURE);
 		flag = true;
-		i++;
+		input = input->next;
 	}
 	if (!option)
 		printf("\n");
 	return (0);
 }
 
-void	ft_env(char **env)
+void	ft_env(t_token *input, t_mini *mini)
 {
 	int		i;
 
 	i = 0;
-	while (env[i])
+	while (input && input->type == WORD)
 	{
-		printf("declare -x %s\n", env[i]);
 		i++;
+		input = input->next;
+	}
+	if (i != 0)
+		error(E_SYNTAX, "too many arguments");
+	else
+	{
+		i = 0;
+		while (mini->env[i])
+		{
+			printf("%s\n", mini->env[i]);
+			i++;
+		}
+
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/18 17:49:29 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/19 15:18:00 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ int		is_str_closed(char *str);
 void	error(t_error_type type, char *input);
 void	signal_handle(int sig);
 //builtin
-// int		ft_echo(char **args);
+
 int		ft_echo(t_token *input);
 int		ft_cd(char **path, t_mini *mini);
 int		ft_pwd(void);
-void	ft_env(char **env);
+void	ft_env(t_token *input, t_mini *mini);
 void	ft_export(t_token *input, t_mini *mini);
 void	ft_unset(t_token *input, t_mini *mini);
 void	exec_builtin(t_mini *mini);

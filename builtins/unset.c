@@ -6,11 +6,12 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:35:17 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/13 15:02:55 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/18 18:02:57 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+// can get multi args
 //lets say args[0] = unset
 //args[1] = NAME
 
@@ -49,7 +50,7 @@ void	rm_env(char **env, int index)
 		i++;
 	new_env = ft_calloc(i, sizeof(char *));
 	if (!new_env)
-		error(E_ALLOC);
+		error(E_ALLOC, NULL);
 	i = 0;
 	j = 0;
 	while (env[i])
@@ -62,28 +63,31 @@ void	rm_env(char **env, int index)
 		}
 		new_env[j++] = ft_strdup(env[i++]);
 		if (!new_env[j])
-			error(E_ALLOC);
+			error(E_ALLOC, NULL);
 	}
 	finish_rm_env(env, new_env);
 }
 
-void	ft_unset(char **args, t_mini *mini)
+void	ft_unset(t_token *input, t_mini *mini)
 {
 	int	index;
 	int	i;
 
 	i = 1;
-	if (args[i] == NULL )
+	if (input == NULL || input->type != WORD)
 		return ;
-	while (args[i])
+	while (input && input->type == WORD)
 	{
-		index = index_env(args[i], mini->env);
+		index = index_env(input->value, mini->env);
 		if (index == -1)
 			return ;
-		if (args[i])
-			if (!is_valid_key(args[i]))
-				error(E_UNSET);
+		if (input)
+			if (!is_valid_key(input->value))
+				error(E_UNSET, input->value);
 		rm_env(mini->env, index);
-		i++;
+		input = input->next;
 	}
+	printf("------------after unset--------------\n");
+	export_print(mini->env);
 }
+//alloc problem !!!!!!!

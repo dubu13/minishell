@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:40:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/11 17:09:15 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/19 15:43:24 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,24 @@ char	*cd_up(char *old_path, char *path)
 	return (new_path);
 }
 
-int	ft_cd(char **path, t_mini *mini)
+int	ft_cd(t_token *input, t_mini *mini)
 {
 	char	*new_path;
 	char	old_path[PATH_MAX];
+	int		i;
 
+	i = 0;
+	while (input && input->type == WORD)
+	{
+		i++;
+		input = input->next;
+	}
+	if (i > 0)
+		return (perror("cd: too many arguments"), EXIT_FAILURE);
 	if (!getcwd(old_path, PATH_MAX))
 		return (perror("cd: error getting current directory"), EXIT_FAILURE);
-	if (!*path || ((**path == '~' || **path == '.') \
-		&& **path == '\0'))
+	if (!input || ((input->value[0] == '~' || input->value[0] == '.') \
+		&& input->value[0] == '\0'))
 		new_path = get_env(mini->env, "HOME");
 	else if (**path == '-' && !*(*path + 1))
 		new_path = get_env(mini->env, "OLDPWD");

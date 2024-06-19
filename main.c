@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/14 14:32:52 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/06/18 17:50:55 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ void	parse(t_mini *mini)
 {
 	mini->input = get_input(mini);
 	if (!is_str_closed(mini->input))
-		error(E_SYNTAX);
+		error(E_SYNTAX, NULL);
 	else
 		tokenize(mini->input, &mini->token_list);
+	exec_builtin(mini);
 }
 
 t_mini	*init_mini(void)
@@ -39,5 +40,6 @@ int	main(void)
 	t_mini	*mini;
 
 	mini = init_mini();
-	parse(mini);
+	while (1)
+		parse(mini);
 }

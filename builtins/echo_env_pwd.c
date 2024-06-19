@@ -13,14 +13,15 @@
 #include "../minishell.h"
 
 /**
- * Checks if the given argument string starts with '-' followed by zero or more 'n' characters.
+
+	* Checks if the given argument string starts with '-' followed by zero or more 'n' characters.
  *
  * @param args The argument string to check.
  * @return 1 if the argument starts with '-n' or '-nn...n', 0 otherwise.
  */
-int check_n(char *args)
+int	check_n(char *args)
 {
-	int i;
+	int	i;
 
 	if (!args || args[0] != '-')
 		return (0);
@@ -36,10 +37,10 @@ int check_n(char *args)
  * @param input A linked list of tokens representing the command arguments.
  * @return 0 on success, EXIT_FAILURE on error.
  */
-int ft_echo(t_token *input)
+int	ft_echo(t_token *input)
 {
-	int option;
-	bool flag;
+	int		option;
+	bool	flag;
 
 	flag = false;
 	option = check_n(input->value);
@@ -69,9 +70,9 @@ int ft_echo(t_token *input)
  * @param mini The minishell context.
  * @return 0 on success, EXIT_FAILURE on error.
  */
-void ft_env(t_token *input, t_mini *mini)
+void	ft_env(t_token *input, t_mini *mini)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (input && input->type == WORD)
@@ -97,9 +98,9 @@ void ft_env(t_token *input, t_mini *mini)
  *
  * @return 0 on success, EXIT_FAILURE on error.
  */
-int ft_pwd(void)
+int	ft_pwd(void)
 {
-	char cwd[PATH_MAX];
+	char	cwd[PATH_MAX];
 
 	if (getcwd(cwd, PATH_MAX))
 		printf("%s\n", cwd);

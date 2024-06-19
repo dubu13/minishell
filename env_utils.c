@@ -23,10 +23,10 @@
  * @param env The environment array to search.
  * @return The index of the matching environment variable, or -1 if not found.
  */
-int index_env(char *type, char **env)
+int	index_env(char *type, char **env)
 {
-	int i;
-	int len;
+	int	i;
+	int	len;
 
 	i = 0;
 	len = ft_strlen(type);
@@ -51,10 +51,10 @@ int index_env(char *type, char **env)
  * @param path The new value to set for the environment variable.
  * @param mini A pointer to the shell's environment.
  */
-void update_env(char *type, char *path, t_mini *mini)
+void	update_env(char *type, char *path, t_mini *mini)
 {
-	char *temp;
-	int i;
+	char	*temp;
+	int		i;
 
 	i = index_env(type, mini->env);
 	// if (i == -1)
@@ -77,10 +77,10 @@ void update_env(char *type, char *path, t_mini *mini)
  * @return The value of the environment variable, or an empty string if the
  * variable is not found.
  */
-char *get_env(char **env, char *type)
+char	*get_env(char **env, char *type)
 {
-	int i;
-	int len;
+	int	i;
+	int	len;
 
 	i = index_env(type, env);
 	if (i == -1)
@@ -100,11 +100,11 @@ char *get_env(char **env, char *type)
  * @return A null-terminated array of strings representing the environment
  * variables, or `NULL` if the allocation fails.
  */
-char **save_env(void)
+char	**save_env(void)
 {
-	extern char **environ;
-	char **env;
-	int i;
+	extern char	**environ;
+	char		**env;
+	int			i;
 
 	i = 0;
 	while (environ[i])

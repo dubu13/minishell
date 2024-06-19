@@ -33,9 +33,9 @@ void	parse(t_mini *mini)
  * @return A pointer to the newly initialized t_mini struct, or NULL if memory
  * allocation failed.
  */
-t_mini *init_mini(void)
+t_mini	*init_mini(void)
 {
-	t_mini *mini;
+	t_mini	*mini;
 
 	mini = malloc(sizeof(t_mini));
 	if (!mini)

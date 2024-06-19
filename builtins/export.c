@@ -11,10 +11,11 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 // can get multi args
-//lets say args[0] = export
-//args[1] = NAME=VALUE
-//change the params
+// lets say args[0] = export
+// args[1] = NAME=VALUE
+// change the params
 
 /**
  * Extracts the key from an environment variable string.
@@ -31,10 +32,10 @@
  *            "KEY+=VALUE".
  * @return A newly allocated string containing the extracted key.
  */
-char *get_key(char *env)
+char	*get_key(char *env)
 {
-	char *key;
-	int i;
+	char	*key;
+	int		i;
 
 	i = 0;
 	if (!ft_isalpha(env[i]) && env[i] != '_')
@@ -72,10 +73,10 @@ char *get_key(char *env)
  * @param env The environment variable string in the format "KEY=VALUE".
  * @param mini The Minishell program context.
  */
-void export_w_arg(char *key, char *env, t_mini *mini)
+void	export_w_arg(char *key, char *env, t_mini *mini)
 {
-	char *exist_env;
-	int index;
+	char	*exist_env;
+	int		index;
 
 	index = index_env(key, mini->env);
 	if ((ft_strchr(env, '+') && *(ft_strchr(env, '+') + 1) == '='))
@@ -106,10 +107,10 @@ void export_w_arg(char *key, char *env, t_mini *mini)
  *
  * @param env An array of environment variables to be printed.
  */
-void export_print(char **env)
+void	export_print(char **env)
 {
-	int i;
-	char *quoted_env;
+	int		i;
+	char	*quoted_env;
 
 	i = 0;
 	env = sort_env(env);
@@ -138,13 +139,12 @@ void export_print(char **env)
  * @param input The linked list of tokens representing the 'export' command.
  * @param mini The Minishell program context.
  */
-void ft_export(t_token *input, t_mini *mini)
+void	ft_export(t_token *input, t_mini *mini)
 {
-	char *key;
-	int i;
+	char	*key;
+	int		i;
 
 	i = 1;
-
 	if (input == NULL || input->type != WORD)
 		export_print(mini->env);
 	while (input && input->type == WORD)

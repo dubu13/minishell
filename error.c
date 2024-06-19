@@ -18,7 +18,7 @@
  * @param type The type of error that occurred.
  * @param input The input that caused the error, if applicable.
  */
-void error(t_error_type type, char *input)
+void	error(t_error_type type, char *input)
 {
 	if (type == E_SYNTAX)
 	{

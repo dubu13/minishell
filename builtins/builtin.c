@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 22:37:00 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/19 15:34:47 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/19 17:17:18 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 void	exec_builtin(t_mini *mini)
 {
 	t_token	*current;
-	int		i;
 
-	i = 0;
 	current = mini->token_list;
 	while (current)
 	{
@@ -26,7 +24,7 @@ void	exec_builtin(t_mini *mini)
 		if (!ft_strncmp(current->value, "pwd", 3))
 			ft_pwd();
 		if (!ft_strncmp(current->value, "cd", 2))
-			return (ft_cd(current->next, mini));
+			ft_cd(current->next, mini);
 		// if (!ft_strncmp(current->value, "exit", 4))
 		// 	return ();
 		if (!ft_strncmp(current->value, "export", 6))

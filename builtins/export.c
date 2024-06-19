@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:31:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/18 17:33:06 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/19 17:17:46 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,6 @@ void	export_print(char **env)
 void	ft_export(t_token *input, t_mini *mini)
 {
 	char	*key;
-	int		i;
-
-	i = 1;
 
 	if (input == NULL || input->type != WORD)
 		export_print(mini->env);

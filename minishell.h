@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/19 15:18:00 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/19 18:32:25 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void	signal_handle(int sig);
 //builtin
 
 int		ft_echo(t_token *input);
-int		ft_cd(char **path, t_mini *mini);
+int		ft_cd(t_token *token, t_mini *mini);
+char	*get_newpath(char *input, char *old_path, t_mini *mini);
 int		ft_pwd(void);
 void	ft_env(t_token *input, t_mini *mini);
 void	ft_export(t_token *input, t_mini *mini);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/18 17:50:55 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/19 16:14:36 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,17 @@ void	parse(t_mini *mini)
 	exec_builtin(mini);
 }
 
+/**
+ * Initializes a new t_mini struct, which is the main data structure used in the
+ * minishell program.
+ *
+ * The function allocates memory for the t_mini struct, saves the current
+ * environment variables, and initializes the input, token_list, and env
+ * members of the struct.
+ *
+ * @return A pointer to the newly initialized t_mini struct, or NULL if memory
+ * allocation failed.
+ */
 t_mini	*init_mini(void)
 {
 	t_mini	*mini;

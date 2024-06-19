@@ -11,9 +11,10 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 // can get multi args
-//lets say args[0] = unset
-//args[1] = NAME
+// lets say args[0] = unset
+// args[1] = NAME
 
 int	is_valid_key(char *key)
 {
@@ -90,4 +91,4 @@ void	ft_unset(t_token *input, t_mini *mini)
 	printf("------------after unset--------------\n");
 	export_print(mini->env);
 }
-//alloc problem !!!!!!!
+// alloc problem !!!!!!!

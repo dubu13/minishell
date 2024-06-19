@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   echo_env_pwd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:39:30 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/19 15:21:33 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/19 15:57:01 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+/**
+
+	* Checks if the given argument string starts with '-' followed by zero or more 'n' characters.
+ *
+ * @param args The argument string to check.
+ * @return 1 if the argument starts with '-n' or '-nn...n', 0 otherwise.
+ */
 int	check_n(char *args)
 {
 	int	i;
@@ -24,6 +31,12 @@ int	check_n(char *args)
 	return (args[i] == '\0');
 }
 
+/**
+ * Prints the specified arguments to stdout, with optional newline.
+ *
+ * @param input A linked list of tokens representing the command arguments.
+ * @return 0 on success, EXIT_FAILURE on error.
+ */
 int	ft_echo(t_token *input)
 {
 	int		option;
@@ -50,9 +63,16 @@ int	ft_echo(t_token *input)
 	return (0);
 }
 
+/**
+ * Prints the current environment variables to stdout.
+ *
+ * @param input The linked list of tokens representing the command.
+ * @param mini The minishell context.
+ * @return 0 on success, EXIT_FAILURE on error.
+ */
 void	ft_env(t_token *input, t_mini *mini)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (input && input->type == WORD)
@@ -70,10 +90,14 @@ void	ft_env(t_token *input, t_mini *mini)
 			printf("%s\n", mini->env[i]);
 			i++;
 		}
-
 	}
 }
 
+/**
+ * Prints the current working directory to stdout.
+ *
+ * @return 0 on success, EXIT_FAILURE on error.
+ */
 int	ft_pwd(void)
 {
 	char	cwd[PATH_MAX];

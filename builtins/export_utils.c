@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:54:25 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/11 22:30:13 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/14 16:32:33 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ char	**new_env(char **env, char *new)
 		i++;
 	new_env = ft_calloc(i + 2, sizeof(char *));
 	if (!new_env)
-		error(E_ALLOC);
+		error(E_ALLOC, NULL);
 	i = 0;
 	while (env[i])
 	{
 		new_env[i] = ft_strdup(env[i]);
 		if (!new_env[i])
-			error(E_ALLOC);
+			error(E_ALLOC, NULL);
 		i++;
 	}
 	new_env[i] = ft_strdup(new);

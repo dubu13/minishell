@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 14:23:38 by dkremer           #+#    #+#             */
-/*   Updated: 2024/06/19 14:42:15 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/06/19 14:46:13 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 // fd[0] - read 
 // fd[1] - write
 int fd[2];
-if (pipe(fd) == -1)
+if (pipe(fd) == -1) // pipe used to communicate between processes
 {
     ft_printf("PIPE ERROR!\n");
     return error;
 }
 int id;
-id = fork();
+id = fork(); // fork used to create a new process
 if (id == -1)
 {
     ft_printf("FORK ERROR!\n");

@@ -6,112 +6,11 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 20:13:06 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/19 16:19:22 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/06/19 16:22:46 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-/**
- * Skips over any whitespace characters in the input string.
- *
- * This function takes a pointer to a string `input` and returns the number of
- * characters that should be skipped to reach the first non-whitespace character.
- * Whitespace characters are defined as characters with ASCII values between 9
- * and 13 (inclusive), as well as the space character (ASCII value 32).
- *
- * @param input The input string to skip whitespace in.
- * @return The number of whitespace characters to skip.
- */
-int skip_ws(char *input)
-{
-	int i;
-
-	i = 0;
-	while (input[i] && ((input[i] >= 9 && input[i] <= 13) || input[i] == ' '))
-		i++;
-	return (i);
-}
-
-/**
- * Checks if the given character is a meta character in the shell.
- *
- * Meta characters in the shell include '>', '<', '|', '\'', and '"'. This function
- * returns 1 if the input character is a meta character, and 0 otherwise.
- *
- * @param c The character to check.
- * @return 1 if the character is a meta character, 0 otherwise.
- */
-int is_meta_char(char c)
-{
-	if (c == '>' || c == '<' || c == '|' || c == '\'' || c == '"')
-		return (1);
-	return (0);
-}
-
-/**
- * Checks if the input string represents an append heredoc operator.
- *
- * This function examines the first two characters of the input string and
- * returns 1 if they represent the append heredoc operator (">>" or "<<"),
- * and 0 otherwise.
- *
- * @param input The input string to check.
- * @return 1 if the input represents an append heredoc operator, 0 otherwise.
- */
-int is_append_heredoc(char *input)
-{
-	if ((*input == '>' && *(input + 1) == '>') || (*input == '<' && *(input + 1) == '<'))
-		return (1);
-	return (0);
-}
-
-/**
- * Creates a new token with the specified type and value.
- *
- * This function allocates memory for a new `t_token` struct and initializes its fields with the provided type and value. The `value` parameter is duplicated using `ft_strdup()` to ensure the token owns its own copy of the value string. The `next` and `prev` pointers are set to `NULL`.
- *
- * @param type   The type of the token to create.
- * @param value  The value of the token to create.
- * @return       A pointer to the newly created token, or `NULL` if memory allocation failed.
- */
-t_token *create_token(t_token_type type, char *value)
-{
-	t_token *new_token;
-
-	new_token = malloc(sizeof(t_token));
-	if (!new_token)
-		return (NULL);
-	new_token->type = type;
-	new_token->value = ft_strdup(value);
-	new_token->next = NULL;
-	new_token->prev = NULL;
-	return (new_token);
-}
-
-/**
- * Adds a new token to the end of a linked list of tokens.
- *
- * This function takes a pointer to the head of a linked list of tokens and a new token to be added to the list. If the list is empty, the new token becomes the head of the list. Otherwise, the function traverses the list to the last node and appends the new token to the end of the list, updating the `next` and `prev` pointers accordingly.
- *
- * @param head       A pointer to the head of the linked list of tokens.
- * @param new_token  The new token to be added to the list.
- */
-void add_back_token(t_token **head, t_token *new_token)
-{
-	t_token *current;
-
-	if (!(*head))
-		*head = new_token;
-	else
-	{
-		current = *head;
-		while (current->next)
-			current = current->next;
-		current->next = new_token;
-		new_token->prev = current;
-	}
-}
 
 /**
  * Handles the parsing of a token representing a redirection with append or heredoc.

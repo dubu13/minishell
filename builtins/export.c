@@ -6,11 +6,12 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:31:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/12 22:44:21 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/18 17:33:06 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+// can get multi args
 //lets say args[0] = export
 //args[1] = NAME=VALUE
 //change the params
@@ -22,12 +23,11 @@ char	*get_key(char *env)
 
 	i = 0;
 	if (!ft_isalpha(env[i]) && env[i] != '_')
-		error(E_EXPORT);
-	while (env[i] && env[i] != '=')
+		error(E_EXPORT, env);
+	while (env[i] && (env[i] != '=' || env[i] != '+'))
 	{
-		if ((!ft_isalnum(env[i]) && env[i] != '_') && (env[i] != '+'
-				&& env[i + 1] != '='))
-			error(E_EXPORT);
+		if (!ft_isalnum(env[i]) && env[i] != '_')
+			error(E_EXPORT, env);
 		i++;
 	}
 	key = ft_substr(env, 0, i);
@@ -40,7 +40,7 @@ void	export_w_arg(char *key, char *env, t_mini *mini)
 	int		index;
 
 	index = index_env(key, mini->env);
-	if ((ft_strchr(env, '+') && ft_strchr(env, '=')) == ft_strchr(env, '+') + 1)
+	if ((ft_strchr(env, '+') && *(ft_strchr(env, '+') + 1) == '='))
 	{
 		if (index != -1)
 		{
@@ -64,7 +64,7 @@ void	export_print(char **env)
 	char	*quoted_env;
 
 	i = 0;
-	env = sort_env(*env);
+	env = sort_env(env);
 	while (env[i])
 	{
 		quoted_env = put_quotes(env[i]);
@@ -73,21 +73,21 @@ void	export_print(char **env)
 	}
 }
 
-void	ft_export(char **args, t_mini *mini)
+void	ft_export(t_token *input, t_mini *mini)
 {
 	char	*key;
 	int		i;
 
 	i = 1;
-	while (args[i])
+
+	if (input == NULL || input->type != WORD)
+		export_print(mini->env);
+	while (input && input->type == WORD)
 	{
-		if (args[i] == NULL)
-			export_print(mini->env);
-		else
-		{
-			key = get_key(args[i]);
-			export_w_arg(key, args[i], mini);
-		}
-		i++;
+		key = get_key(input->value);
+		export_w_arg(key, input->value, mini);
+		input = input->next;
 	}
+	printf("---------------after export---------------\n");
+	export_print(mini->env);
 }

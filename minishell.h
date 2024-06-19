@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/13 15:02:46 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/18 17:49:29 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,22 @@ typedef struct s_mini
 //utils
 int		is_str_closed(char *str);
 //error
-void	error(t_error_type type);
+void	error(t_error_type type, char *input);
 void	signal_handle(int sig);
 //builtin
-int		ft_echo(char **args);
+// int		ft_echo(char **args);
+int		ft_echo(t_token *input);
 int		ft_cd(char **path, t_mini *mini);
 int		ft_pwd(void);
 void	ft_env(char **env);
-void	ft_export(char **args, t_mini *mini);
+void	ft_export(t_token *input, t_mini *mini);
+void	ft_unset(t_token *input, t_mini *mini);
+void	exec_builtin(t_mini *mini);
 //builtin_utils
 char	*put_quotes(char *env);
 char	**sort_env(char **env);
 char	**new_env(char **env, char *new);
+void	export_print(char **env);
 //parse
 char	*get_input(t_mini *mini);
 // env_utils.c

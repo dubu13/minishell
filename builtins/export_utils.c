@@ -3,19 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:54:25 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/14 16:32:33 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/19 16:13:57 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	**new_env(char **env, char *new)
+/**
+ * Creates a new environment variable array with the given new environment variable added.
+ *
+ * @param env The existing environment variable array.
+ * @param new The new environment variable to be added.
+ * @return A newly allocated environment variable array with the new variable added.
+ */
+char **new_env(char **env, char *new)
 {
-	char	**new_env;
-	int		i;
+	char **new_env;
+	int i;
 
 	i = 0;
 	while (env[i])
@@ -32,15 +39,21 @@ char	**new_env(char **env, char *new)
 		i++;
 	}
 	new_env[i] = ft_strdup(new);
-	//add func to free env
+	// add func to free env
 	return (new_env);
 }
 
-char	**sort_env(char **env)
+/**
+ * Sorts the given environment variable array in alphabetical order.
+ *
+ * @param env The environment variable array to be sorted.
+ * @return The sorted environment variable array.
+ */
+char **sort_env(char **env)
 {
-	int		i;
-	int		j;
-	char	*temp;
+	int i;
+	int j;
+	char *temp;
 
 	i = 0;
 	while (env[i])
@@ -61,11 +74,17 @@ char	**sort_env(char **env)
 	return (env);
 }
 
-char	*put_quotes(char *env)
+/**
+ * Encloses the given environment variable string in double quotes.
+ *
+ * @param env The environment variable string to be quoted.
+ * @return A newly allocated string with the environment variable enclosed in double quotes.
+ */
+char *put_quotes(char *env)
 {
-	char	*key;
-	char	*value;
-	int		i;
+	char *key;
+	char *value;
+	int i;
 
 	i = 0;
 	while (env[i] && env[i] != '=')

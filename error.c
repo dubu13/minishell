@@ -3,16 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 15:42:14 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/19 15:24:09 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/19 16:15:11 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	error(t_error_type type, char *input)
+/**
+ * Prints an error message to stderr based on the specified error type.
+ *
+ * @param type The type of error that occurred.
+ * @param input The input that caused the error, if applicable.
+ */
+void error(t_error_type type, char *input)
 {
 	if (type == E_SYNTAX)
 	{

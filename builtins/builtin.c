@@ -3,19 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 22:37:00 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/19 15:34:47 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/19 16:14:13 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	exec_builtin(t_mini *mini)
+/**
+ * Executes the appropriate built-in command based on the tokens in the mini shell.
+ * This function iterates through the token list and calls the corresponding built-in
+ * function for each recognized command, such as echo, pwd, cd, export, unset, and env.
+ * The built-in functions are responsible for executing the command and updating the
+ * mini shell state as necessary.
+ *
+ * @param mini The mini shell structure containing the token list and other state.
+ */
+void exec_builtin(t_mini *mini)
 {
-	t_token	*current;
-	int		i;
+	t_token *current;
+	int i;
 
 	i = 0;
 	current = mini->token_list;

@@ -3,19 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 13:41:56 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/11 21:48:40 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/19 16:15:47 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	index_env(char *type, char **env)
+/**
+ * Finds the index of an environment variable in an environment array.
+ *
+ * This function takes an environment variable name and an environment array,
+ * and returns the index of the first matching environment variable in the
+ * array. If the variable is not found, it returns -1.
+ *
+ * @param type The name of the environment variable to search for.
+ * @param env The environment array to search.
+ * @return The index of the matching environment variable, or -1 if not found.
+ */
+int index_env(char *type, char **env)
 {
-	int	i;
-	int	len;
+	int i;
+	int len;
 
 	i = 0;
 	len = ft_strlen(type);
@@ -28,10 +39,22 @@ int	index_env(char *type, char **env)
 	return (-1);
 }
 
-void	update_env(char *type, char *path, t_mini *mini)
+/**
+ * Updates an environment variable in the shell's environment.
+ *
+ * This function takes an environment variable name, a new value for that
+ * variable, and a pointer to the shell's environment. It finds the index of
+ * the environment variable in the environment array, frees the old value, and
+ * sets the new value.
+ *
+ * @param type The name of the environment variable to update.
+ * @param path The new value to set for the environment variable.
+ * @param mini A pointer to the shell's environment.
+ */
+void update_env(char *type, char *path, t_mini *mini)
 {
-	char	*temp;
-	int		i;
+	char *temp;
+	int i;
 
 	i = index_env(type, mini->env);
 	// if (i == -1)
@@ -42,10 +65,22 @@ void	update_env(char *type, char *path, t_mini *mini)
 	free(temp);
 }
 
-char	*get_env(char **env, char *type)
+/**
+ * Retrieves the value of an environment variable.
+ *
+ * This function takes an array of environment variables and a variable name,
+ * and returns the value of the corresponding environment variable. If the
+ * variable is not found in the environment, an empty string is returned.
+ *
+ * @param env The array of environment variables.
+ * @param type The name of the environment variable to retrieve.
+ * @return The value of the environment variable, or an empty string if the
+ * variable is not found.
+ */
+char *get_env(char **env, char *type)
 {
-	int	i;
-	int	len;
+	int i;
+	int len;
 
 	i = index_env(type, env);
 	if (i == -1)
@@ -54,11 +89,22 @@ char	*get_env(char **env, char *type)
 	return (ft_strdup(env[i] + len + 1));
 }
 
-char	**save_env(void)
+/**
+ * Saves a copy of the current environment variables.
+ *
+ * This function creates a dynamically allocated copy of the current environment
+ * variables, which can be used to restore the environment later. The copy is
+ * allocated using `ft_calloc` and each environment variable is duplicated using
+ * `ft_strdup`.
+ *
+ * @return A null-terminated array of strings representing the environment
+ * variables, or `NULL` if the allocation fails.
+ */
+char **save_env(void)
 {
-	extern char	**environ;
-	char		**env;
-	int			i;
+	extern char **environ;
+	char **env;
+	int i;
 
 	i = 0;
 	while (environ[i])

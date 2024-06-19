@@ -3,16 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:15:13 by dhasan            #+#    #+#             */
-/*   Updated: 2024/05/25 13:38:02 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/19 16:14:57 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	signal_handle(int sig)
+/**
+ * Handles signals received by the program.
+ *
+ * This function is called when a SIGINT (Ctrl+C) or SIGQUIT (Ctrl+\) signal is received.
+ * For SIGINT, it writes "^C" to the standard output.
+ * For SIGQUIT, it writes "Quit: 3" to the standard output, moves the cursor to a new line, and writes a carriage return.
+ *
+ * @param sig The signal number that was received.
+ */
+void signal_handle(int sig)
 {
 	if (sig == SIGINT)
 	{

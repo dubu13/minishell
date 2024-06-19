@@ -3,19 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:49:02 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/08 17:05:30 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/19 16:14:48 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_str_closed(char *str)
+/**
+ * Checks if a given string is properly closed with respect to single and double quotes.
+ *
+ * @param str The string to check.
+ * @return 1 if the string is properly closed, 0 otherwise.
+ */
+int is_str_closed(char *str)
 {
-	bool	s_quote_open;
-	bool	d_quote_open;
+	bool s_quote_open;
+	bool d_quote_open;
 
 	s_quote_open = false;
 	d_quote_open = false;

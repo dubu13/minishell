@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/19 18:32:25 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/21 13:21:51 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,10 @@ char	*get_env(char **env, char *type);
 char	**save_env(void);
 
 void	tokenize(char *input, t_token **token_list);
+t_token	*create_token(t_token_type type, char *value);
+void	add_back_token(t_token **head, t_token *new_token);
+int	skip_ws(char *input);
+int	is_meta_char(char c);
+int	is_append_heredoc(char *input);
 
 #endif

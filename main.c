@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/19 16:14:36 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/06/21 14:31:37 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,32 @@ t_mini	*init_mini(void)
 	return (mini);
 }
 
+void	ft_reset(t_token *list)
+{
+	t_token	*tmp;
+
+	if (list)
+	{
+		while (list)
+		{
+			tmp = list->next;
+			free(list);
+			list = tmp;
+		}
+	}
+}
+
 int	main(void)
 {
 	t_mini	*mini;
 
 	mini = init_mini();
+	if (!mini)
+		return (EXIT_FAILURE);
 	while (1)
+	{
 		parse(mini);
+		ft_reset(mini->token_list);
+		mini->token_list = NULL;
+	}
 }

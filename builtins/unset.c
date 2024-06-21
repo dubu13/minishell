@@ -6,15 +6,11 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:35:17 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/21 13:27:25 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/21 19:44:51 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// can get multi args
-// lets say args[0] = unset
-// args[1] = NAME
 
 int	is_valid_key(char *key)
 {
@@ -29,29 +25,11 @@ int	is_valid_key(char *key)
 	return (1);
 }
 
-void	finish_rm_env(char **env, char **new_env)
+char	**rm_and_copy_env(char **env, char **new_env, int index)
 {
 	int	i;
+	int	j;
 
-	i = -1;
-	while (env[++i])
-		free(env[i]);
-	free(env);
-	env = new_env;
-}
-
-void	rm_env(char **env, int index)
-{
-	char	**new_env;
-	int		i;
-	int		j;
-
-	i = 0;
-	while (env[i])
-		i++;
-	new_env = ft_calloc(i, sizeof(char *));
-	if (!new_env)
-		error(E_ALLOC, NULL);
 	i = 0;
 	j = 0;
 	while (env[i])
@@ -62,11 +40,30 @@ void	rm_env(char **env, int index)
 			i++;
 			continue ;
 		}
-		new_env[j++] = ft_strdup(env[i++]);
+		new_env[j] = ft_strdup(env[i]);
 		if (!new_env[j])
 			error(E_ALLOC, NULL);
+		i++;
+		j++;
 	}
-	finish_rm_env(env, new_env);
+	new_env[j] = NULL;
+	free(env);
+	return (new_env);
+}
+
+char	**rm_env(char **env, int index)
+{
+	char	**new_env;
+	int		i;
+
+	i = 0;
+	while (env[i])
+		i++;
+	new_env = ft_calloc(i, sizeof(char *));
+	if (!new_env)
+		error(E_ALLOC, NULL);
+	new_env = rm_and_copy_env(env, new_env, index);
+	return (new_env);
 }
 
 void	ft_unset(t_token *input, t_mini *mini)
@@ -83,10 +80,7 @@ void	ft_unset(t_token *input, t_mini *mini)
 		if (input)
 			if (!is_valid_key(input->value))
 				error(E_UNSET, input->value);
-		rm_env(mini->env, index);
+		mini->env = rm_env(mini->env, index);
 		input = input->next;
 	}
-	printf("------------after unset--------------\n");
-	export_print(mini->env);
 }
-// alloc problem !!!!!!!

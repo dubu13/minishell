@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:40:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/19 16:42:28 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/06/21 13:06:52 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 int	cd_path(char *new_path, char *old_path, t_mini *mini)
 {
 	if (chdir(new_path) == -1)
-		return (perror("cd : no such file or directory"), EXIT_FAILURE);
+		return (error_cd("no such file or directory"), EXIT_FAILURE);
 	update_env("OLDPWD", old_path, mini);
 	update_env("PWD", new_path, mini);
 	return (0);
@@ -88,29 +88,11 @@ int	ft_cd(t_token *input, t_mini *mini)
 		temp = temp->next;
 	}
 	if (i > 0)
-		return (perror("cd: too many arguments"), EXIT_FAILURE);
+		return (error_cd("too many arguments"), EXIT_FAILURE);
 	if (!getcwd(old_path, PATH_MAX))
-		return (perror("cd: error getting current directory"), EXIT_FAILURE);
-	if (!input || ((input->value[0] == '~' || input->value[0] == '.')
-			&& input->value[0] == '\0'))
-		new_path = get_env(mini->env, "HOME");
-	else if (**path == '-' && !*(*path + 1))
-		new_path = get_env(mini->env, "OLDPWD");
-	else if (**path == '.' && *(*path + 1) == '.')
-		new_path = cd_up(old_path, *(path + 2));
-	else
-		new_path = ft_strdup(*path);
+		return (error_cd("error getting current directory"), EXIT_FAILURE);
+	new_path = get_newpath(input->value, old_path, mini);
 	if (!new_path || cd_path(new_path, old_path, mini))
-		return (perror("cd: error getting path\n"), EXIT_FAILURE);
+		return (error_cd("error getting path\n"), EXIT_FAILURE);
 	return (0);
 }
-
-	// if (!input || (input->value[0] == '~' && input->value[0] == '\0'))
-	// 	new_path = get_env(mini->env, "HOME");
-	// else if (input->value[0] == '.')
-	// 	new_path = ft_strdup(old_path);
-	// else if (input->value[0] == '-' && input->value[1] == '\0')
-	// 	new_path = get_env(mini->env, "OLDPWD");
-	// else if (input->value[0] == '.' && input->value[1] == '.')
-	// 	new_path = cd_up(old_path, input->value);
-	// else

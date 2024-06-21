@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 15:42:14 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/19 16:15:11 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/06/21 13:01:35 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,11 @@ void	error(t_error_type type, char *input)
 		ft_putstr_fd(input, 2);
 		ft_putstr_fd("\n", 2);
 	}
+}
+
+void	error_cd(char *error_msg)
+{
+	ft_putstr_fd("cd: ", 2);
+	ft_putstr_fd(error_msg, 2);
+	ft_putstr_fd("\n", 2);
 }

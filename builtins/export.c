@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:31:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/19 16:11:52 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/06/21 13:27:11 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,9 +142,7 @@ void	export_print(char **env)
 void	ft_export(t_token *input, t_mini *mini)
 {
 	char	*key;
-	int		i;
 
-	i = 1;
 	if (input == NULL || input->type != WORD)
 		export_print(mini->env);
 	while (input && input->type == WORD)

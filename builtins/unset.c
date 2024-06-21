@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:35:17 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/18 18:02:57 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/21 13:27:25 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,7 @@ void	rm_env(char **env, int index)
 void	ft_unset(t_token *input, t_mini *mini)
 {
 	int	index;
-	int	i;
 
-	i = 1;
 	if (input == NULL || input->type != WORD)
 		return ;
 	while (input && input->type == WORD)

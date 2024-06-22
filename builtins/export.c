@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:31:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/21 19:44:33 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/22 18:19:48 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,12 @@ void	export_w_arg(char *key, char *env, t_mini *mini)
 	else
 	{
 		if (index != -1)
-			update_env(key, ft_strchr(env, '=') + 1, mini);
+		{
+			if (ft_strchr(env, '='))
+				update_env(key, ft_strchr(env, '=') + 1, mini);
+			else
+				update_env(key, NULL, mini);
+		}
 		else
 			mini->env = new_env(mini->env, env);
 	}

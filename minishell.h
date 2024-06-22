@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/21 14:45:07 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/06/22 18:22:47 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	export_print(char **env);
 char	*get_input(t_mini *mini);
 // env_utils.c
 int		index_env(char *type, char **env);
-void	update_env(char *type, char *path, t_mini *mini);
+void	update_env(char *type, char *value, t_mini *mini);
 char	*get_env(char **env, char *type);
 char	**save_env(void);
 
@@ -99,6 +99,6 @@ void	add_back_token(t_token **head, t_token *new_token);
 int		skip_ws(char *input);
 int		is_meta_char(char c);
 int		is_append_heredoc(char *input);
-int 	count_pipes(t_token *token_list);
-int 	ft_pipe(t_mini *mini, t_token *token_list);
+int		count_pipes(t_token *token_list);
+int		ft_pipe(t_mini *mini, t_token *token_list);
 #endif

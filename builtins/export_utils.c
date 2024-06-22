@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:54:25 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/22 15:45:27 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/22 16:43:36 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ char	**new_env(char **env, char *new)
 			error(E_ALLOC, NULL);
 		i++;
 	}
-	if (ft_strncmp(new, "=", 1) == 0)
-		new = ft_strjoin(new, "=");
+	// if (ft_strncmp(new, "=", 1) == 0)
+	// 	new = ft_strjoin(new, "=");
 	new_env[i] = ft_strdup(new);
 	if (!new_env[i])
 		error(E_ALLOC, NULL);
@@ -91,11 +91,13 @@ char	*put_quotes(char *env)
 {
 	char	*key;
 	char	*value;
-	int		i;
+	size_t	i;
 
 	i = 0;
 	while (env[i] && env[i] != '=')
 		i++;
+	if (ft_strlen(env) == i)
+		return (env);
 	key = ft_substr(env, 0, i);
 	value = ft_strdup(env + i + 1);
 	value = ft_strjoin("\"", value);

@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 13:41:56 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/21 13:10:15 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/22 16:32:18 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	index_env(char *type, char **env)
 	len = ft_strlen(type);
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], type, len) && env[i][len] == '=')
+		if (!ft_strncmp(env[i], type, len) && \
+			(env[i][len] == '=' || env[i][len] == '\0'))
 			return (i);
 		i++;
 	}

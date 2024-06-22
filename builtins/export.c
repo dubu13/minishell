@@ -6,16 +6,11 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:31:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/21 13:27:11 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/21 19:44:33 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// can get multi args
-// lets say args[0] = export
-// args[1] = NAME=VALUE
-// change the params
 
 /**
  * Extracts the key from an environment variable string.
@@ -40,7 +35,7 @@ char	*get_key(char *env)
 	i = 0;
 	if (!ft_isalpha(env[i]) && env[i] != '_')
 		error(E_EXPORT, env);
-	while (env[i] && (env[i] != '=' || env[i] != '+'))
+	while (env[i] && env[i] != '=' && !(env[i] == '+' && env[i + 1] == '='))
 	{
 		if (!ft_isalnum(env[i]) && env[i] != '_')
 			error(E_EXPORT, env);
@@ -73,21 +68,32 @@ char	*get_key(char *env)
  * @param env The environment variable string in the format "KEY=VALUE".
  * @param mini The Minishell program context.
  */
+
+void	handle_plus(t_mini *mini, char *key, char *env, int index)
+{
+	char	*value;
+
+	if (index != -1)
+	{
+		value = get_env(mini->env, key);
+		value = ft_strjoin(value, ft_strchr(env, '=') + 1);
+		update_env(key, value, mini);
+		free(value);
+	}
+	else
+	{
+		value = ft_strjoin(key, ft_strchr(env, '+') + 1);
+		mini->env = new_env(mini->env, value);
+	}
+}
+
 void	export_w_arg(char *key, char *env, t_mini *mini)
 {
-	char	*exist_env;
 	int		index;
 
 	index = index_env(key, mini->env);
 	if ((ft_strchr(env, '+') && *(ft_strchr(env, '+') + 1) == '='))
-	{
-		if (index != -1)
-		{
-			exist_env = get_env(mini->env, key);
-			mini->env[index] = ft_strjoin(exist_env, ft_strchr(env, '=') + 1);
-			free(exist_env);
-		}
-	}
+		handle_plus(mini, key, env, index);
 	else
 	{
 		if (index != -1)
@@ -151,6 +157,4 @@ void	ft_export(t_token *input, t_mini *mini)
 		export_w_arg(key, input->value, mini);
 		input = input->next;
 	}
-	printf("---------------after export---------------\n");
-	export_print(mini->env);
 }

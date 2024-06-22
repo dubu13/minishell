@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:54:25 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/19 16:13:57 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/06/21 19:15:08 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,12 @@ char	**new_env(char **env, char *new)
 			error(E_ALLOC, NULL);
 		i++;
 	}
+	if (ft_strncmp(new, "=", 1))
+		new = ft_strjoin(new, "=");
 	new_env[i] = ft_strdup(new);
-	// add func to free env
+	if (!new_env[i])
+		error(E_ALLOC, NULL);
+	free(env);
 	return (new_env);
 }
 

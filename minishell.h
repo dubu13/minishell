@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/21 13:27:32 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/21 14:45:07 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <limits.h>
 # include <stdlib.h>
 # include <stdbool.h>
+# include <sys/wait.h>
 
 # define RESET "\033[0m"
 # define CYN "\033[1;33m"  // Bold Yellow
@@ -95,8 +96,9 @@ char	**save_env(void);
 void	tokenize(char *input, t_token **token_list);
 t_token	*create_token(t_token_type type, char *value);
 void	add_back_token(t_token **head, t_token *new_token);
-int	skip_ws(char *input);
-int	is_meta_char(char c);
-int	is_append_heredoc(char *input);
-
+int		skip_ws(char *input);
+int		is_meta_char(char c);
+int		is_append_heredoc(char *input);
+int 	count_pipes(t_token *token_list);
+int 	ft_pipe(t_mini *mini, t_token *token_list);
 #endif

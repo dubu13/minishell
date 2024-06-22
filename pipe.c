@@ -3,74 +3,161 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 14:23:38 by dkremer           #+#    #+#             */
-/*   Updated: 2024/06/19 17:21:40 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/06/21 15:19:00 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
 /**
- * Executes a pipe command,
-	creating two child processes and connecting them via a pipe.
- * The first child process writes its output to the write end of the pipe,
-	and the second
- * child process reads from the read end of the pipe.
+ * Allocates memory for an array of pipe file descriptors and an array of process IDs.
  *
- * @param PARAM Placeholder for function parameters,
-	which are not provided in the given code.
- * @return 0 on success, or an error code on failure.
+ * This function is responsible for dynamically allocating memory for the pipes and process IDs
+ * that will be used in the pipeline of commands. It allocates memory for an array of pipe file
+ * descriptors and an array of process IDs, with the size of the arrays determined by the
+ * `pipe_count` parameter.
+ *
+ * @param pipes A double pointer to an array of pipe file descriptors. This array will be
+ *              allocated by this function.
+ * @param pids A double pointer to an array of process IDs. This array will be allocated by
+ *             this function.
+ * @param pipe_count The number of pipes to allocate in the `pipes` array.
  */
-// TODO: Implement this function
-// TODO: Add error handling
-// TODO: Use the functions from the previous exercise to implement this function
-
-int	ft_pipe(PARAM)
+static void allocate_resources(int ***pipes, pid_t **pids, int pipe_count)
 {
-	int fd[2];
-	// fd[0] - read
-	// fd[1] - write
-	int pid1;
-	int pid2;
+	*pipes = malloc(sizeof(int *) * (pipe_count + 1));
+	if (*pipes == NULL)
+		error(E_ALLOC, NULL);
+	*pids = malloc(sizeof(pid_t) * (pipe_count + 2));
+	if (*pids == NULL)
+		error(E_ALLOC, NULL);
+}
 
-	if (pipe(fd) == -1) // pipe used to communicate between processes
+/**
+ * Allocates and initializes an array of pipe file descriptors.
+ *
+ * @param pipes A double pointer to an array of pipe file descriptors.
+ * @param pipe_count The number of pipes to allocate.
+ */
+static void	setup_pipes(int **pipes, int pipe_count)
+{
+	int	i;
+
+	i = 0;
+	while (i <= pipe_count)
 	{
-		ft_printf("PIPE ERROR!\n");
-		return (error);
+		pipes[i] = malloc(sizeof(int) * 2);
+		if (pipes[i] == NULL)
+			error(E_ALLOC, NULL);
+		i++;
 	}
-	pid1 = fork(); // fork used to create a new process
-	if (pid1 == -1)
+}
+
+/**
+ * Closes all the pipe file descriptors in the given array of pipes.
+ *
+ * @param pipes A double pointer to an array of pipe file descriptors.
+ * @param pipe_count The number of pipes to close.
+ */
+static void	close_pipes(int **pipes, int pipe_count)
+{
+	int	i;
+
+	i = 0;
+	while (i <= pipe_count)
 	{
-		ft_printf("FORK ERROR!\n");
-		return (error);
+		close(pipes[i][0]);
+		close(pipes[i][1]);
+		i++;
 	}
-	if (pid1 == 0) // child process 1
+}
+
+
+/**
+ * Executes a child process in a pipeline, handling input and output redirection.
+ *
+ * This function is called by the parent process in the ft_pipe function to execute
+ * a child process in the pipeline. It sets up the necessary input and output
+ * redirection for the child process based on its position in the pipeline.
+ *
+ * @param mini A pointer to the t_mini struct containing the mini shell state.
+ * @param token_list A pointer to the linked list of tokens representing the pipeline.
+ * @param pipes A 2D array of pipe file descriptors, one for each pipe in the pipeline.
+ * @param child_index The index of the current child process in the pipeline.
+ */
+static void exec_child(t_mini *mini, t_token *token_list, int **pipes,
+					   int child_index)
+{
+	int pipe_count;
+
+	pipe_count = count_pipes(token_list);
+	if (child_index == 0)
 	{
-		dup2(fd[1], STDOUT_FILENO); // redirect stdout to write end of pipe
-		close(fd[0]);               // never read from pipe in child procces
-		close(fd[1]);
-			// after writing close the write end of the pipe
-		// execute command
+		close(pipes[0][0]);
+		dup2(pipes[0][1], STDOUT_FILENO);
+		close(pipes[0][1]);
 	}
-	pid2 = fork();
-	if (pid2 == -1)
+	else if (child_index == pipe_count + 1)
 	{
-		ft_printf("FORK ERROR!\n");
-		return (error);
+		close(pipes[pipe_count][1]);
+		dup2(pipes[pipe_count][0], STDIN_FILENO);
+		close(pipes[pipe_count][0]);
 	}
-	if (pid2 == 0)
+	else
 	{
-		dup2(fd[0], STDIN_FILENO); // redirect stdin to read end of pipe
-		close(fd[0]);
-			// after reading close the read end of the pipe
-		close(fd[1]);              // never write to pipe in child procces
-		// execute command
+		dup2(pipes[child_index - 1][0], STDIN_FILENO);
+		close(pipes[child_index - 1][0]);
+		close(pipes[child_index - 1][1]);
+		dup2(pipes[child_index][1], STDOUT_FILENO);
+		close(pipes[child_index][0]);
+		close(pipes[child_index][1]);
 	}
-	close(fd[0]);           // after reading close the read end of the pipe
-	close(fd[1]);           // after writing close the write end of the pipe
-	waitpid(pid1, NULL, 0); // wait for child process 1 to finish
-	waitpid(pid2, NULL, 0); // wait for child process 2 to finish
+	close_pipes(pipes, pipe_count);
+	exec_builtin(mini);
+	exit(EXIT_FAILURE);
+}
+
+/**
+ * Executes a pipeline of child processes, handling input and output redirection.
+ *
+ * This function is responsible for setting up and executing a pipeline of child
+ * processes, where the output of one process is used as the input for the next.
+ * It allocates the necessary resources, sets up the pipes, forks the child
+ * processes, and waits for them to complete.
+ *
+ * @param mini A pointer to the t_mini struct containing the mini shell state.
+ * @param token_list A pointer to the linked list of tokens representing the pipeline.
+ * @return 0 on success, or a non-zero exit status on failure.
+ */
+int ft_pipe(t_mini *mini, t_token *token_list)
+{
+	int pipe_count;
+	int **pipes;
+	int i;
+	pid_t *pids;
+
+	pipe_count = count_pipes(token_list);
+	allocate_resources(&pipes, &pids, pipe_count);
+	setup_pipes(pipes, pipe_count);
+	i = 0;
+	while (i <= pipe_count + 1)
+	{
+		pids[i] = fork();
+		if (pids[i] == -1)
+			exit(EXIT_FAILURE);
+		else if (pids[i] == 0)
+			exec_child(mini, token_list, pipes, i);
+		i++;
+	}
+	i = 0;
+	while (i <= pipe_count + 1)
+		waitpid(pids[i++], NULL, 0);
+	close_pipes(pipes, pipe_count);
+	free(pipes);
+	free(pids);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/22 12:36:01 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/06/22 12:36:05 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,6 @@ int	main(void)
 	while (1)
 	{
 		parse(mini);
-		mini->token_list = NULL;
+ 		mini->token_list = NULL;
 	}
 }

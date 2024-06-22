@@ -6,20 +6,27 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/19 16:14:36 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/06/21 15:15:10 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parse(t_mini *mini)
+void parse(t_mini *mini)
 {
-	mini->input = get_input(mini);
-	if (!is_str_closed(mini->input))
-		error(E_SYNTAX, NULL);
+    mini->input = get_input(mini);
+    if (!is_str_closed(mini->input))
+        error(E_SYNTAX, NULL);
 	else
-		tokenize(mini->input, &mini->token_list);
-	exec_builtin(mini);
+	{
+        tokenize(mini->input, &mini->token_list);
+
+        if (count_pipes(mini->token_list) > 0)
+            ft_pipe(mini, mini->token_list);
+		else
+            if (mini->token_list != NULL)
+                exec_builtin(mini);
+    }
 }
 
 /**
@@ -52,5 +59,8 @@ int	main(void)
 
 	mini = init_mini();
 	while (1)
+	{
 		parse(mini);
+		mini->token_list = NULL;
+	}
 }

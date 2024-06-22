@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:54:25 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/21 19:15:08 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/22 15:45:27 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**new_env(char **env, char *new)
 			error(E_ALLOC, NULL);
 		i++;
 	}
-	if (ft_strncmp(new, "=", 1))
+	if (ft_strncmp(new, "=", 1) == 0)
 		new = ft_strjoin(new, "=");
 	new_env[i] = ft_strdup(new);
 	if (!new_env[i])

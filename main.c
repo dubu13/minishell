@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/22 12:36:05 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/06/22 15:44:27 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 
-void parse(t_mini *mini)
+void	parse(t_mini *mini)
 {
-    mini->input = get_input(mini);
-    if (!is_str_closed(mini->input))
-        error(E_SYNTAX, NULL);
+	mini->input = get_input(mini);
+	if (!is_str_closed(mini->input))
+		error(E_SYNTAX, NULL);
 	else
 	{
-        tokenize(mini->input, &mini->token_list);
-
-        if (count_pipes(mini->token_list) > 0)
-            ft_pipe(mini, mini->token_list);
+		tokenize(mini->input, &mini->token_list);
+		if (count_pipes(mini->token_list) > 0)
+			ft_pipe(mini, mini->token_list);
 		else
-            if (mini->token_list != NULL)
-                exec_builtin(mini);
-    }
+			if (mini->token_list != NULL)
+				exec_builtin(mini);
+	}
 }
 
 /**
@@ -77,6 +77,7 @@ int	main(void)
 	while (1)
 	{
 		parse(mini);
- 		mini->token_list = NULL;
+		ft_reset(mini->token_list);
+		mini->token_list = NULL;
 	}
 }

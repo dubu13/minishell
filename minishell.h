@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/22 18:22:47 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/24 18:06:00 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <limits.h>
 # include <stdlib.h>
 # include <stdbool.h>
+# include <fcntl.h>
 # include <sys/wait.h>
 
 # define RESET "\033[0m"

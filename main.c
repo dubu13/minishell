@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/22 15:44:27 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/25 15:57:38 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	parse(t_mini *mini)
 			ft_pipe(mini, mini->token_list);
 		else
 			if (mini->token_list != NULL)
-				exec_builtin(mini);
+				exec_command(mini);
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 22:37:00 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/21 14:37:31 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/06/25 15:48:49 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,21 @@ void	exec_builtin(t_mini *mini)
 			return (ft_env(current->next, mini));
 		current = current->next;
 	}
+}
+
+int	check_builtin(t_token *input)
+{
+	if (!ft_strncmp(input->value, "echo", 4))
+		return (1);
+	else if (!ft_strncmp(input->value, "pwd", 3))
+		return (1);
+	else if (!ft_strncmp(input->value, "cd", 2))
+		return (1);
+	else if (!ft_strncmp(input->value, "export", 6))
+		return (1);
+	else if (!ft_strncmp(input->value, "unset", 5))
+		return (1);
+	else if (!ft_strncmp(input->value, "env", 3))
+		return (1);
+	return (0);
 }

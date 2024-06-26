@@ -48,7 +48,7 @@ static void	setup_pipes(int **pipes, int pipe_count)
 	int	i;
 
 	i = 0;
-	while (i <= pipe_count)
+	while (i < pipe_count)
 	{
 		pipes[i] = malloc(sizeof(int) * 2);
 		if (pipes[i] == NULL)
@@ -68,7 +68,7 @@ static void	close_pipes(int **pipes, int pipe_count)
 	int	i;
 
 	i = 0;
-	while (i <= pipe_count)
+	while (i < pipe_count)
 	{
 		close(pipes[i][0]);
 		close(pipes[i][1]);
@@ -89,36 +89,31 @@ static void	close_pipes(int **pipes, int pipe_count)
  * @param pipes A 2D array of pipe file descriptors, one for each pipe in the pipeline.
  * @param child_index The index of the current child process in the pipeline.
  */
-static void exec_child(t_mini *mini, t_token *token_list, int **pipes,
-					   int child_index)
+static void exec_child(t_mini *mini, t_token *token_list, int **pipes, int child_index)
 {
-	int pipe_count;
+    int pipe_count;
 
-	pipe_count = count_pipes(token_list);
-	if (child_index == 0)
-	{
-		close(pipes[0][0]);
-		dup2(pipes[0][1], STDOUT_FILENO);
-		close(pipes[0][1]);
-	}
-	else if (child_index == pipe_count + 1)
-	{
-		close(pipes[pipe_count][1]);
-		dup2(pipes[pipe_count][0], STDIN_FILENO);
-		close(pipes[pipe_count][0]);
-	}
-	else
-	{
-		dup2(pipes[child_index - 1][0], STDIN_FILENO);
-		close(pipes[child_index - 1][0]);
-		close(pipes[child_index - 1][1]);
-		dup2(pipes[child_index][1], STDOUT_FILENO);
-		close(pipes[child_index][0]);
-		close(pipes[child_index][1]);
-	}
-	close_pipes(pipes, pipe_count);
-	exec_builtin(mini);
-	exit(EXIT_FAILURE);
+    pipe_count = count_pipes(token_list);
+    if (child_index == 0)
+    {
+        dup2(pipes[0][1], STDOUT_FILENO);
+        close(pipes[0][0]);
+    }
+    else if (child_index == pipe_count)
+    {
+        dup2(pipes[child_index - 1][0], STDIN_FILENO);
+        close(pipes[child_index - 1][1]);
+    }
+    else
+    {
+        dup2(pipes[child_index - 1][0], STDIN_FILENO);
+        close(pipes[child_index - 1][1]);
+        dup2(pipes[child_index][1], STDOUT_FILENO);
+        close(pipes[child_index][0]);
+    }
+    close_pipes(pipes, pipe_count);
+    exec_builtin(mini);
+    exit(EXIT_FAILURE);
 }
 
 /**
@@ -144,7 +139,7 @@ int ft_pipe(t_mini *mini, t_token *token_list)
 	allocate_resources(&pipes, &pids, pipe_count);
 	setup_pipes(pipes, pipe_count);
 	i = 0;
-	while (i <= pipe_count + 1)
+	while (i <= pipe_count)
 	{
 		pids[i] = fork();
 		if (pids[i] == -1)
@@ -154,7 +149,7 @@ int ft_pipe(t_mini *mini, t_token *token_list)
 		i++;
 	}
 	i = 0;
-	while (i <= pipe_count + 1)
+	while (i <= pipe_count)
 		waitpid(pids[i++], NULL, 0);
 	close_pipes(pipes, pipe_count);
 	free(pipes);

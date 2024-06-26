@@ -142,6 +142,8 @@ void tokenize(char *input, t_token **token_list)
 	int i;
 
 	i = 0;
+	if (!input)
+		return;
 	while (input[i])
 	{
 		i += skip_ws(&input[i]);

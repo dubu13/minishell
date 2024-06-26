@@ -26,6 +26,8 @@ int	is_str_closed(char *str)
 
 	s_quote_open = false;
 	d_quote_open = false;
+	if (!str)
+		return (1);
 	while (*str)
 	{
 		if (*str == '\'')

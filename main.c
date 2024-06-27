@@ -6,15 +6,24 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/25 15:57:38 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/27 16:49:12 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	**test(char *input)
+{
+	char	**test;
+
+	test = ft_split(input, '|');
+	return (test);
+}
+
 void	parse(t_mini *mini)
 {
 	mini->input = get_input(mini);
+	mini->cmd_list = test(mini->input);
 	if (!is_str_closed(mini->input))
 		error(E_SYNTAX, NULL);
 	else

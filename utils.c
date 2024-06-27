@@ -1,12 +1,12 @@
 /* ************************************************************************** */
-/*                                                                            */
+/*	                                                                       */
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:49:02 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/19 16:14:48 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/06/27 18:38:39 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_str_closed(char *str)
 
 	s_quote_open = false;
 	d_quote_open = false;
-	while (*str)
+	while (str && *str != '\0')
 	{
 		if (*str == '\'')
 		{
@@ -43,4 +43,25 @@ int	is_str_closed(char *str)
 	if (s_quote_open || d_quote_open)
 		return (0);
 	return (1);
+}
+
+char	*remove_quotes(char *str)
+{
+	int		i;
+	int		j;
+	char	*new_str;
+
+	new_str = malloc(ft_strlen(str) + 1);
+	if (!new_str)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] != '\"' && str[i] != '\'')
+			new_str[j++] = str[i];
+		i++;
+	}
+	new_str[j] = '\0';
+	return (new_str);
 }

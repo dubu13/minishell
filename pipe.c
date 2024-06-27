@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 14:23:38 by dkremer           #+#    #+#             */
-/*   Updated: 2024/06/21 15:19:00 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/06/27 19:16:15 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 /**
  * Allocates memory for an array of pipe file descriptors and an array of process IDs.
@@ -89,10 +88,10 @@ static void	close_pipes(int **pipes, int pipe_count)
  * @param pipes A 2D array of pipe file descriptors, one for each pipe in the pipeline.
  * @param child_index The index of the current child process in the pipeline.
  */
-static void exec_child(t_mini *mini, t_token *token_list, int **pipes,
-					   int child_index)
+static void exec_child(t_mini *mini, t_token *token_list, int **pipes, \
+				int child_index)
 {
-	int pipe_count;
+	int	pipe_count;
 
 	pipe_count = count_pipes(token_list);
 	if (child_index == 0)
@@ -133,12 +132,12 @@ static void exec_child(t_mini *mini, t_token *token_list, int **pipes,
  * @param token_list A pointer to the linked list of tokens representing the pipeline.
  * @return 0 on success, or a non-zero exit status on failure.
  */
-int ft_pipe(t_mini *mini, t_token *token_list)
+int	ft_pipe(t_mini *mini, t_token *token_list)
 {
-	int pipe_count;
-	int **pipes;
-	int i;
-	pid_t *pids;
+	int	pipe_count;
+	int	**pipes;
+	int	i;
+	pid_t	*pids;
 
 	pipe_count = count_pipes(token_list);
 	allocate_resources(&pipes, &pids, pipe_count);

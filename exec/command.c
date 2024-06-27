@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.c                                          :+:      :+:    :+:   */
+/*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/11 22:37:00 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/25 15:48:49 by dhasan           ###   ########.fr       */
+/*   Created: 2024/06/27 19:06:47 by dhasan            #+#    #+#             */
+/*   Updated: 2024/06/27 19:07:54 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,91 @@ void	exec_builtin(t_mini *mini)
 	}
 }
 
-int	check_builtin(t_token *input)
+int	check_builtin(char *input)
 {
-	if (!ft_strncmp(input->value, "echo", 4))
+	if (!ft_strncmp(input, "echo", 4))
 		return (1);
-	else if (!ft_strncmp(input->value, "pwd", 3))
+	else if (!ft_strncmp(input, "pwd", 3))
 		return (1);
-	else if (!ft_strncmp(input->value, "cd", 2))
+	else if (!ft_strncmp(input, "cd", 2))
 		return (1);
-	else if (!ft_strncmp(input->value, "export", 6))
+	else if (!ft_strncmp(input, "export", 6))
 		return (1);
-	else if (!ft_strncmp(input->value, "unset", 5))
+	else if (!ft_strncmp(input, "unset", 5))
 		return (1);
-	else if (!ft_strncmp(input->value, "env", 3))
+	else if (!ft_strncmp(input, "env", 3))
 		return (1);
 	return (0);
+}
+
+char	*command_path(char *command)
+{
+	int		i;
+	int		len;
+	char	*path;
+	char	**directories;
+
+	directories = ft_split(getenv("PATH"), ':');
+	if (!directories)
+		return (ft_putstr_fd \
+		("minishell: Path environment variable not found\n", 2), NULL);
+	i = -1;
+	while (directories[++i])
+	{
+		len = ft_strlen(directories[i]);
+		if (directories[i][len - 1] == '/')
+			path = ft_strjoin(directories[i], command);
+		else
+		{
+			path = ft_strjoin(directories[i], "/");
+			path = ft_strjoin(path, command);
+		}
+		if (!(access(path, X_OK | F_OK)))
+			return (path);
+	}
+	return (NULL);
+}
+
+char	**check_cmd(char **cmd)
+{
+	int		i;
+	char	*arg;
+
+	i = 0;
+	while (cmd[i])
+	{
+		arg = remove_quotes(cmd[i]);
+		free(cmd[i]);
+		cmd[i] = arg;
+		i++;
+	}
+	return (cmd);
+}
+
+void	external_command(char *input, t_mini *mini)
+{
+	char	*cmd_path;
+	char	**cmd;
+	pid_t	pid;
+	int		status;
+
+	cmd = ft_split(input, ' ');
+	cmd = check_cmd(cmd);
+	if (!cmd)
+		return ;
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+	cmd_path = command_path(cmd[0]);
+	if (!cmd_path)
+		error_cmd(cmd[0]);
+	if (pid == 0)
+		execve(cmd_path, cmd, mini->env);
+	else
+		waitpid(pid, &status, 0);
+	free(cmd_path);
+	free(cmd);
 }

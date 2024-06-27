@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:22:12 by dkremer           #+#    #+#             */
-/*   Updated: 2024/06/19 16:22:43 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/06/27 17:56:49 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	skip_ws(char *input)
  */
 int	is_meta_char(char c)
 {
-	if (c == '>' || c == '<' || c == '|' || c == '\'' || c == '"')
+	if (c == '>' || c == '<' || c == '|')
 		return (1);
 	return (0);
 }

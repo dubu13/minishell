@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 20:13:06 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/21 17:50:41 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/06/27 14:32:38 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,16 +137,19 @@ void token_type(char *input, int *i, t_token **token_list)
  * @param input       The input string to be tokenized.
  * @param token_list  A pointer to the token list to which the tokens will be added.
  */
-void tokenize(char *input, t_token **token_list)
+void	tokenize(char *input, t_token **token_list)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while (input[i])
+	if (input)
 	{
-		i += skip_ws(&input[i]);
-		if (!input[i])
-			break;
-		token_type(input, &i, token_list);
+		while (input[i] != '\0')
+		{
+			i += skip_ws(&input[i]);
+			if (!input[i])
+				break ;
+			token_type(input, &i, token_list);
+		}
 	}
 }

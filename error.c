@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 15:42:14 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/21 13:01:35 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/27 19:05:23 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,3 +52,17 @@ void	error_cd(char *error_msg)
 	ft_putstr_fd(error_msg, 2);
 	ft_putstr_fd("\n", 2);
 }
+
+void	error_cmd(char *cmd)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": command not found\n", 2);
+}
+
+// void	msg(char *msg)
+// {
+// 	ft_putstr_fd(msg, 2);
+// 	ft_putstr_fd("\n", 2);
+// }
+

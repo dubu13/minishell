@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/25 16:08:04 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/27 19:02:50 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,22 @@ typedef struct s_mini
 {
 	char	**env;
 	char	*input;
+	char	**cmd_list;
 	t_token	*token_list;
 }			t_mini;
 
 //utils
 int		is_str_closed(char *str);
+char	*remove_quotes(char *str);
 //error
 void	error(t_error_type type, char *input);
 void	error_cd(char *input);
+void	error_cmd(char *cmd);
 void	signal_handle(int sig);
 //exec
-int		check_builtin(t_token *input);
+int		check_builtin(char *input);
 char	*command_path(char *command);
-void	external_command(t_token *input, t_mini *mini);
+void	external_command(char *input, t_mini *mini);
 void	exec_command(t_mini *mini);
 //builtin
 int		ft_echo(t_token *input);

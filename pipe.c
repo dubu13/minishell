@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 14:23:38 by dkremer           #+#    #+#             */
-/*   Updated: 2024/06/27 19:16:15 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/28 17:12:25 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
  *             this function.
  * @param pipe_count The number of pipes to allocate in the `pipes` array.
  */
-static void allocate_resources(int ***pipes, pid_t **pids, int pipe_count)
+static void	allocate_resources(int ***pipes, pid_t **pids, int pipe_count)
 {
 	*pipes = malloc(sizeof(int *) * (pipe_count + 1));
 	if (*pipes == NULL)
@@ -75,7 +75,6 @@ static void	close_pipes(int **pipes, int pipe_count)
 	}
 }
 
-
 /**
  * Executes a child process in a pipeline, handling input and output redirection.
  *
@@ -88,32 +87,32 @@ static void	close_pipes(int **pipes, int pipe_count)
  * @param pipes A 2D array of pipe file descriptors, one for each pipe in the pipeline.
  * @param child_index The index of the current child process in the pipeline.
  */
-static void exec_child(t_mini *mini, t_token *token_list, int **pipes, \
+static void	exec_child(t_mini *mini, t_token *token_list, int **pipes, \
 				int child_index)
 {
 	int	pipe_count;
 
-    pipe_count = count_pipes(token_list);
-    if (child_index == 0)
-    {
-        dup2(pipes[0][1], STDOUT_FILENO);
-        close(pipes[0][0]);
-    }
-    else if (child_index == pipe_count)
-    {
-        dup2(pipes[child_index - 1][0], STDIN_FILENO);
-        close(pipes[child_index - 1][1]);
-    }
-    else
-    {
-        dup2(pipes[child_index - 1][0], STDIN_FILENO);
-        close(pipes[child_index - 1][1]);
-        dup2(pipes[child_index][1], STDOUT_FILENO);
-        close(pipes[child_index][0]);
-    }
-    close_pipes(pipes, pipe_count);
-    exec_builtin(mini);
-    exit(EXIT_FAILURE);
+	pipe_count = count_pipes(token_list);
+	if (child_index == 0)
+	{
+		dup2(pipes[0][1], STDOUT_FILENO);
+		close(pipes[0][0]);
+	}
+	else if (child_index == pipe_count)
+	{
+		dup2(pipes[child_index - 1][0], STDIN_FILENO);
+		close(pipes[child_index - 1][1]);
+	}
+	else
+	{
+		dup2(pipes[child_index - 1][0], STDIN_FILENO);
+		close(pipes[child_index - 1][1]);
+		dup2(pipes[child_index][1], STDOUT_FILENO);
+		close(pipes[child_index][0]);
+	}
+	close_pipes(pipes, pipe_count);
+	exec_builtin(mini);
+	exit(EXIT_FAILURE);
 }
 
 /**
@@ -130,9 +129,9 @@ static void exec_child(t_mini *mini, t_token *token_list, int **pipes, \
  */
 int	ft_pipe(t_mini *mini, t_token *token_list)
 {
-	int	pipe_count;
-	int	**pipes;
-	int	i;
+	int		pipe_count;
+	int		**pipes;
+	int		i;
 	pid_t	*pids;
 
 	pipe_count = count_pipes(token_list);

@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 19:06:47 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/28 16:05:22 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/28 17:26:11 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,17 +118,9 @@ void	external_command(char *input, t_mini *mini)
 	char	**cmd;
 	pid_t	pid;
 	int		status;
-	int		i;
 
-	// cmd = ft_split(input, ' ');
 	cmd = split_cmd(input, ' ');
 	cmd = check_cmd(cmd);
-	i = 0;
-	while (cmd[i] && *cmd)
-	{
-		printf("cmd: %s\n", cmd[i]);
-		i++;
-	}
 	if (!cmd)
 		return ;
 	pid = fork();

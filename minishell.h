@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/27 19:02:50 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/28 14:52:43 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,14 @@ typedef struct s_mini
 }			t_mini;
 
 //utils
+char	**split_cmd(char const *s, char c);
 int		is_str_closed(char *str);
 char	*remove_quotes(char *str);
 //error
 void	error(t_error_type type, char *input);
 void	error_cd(char *input);
 void	error_cmd(char *cmd);
-void	signal_handle(int sig);
+void	handle_signal(void);
 //exec
 int		check_builtin(char *input);
 char	*command_path(char *command);

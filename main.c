@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/27 16:49:12 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/28 14:25:17 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,14 @@ int	main(void)
 	while (1)
 	{
 		parse(mini);
+		if (!mini->input)
+		{
+			printf("exit\n");
+			break ;
+		}
 		ft_reset(mini->token_list);
 		mini->token_list = NULL;
 	}
+	rl_clear_history();
+	return (0);
 }

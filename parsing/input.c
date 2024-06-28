@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 15:40:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/19 16:16:09 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/06/28 14:18:38 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ char	*get_input(t_mini *mini)
 {
 	char	*input;
 
+	handle_signal();
 	if (isatty(STDIN_FILENO))
 	{
 		rl_on_new_line();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:15:13 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/19 16:14:57 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/06/28 14:21:13 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,26 @@
  *
  * @param sig The signal number that was received.
  */
-void	signal_handle(int sig)
+void	sig_action(int sig)
 {
 	if (sig == SIGINT)
 	{
 		write(1, "^C\n", 3);
-	}
-	else if (sig == SIGQUIT)
-	{
-		write(1, "Quit: 3\n", 8);
 		rl_on_new_line();
-		write(1, "\r", 1);
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
+	// else if (sig == SIGQUIT)
+	// {
+	// 	write(1, "Quit: 3\n", 8);
+	// 	rl_on_new_line();
+	// 	write(1, "\r", 1);
+	// }
+}
+
+void	handle_signal(void)
+{
+	rl_catch_signals = 0;
+	signal(SIGINT, sig_action);
+	signal(SIGQUIT, SIG_IGN);
 }

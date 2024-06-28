@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 14:42:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/28 17:08:10 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/06/28 17:22:58 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,40 +63,47 @@ static char	*copy(char const *s, size_t len)
 	return (new);
 }
 
-char	**split_cmd(char const *s, char c)
+char	**process_string(char const *s, char c, char **split, size_t *i)
 {
-	char	**split;
-	size_t	i;
 	size_t	start;
 	size_t	end;
 	int		in_quotes;
 
-	i = 0;
 	start = 0;
 	end = 0;
 	in_quotes = 0;
-	split = ft_calloc(sizeof(char *), (c_words(s, c) + 1));
-	if (!split)
-		return (NULL);
 	while (s[start] != '\0')
 	{
 		while (s[start] == c && !in_quotes)
 			start++;
 		end = start;
 		while (s[end] != '\0' && (s[end] != c || in_quotes))
-		{
-			if (s[end] == '\"')
+			if (s[end++] == '\"')
 				in_quotes = !in_quotes;
-			end++;
-		}
 		if (start != end)
 		{
-			split[i++] = copy(s + start, end - start);
-			if (split[i - 1] == NULL)
+			split[*i] = copy(s + start, end - start);
+			if (split[*i] == NULL)
 				return (free_m(split));
+			(*i)++;
 		}
 		start = end;
 	}
+	return (split);
+}
+
+char	**split_cmd(char const *s, char c)
+{
+	char	**split;
+	size_t	i;
+
+	i = 0;
+	split = ft_calloc(sizeof(char *), (c_words(s, c) + 1));
+	if (!split)
+		return (NULL);
+	split = process_string(s, c, split, &i);
+	if (!split)
+		return (NULL);
 	split[i] = NULL;
 	return (split);
 }

@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/28 14:52:43 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/01 21:01:50 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,11 @@ typedef struct s_mini
 }			t_mini;
 
 //utils
-char	**split_cmd(char const *s, char c);
-int		is_str_closed(char *str);
-char	*remove_quotes(char *str);
+char		**split_cmd(char const *s, char c);
+int			is_str_closed(char *str);
+char		*remove_quotes(char *str);
+long long	ft_atou(const char *str);
+int	is_digit(const char *str);
 //error
 void	error(t_error_type type, char *input);
 void	error_cd(char *input);
@@ -83,6 +85,7 @@ void	exec_command(t_mini *mini);
 //builtin
 int		ft_echo(t_token *input);
 int		ft_cd(t_token *token, t_mini *mini);
+void	ft_exit(t_token *input);
 char	*get_newpath(char *input, char *old_path, t_mini *mini);
 int		ft_pwd(void);
 void	ft_env(t_token *input, t_mini *mini);

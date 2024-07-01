@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_env_pwd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:39:30 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/19 15:57:01 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/01 18:41:51 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ int	ft_pwd(void)
 {
 	char	cwd[PATH_MAX];
 
+	// if (input->next != NULL)
+	// 	ft_putstr_fd("minishell: pwd: too many arguments\n", 2);
 	if (getcwd(cwd, PATH_MAX))
 		printf("%s\n", cwd);
 	else

@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 19:06:47 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/28 17:26:11 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/01 18:49:33 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	exec_builtin(t_mini *mini)
 			ft_pwd();
 		else if (!ft_strncmp(current->value, "cd", 2))
 			ft_cd(current->next, mini);
-		// if (!ft_strncmp(current->value, "exit", 4))
-		// 	return ();
+		if (!ft_strncmp(current->value, "exit", 4))
+			return (ft_exit(current->next));
 		else if (!ft_strncmp(current->value, "export", 6))
 			return (ft_export(current->next, mini));
 		else if (!ft_strncmp(current->value, "unset", 5))
@@ -64,6 +64,8 @@ int	check_builtin(char *input)
 	else if (!ft_strncmp(input, "unset", 5))
 		return (1);
 	else if (!ft_strncmp(input, "env", 3))
+		return (1);
+	else if (!ft_strncmp(input, "exit", 4))
 		return (1);
 	return (0);
 }

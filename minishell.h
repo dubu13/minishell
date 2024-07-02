@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/01 21:01:50 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/02 18:23:57 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef enum e_error_type
 	E_EXPORT,
 	E_ALLOC,
 	E_UNSET,
+	E_EXIT,
+	E_CD,
 }	t_error_type;
 
 typedef enum e_token_type
@@ -70,47 +72,47 @@ typedef struct s_mini
 char		**split_cmd(char const *s, char c);
 int			is_str_closed(char *str);
 char		*remove_quotes(char *str);
-long long	ft_atou(const char *str);
-int	is_digit(const char *str);
+long long	ft_atoull(const char *str, bool *error);
+int			is_digit(const char *str);
 //error
-void	error(t_error_type type, char *input);
-void	error_cd(char *input);
-void	error_cmd(char *cmd);
-void	handle_signal(void);
+void		error(t_error_type type, char *input);
+void		builtin_msg(t_token_type type, char *msg);
+void		handle_signal(void);
 //exec
-int		check_builtin(char *input);
-char	*command_path(char *command);
-void	external_command(char *input, t_mini *mini);
-void	exec_command(t_mini *mini);
+int			check_builtin(char *input);
+char		*command_path(char *command);
+void		external_command(char *input, t_mini *mini);
+void		exec_command(t_mini *mini);
 //builtin
-int		ft_echo(t_token *input);
-int		ft_cd(t_token *token, t_mini *mini);
-void	ft_exit(t_token *input);
-char	*get_newpath(char *input, char *old_path, t_mini *mini);
-int		ft_pwd(void);
-void	ft_env(t_token *input, t_mini *mini);
-void	ft_export(t_token *input, t_mini *mini);
-void	ft_unset(t_token *input, t_mini *mini);
-void	exec_builtin(t_mini *mini);
+int			ft_echo(t_token *input);
+int			ft_cd(t_token *token, t_mini *mini);
+void		ft_exit(t_token *input);
+char		*get_newpath(char *input, char *old_path, t_mini *mini);
+int			ft_pwd(void);
+void		ft_env(t_token *input, t_mini *mini);
+void		ft_export(t_token *input, t_mini *mini);
+void		ft_unset(t_token *input, t_mini *mini);
+void		exec_builtin(t_mini *mini);
 //builtin_utils
-char	*put_quotes(char *env);
-char	**sort_env(char **env);
-char	**new_env(char **env, char *new);
-void	export_print(char **env);
+char		*put_quotes(char *env);
+char		**sort_env(char **env);
+char		**new_env(char **env, char *new);
+void		export_print(char **env);
 //parse
-char	*get_input(t_mini *mini);
+char		*get_input(t_mini *mini);
 // env_utils.c
-int		index_env(char *type, char **env);
-void	update_env(char *type, char *value, t_mini *mini);
-char	*get_env(char **env, char *type);
-char	**save_env(void);
+int			index_env(char *type, char **env);
+void		update_env(char *type, char *value, t_mini *mini);
+char		*get_env(char **env, char *type);
+char		**save_env(void);
 
-void	tokenize(char *input, t_token **token_list);
-t_token	*create_token(t_token_type type, char *value);
-void	add_back_token(t_token **head, t_token *new_token);
-int		skip_ws(char *input);
-int		is_meta_char(char c);
-int		is_append_heredoc(char *input);
-int		count_pipes(t_token *token_list);
-int		ft_pipe(t_mini *mini, t_token *token_list);
+void		tokenize(char *input, t_token **token_list);
+t_token		*create_token(t_token_type type, char *value);
+void		add_back_token(t_token **head, t_token *new_token);
+int			skip_ws(char *input);
+int			is_meta_char(char c);
+int			is_append_heredoc(char *input);
+int			count_pipes(t_token *token_list);
+int			ft_pipe(t_mini *mini, t_token *token_list);
+
 #endif

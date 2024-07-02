@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:35:17 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/21 19:44:51 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/02 18:18:47 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	ft_unset(t_token *input, t_mini *mini)
 			return ;
 		if (input)
 			if (!is_valid_key(input->value))
-				error(E_UNSET, input->value);
+				builtin_msg(E_UNSET, input->value);
 		mini->env = rm_env(mini->env, index);
 		input = input->next;
 	}

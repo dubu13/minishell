@@ -6,37 +6,33 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 15:11:37 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/01 21:01:18 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/02 18:21:28 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-//exit can be called with no arguments, with a single numeric argument
-//9223372036854775807
-//-9223372036854775808
+
 void	ft_exit(t_token *input)
 {
 	unsigned int	exit_code;
+	bool			error;
 
-	// if (!input)
-	// 	printf("exit\n");
 	printf("exit\n");
 	exit_code = 0;
+	error = false;
 	if (input)
 	{
 		if (input->next != NULL)
 		{
-			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+			ft_putstr_fd("exit: too many arguments\n", 2);
 			exit_code = 1;
 		}
-		if (!is_digit(input->value) && input->value)
+		exit_code = ft_atoull(input->value, &error);
+		if ((!is_digit(input->value) && input->value) || error)
 		{
-			ft_putstr_fd("minishell: exit: ", 2);
-			ft_putstr_fd(input->value, 2);
-			ft_putstr_fd(": numeric argument required\n", 2);
+			builtin_msg(E_EXIT, input->value);
 			exit_code = 255;
 		}
-		exit_code = ft_atou(input->value);
 	}
 	//free stuff
 	rl_clear_history();
@@ -45,42 +41,21 @@ void	ft_exit(t_token *input)
 
 int	is_digit(const char *str)
 {
-	int	i;
-	long long	num;
-
-	i = 0;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while (str[i] != '\0')
+	if (*str == '-' || *str == '+')
+		str++;
+	while (*str != '\0')
 	{
-		if (!(str[i] >= '0' && str[i] <= '9'))
+		if (!(*str >= '0' && *str <= '9'))
 			return (0);
-		i++;
+		str++;
 	}
-	num = ft_atou(str);
-	if (num > 9223372036854775807LL || num < -9223372036854775807LL - 1)
-		return (0);
-	// i = 0;
-	// sign = 0;
-	// while (str[i] != '\0')
-	// {
-	// 	while (str[i] == '-' || str[i] == '+' || str[i] == '0')
-	// 		i++;
-	// 	while (str[i] >= '0' && str[i] <= '9')
-	// 	{
-	// 		i++;
-	// 		sign++;
-	// 	}
-	// }
-	// if (sign >= 20)
-		// return (0);
 	return (1);
 }
 
-long long	ft_atou(const char *str)
+long long	ft_atoull(const char *str, bool *error)
 {
-	int				sign;
-	long long		num;
+	unsigned long		num;
+	int					sign;
 
 	sign = 1;
 	num = 0;
@@ -91,5 +66,8 @@ long long	ft_atou(const char *str)
 	}
 	while (*str >= '0' && *str <= '9')
 		num = (num * 10) + (*str++ - '0');
+	if ((sign == 1 && num > LLONG_MAX)
+		|| (sign == -1 && num > 9223372036854775808ULL))
+		*error = true;
 	return (num * sign);
 }

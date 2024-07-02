@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:40:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/21 13:06:52 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/02 18:15:02 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 int	cd_path(char *new_path, char *old_path, t_mini *mini)
 {
 	if (chdir(new_path) == -1)
-		return (error_cd("no such file or directory"), EXIT_FAILURE);
+		return (builtin_msg(E_CD, "no such file or directory"), EXIT_FAILURE);
 	update_env("OLDPWD", old_path, mini);
 	update_env("PWD", new_path, mini);
 	return (0);
@@ -88,11 +88,11 @@ int	ft_cd(t_token *input, t_mini *mini)
 		temp = temp->next;
 	}
 	if (i > 0)
-		return (error_cd("too many arguments"), EXIT_FAILURE);
+		return (builtin_msg(E_CD, "too many arguments"), EXIT_FAILURE);
 	if (!getcwd(old_path, PATH_MAX))
-		return (error_cd("error getting current directory"), EXIT_FAILURE);
+		return (builtin_msg(E_CD, "error getting current directory"), EXIT_FAILURE);
 	new_path = get_newpath(input->value, old_path, mini);
 	if (!new_path || cd_path(new_path, old_path, mini))
-		return (error_cd("error getting path\n"), EXIT_FAILURE);
+		return (builtin_msg(E_CD, "error getting path\n"), EXIT_FAILURE);
 	return (0);
 }

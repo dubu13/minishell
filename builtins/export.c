@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:31:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/22 18:19:48 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/02 18:19:25 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ char	*get_key(char *env)
 
 	i = 0;
 	if (!ft_isalpha(env[i]) && env[i] != '_')
-		error(E_EXPORT, env);
+		builtin_msg(E_EXPORT, env);
 	while (env[i] && env[i] != '=' && !(env[i] == '+' && env[i + 1] == '='))
 	{
 		if (!ft_isalnum(env[i]) && env[i] != '_')
-			error(E_EXPORT, env);
+			builtin_msg(E_EXPORT, env);
 		i++;
 	}
 	key = ft_substr(env, 0, i);

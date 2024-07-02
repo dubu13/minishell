@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:39:30 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/01 18:41:51 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/02 18:17:25 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	check_n(char *args)
  */
 int	ft_echo(t_token *input)
 {
+	//if its only echo have to print a newline
 	int		option;
 	bool	flag;
 
@@ -87,7 +88,10 @@ void	ft_env(t_token *input, t_mini *mini)
 		i = 0;
 		while (mini->env[i])
 		{
-			printf("%s\n", mini->env[i]);
+			if (!ft_strchr(mini->env[i], '='))
+				i++;
+			if (mini->env[i])
+				printf("%s\n", mini->env[i]);
 			i++;
 		}
 	}

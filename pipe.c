@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 14:23:38 by dkremer           #+#    #+#             */
-/*   Updated: 2024/06/28 17:43:05 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/01 18:48:07 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,57 +154,4 @@ int	ft_pipe(t_mini *mini, t_token *token_list)
 	free(pipes);
 	free(pids);
 	return (0);
-}
-void execute_pipeline(char **commands, int num_commands)
-{
-    int i;
-    int pipe_fds[2];
-    int prev_fd = 0;  // Initially, no previous fd
-
-    for (i = 0; i < num_commands; i++)
-    {
-        pipe(pipe_fds);  // Create a pipe for the next command
-
-        if (fork() == 0)
-        {
-            // Child process
-
-            if (i > 0)
-            {
-                // Not the first command, get input from previous pipe
-                dup2(prev_fd, 0);
-                close(prev_fd);
-            }
-
-            if (i < num_commands - 1)
-            {
-                // Not the last command, output to next pipe
-                dup2(pipe_fds[1], 1);
-            }
-
-            // Close the pipe ends that are not needed
-            close(pipe_fds[0]);
-            close(pipe_fds[1]);
-
-            // Execute the command
-            exec_command(commands[i]);
-            exit(EXIT_FAILURE);  // exec_command only returns on failure
-        }
-        else
-        {
-            // Parent process
-
-            // Close the write end of the pipe in the parent
-            close(pipe_fds[1]);
-
-            // Save the read end of the pipe to be used as input for the next command
-            prev_fd = pipe_fds[0];
-        }
-    }
-
-    // Wait for all child processes to finish
-    for (i = 0; i < num_commands; i++)
-    {
-        wait(NULL);
-    }
 }

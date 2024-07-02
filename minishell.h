@@ -52,6 +52,14 @@ typedef enum e_token_type
 	RDIR_HEREDOC,
 }	t_token_type;
 
+typedef struct s_tree
+{
+	t_token_type	type;
+	char			**cmd;
+	struct s_tree	*left;
+	struct s_tree	*right;
+}	t_tree;
+
 typedef struct s_token
 {
 	t_token_type	type;
@@ -66,6 +74,7 @@ typedef struct s_mini
 	char	*input;
 	char	**cmd_list;
 	t_token	*token_list;
+	t_tree	*binary_tree;
 }			t_mini;
 
 //utils

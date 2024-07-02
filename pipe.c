@@ -13,16 +13,22 @@
 #include "minishell.h"
 
 /**
- * Allocates memory for an array of pipe file descriptors and an array of process IDs.
+
+	* Allocates memory for an array of pipe file descriptors and an array of process IDs.
  *
- * This function is responsible for dynamically allocating memory for the pipes and process IDs
- * that will be used in the pipeline of commands. It allocates memory for an array of pipe file
- * descriptors and an array of process IDs, with the size of the arrays determined by the
+
+	* This function is responsible for dynamically allocating memory for the pipes and process IDs
+
+	* that will be used in the pipeline of commands. It allocates memory for an array of pipe file
+ * descriptors and an array of process IDs,
+	with the size of the arrays determined by the
  * `pipe_count` parameter.
  *
- * @param pipes A double pointer to an array of pipe file descriptors. This array will be
+
+	* @param pipes A double pointer to an array of pipe file descriptors. This array will be
  *              allocated by this function.
- * @param pids A double pointer to an array of process IDs. This array will be allocated by
+
+	* @param pids A double pointer to an array of process IDs. This array will be allocated by
  *             this function.
  * @param pipe_count The number of pipes to allocate in the `pipes` array.
  */
@@ -76,19 +82,23 @@ static void	close_pipes(int **pipes, int pipe_count)
 }
 
 /**
- * Executes a child process in a pipeline, handling input and output redirection.
+ * Executes a child process in a pipeline,
+	handling input and output redirection.
  *
- * This function is called by the parent process in the ft_pipe function to execute
+
+	* This function is called by the parent process in the ft_pipe function to execute
  * a child process in the pipeline. It sets up the necessary input and output
  * redirection for the child process based on its position in the pipeline.
  *
  * @param mini A pointer to the t_mini struct containing the mini shell state.
- * @param token_list A pointer to the linked list of tokens representing the pipeline.
- * @param pipes A 2D array of pipe file descriptors, one for each pipe in the pipeline.
+
+	* @param token_list A pointer to the linked list of tokens representing the pipeline.
+ * @param pipes A 2D array of pipe file descriptors,
+	one for each pipe in the pipeline.
  * @param child_index The index of the current child process in the pipeline.
  */
-static void	exec_child(t_mini *mini, t_token *token_list, int **pipes, \
-				int child_index)
+static void	exec_child(t_mini *mini, t_token *token_list, int **pipes,
+		int child_index)
 {
 	int	pipe_count;
 
@@ -116,7 +126,8 @@ static void	exec_child(t_mini *mini, t_token *token_list, int **pipes, \
 }
 
 /**
- * Executes a pipeline of child processes, handling input and output redirection.
+ * Executes a pipeline of child processes,
+	handling input and output redirection.
  *
  * This function is responsible for setting up and executing a pipeline of child
  * processes, where the output of one process is used as the input for the next.
@@ -124,7 +135,8 @@ static void	exec_child(t_mini *mini, t_token *token_list, int **pipes, \
  * processes, and waits for them to complete.
  *
  * @param mini A pointer to the t_mini struct containing the mini shell state.
- * @param token_list A pointer to the linked list of tokens representing the pipeline.
+
+	* @param token_list A pointer to the linked list of tokens representing the pipeline.
  * @return 0 on success, or a non-zero exit status on failure.
  */
 int	ft_pipe(t_mini *mini, t_token *token_list)

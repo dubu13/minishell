@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/28 14:25:17 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/02 15:40:38 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ char	**test(char *input)
 
 void	parse(t_mini *mini)
 {
+	t_tree	*root;
+	t_token	*tmp;
+
 	mini->input = get_input(mini);
 	mini->cmd_list = test(mini->input);
 	if (!is_str_closed(mini->input))
@@ -29,11 +32,9 @@ void	parse(t_mini *mini)
 	else
 	{
 		tokenize(mini->input, &mini->token_list);
-		if (count_pipes(mini->token_list) > 0)
-			ft_pipe(mini, mini->token_list);
-		else
-			if (mini->token_list != NULL)
-				exec_command(mini);
+		tmp = mini->token_list;
+		root = build_tree(&tmp);
+		execute_tree(root, mini);
 	}
 }
 
@@ -58,6 +59,7 @@ t_mini	*init_mini(void)
 	mini->env = save_env();
 	mini->input = NULL;
 	mini->token_list = NULL;
+	mini->binary_tree = NULL;
 	return (mini);
 }
 

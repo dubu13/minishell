@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 20:12:58 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/02 18:02:32 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/03 16:38:45 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,47 +20,35 @@ t_tree	*create_node(t_token *token)
 	if (!node)
 		return (NULL);
 	node->type = token->type;
-	node->cmd = token->value;
+	node->cmd = append_cmd(node->cmd, token->value);
 	node->left = NULL;
 	node->right = NULL;
 	return (node);
 }
 
-// Function to append a string to the cmd array
 char	**append_cmd(char **cmd, char *value)
 {
 	int		i;
 	char	**new_cmd;
 
-	// Count the number of strings in cmd
 	i = 0;
 	while (cmd[i])
 		i++;
-
-	// Allocate memory for new_cmd
-	new_cmd = (char**)ft_calloc(i + 2, sizeof(char*));
+	new_cmd = (char **)ft_calloc(i + 2, sizeof(char *));
 	if (!new_cmd)
 		return (NULL);
-
-	// Copy the strings from cmd to new_cmd
 	i = 0;
 	while (cmd[i])
 	{
 		new_cmd[i] = cmd[i];
 		i++;
 	}
-
-	// Add the new value to new_cmd
 	new_cmd[i] = ft_strdup(value);
 	new_cmd[i + 1] = NULL;
-
-	// Free the old cmd
 	free(cmd);
-
 	return (new_cmd);
 }
 
-// Modify the build_tree function
 t_tree	*build_tree(t_token **tokens)
 {
 	t_tree	*node;
@@ -74,11 +62,9 @@ t_tree	*build_tree(t_token **tokens)
 	*tokens = (*tokens)->next;
 	while (*tokens && (*tokens)->type != PIPE)
 	{
-		cmd_node->cmd = append_cmd(cmd_node->cmd, (*tokens)->value); // Append the value from token to cmd
+		cmd_node->cmd = append_cmd(cmd_node->cmd, (*tokens)->value);
 		if (!cmd_node->cmd)
-		{
 			return (NULL);
-		}
 		*tokens = (*tokens)->next;
 	}
 	if (*tokens && (*tokens)->type == PIPE)
@@ -89,80 +75,8 @@ t_tree	*build_tree(t_token **tokens)
 		node->right = build_tree(tokens);
 	}
 	else
-	{
 		node = cmd_node;
-	}
 	return (node);
-}
-
-void	execute_command(t_tree *node, t_mini *mini)
-{
-	char	command[1024];
-
-	if (node == NULL)
-		return ;
-	if (check_builtin(node->cmd))
-	{
-		exec_builtin(mini);
-	}
-	else
-	{
-		ft_strlcpy(command, node->cmd, sizeof(command));
-		if (node->left)
-		{
-			ft_strlcat(command, " ", sizeof(command));
-			ft_strlcat(command, node->left->cmd, sizeof(command));
-		}
-		external_command(command, mini);
-	}
-}
-
-void	left_pipe(pid_t pid_left, int fd[2], t_tree *node, t_mini *mini)
-{
-	if (pid_left == -1)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
-	if (pid_left == 0)
-	{
-		if (dup2(fd[1], STDOUT_FILENO) == -1)
-		{
-			perror("dup2");
-			exit(EXIT_FAILURE);
-		}
-		if (close(fd[0]) == -1 || close(fd[1]) == -1)
-		{
-			perror("close");
-			exit(EXIT_FAILURE);
-		}
-		execute_command(node->left, mini);
-		exit(EXIT_SUCCESS);
-	}
-}
-
-void	right_pipe(pid_t pid_right, int fd[2], t_tree *node, t_mini *mini)
-{
-	if (pid_right == -1)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
-	if (pid_right == 0)
-	{
-		if (dup2(fd[0], STDIN_FILENO) == -1)
-		{
-			perror("dup2");
-			exit(EXIT_FAILURE);
-		}
-		if (close(fd[0]) == -1 || close(fd[1]) == -1)
-		{
-			perror("close");
-			exit(EXIT_FAILURE);
-		}
-		execute_command(node->right, mini);
-		exit(EXIT_SUCCESS);
-	}
 }
 
 void	execute_pipe(t_tree *node, t_mini *mini)
@@ -213,12 +127,8 @@ void	execute_tree(t_tree *node, t_mini *mini)
 		return ;
 	execute_tree(node->left, mini);
 	if (node->right)
-	{
 		execute_pipe(node, mini);
-	}
 	else
-	{
 		execute_command(node, mini);
-	}
 	execute_tree(node->right, mini);
 }

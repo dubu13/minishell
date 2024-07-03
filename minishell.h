@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/02 18:23:57 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/03 16:31:54 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,14 @@ long long	ft_atoull(const char *str, bool *error);
 int			is_digit(const char *str);
 //error
 void		error(t_error_type type, char *input);
-void		builtin_msg(t_token_type type, char *msg);
+void		builtin_msg(t_error_type type, char *msg);
 void		handle_signal(void);
 //exec
 int			check_builtin(char *input);
 char		*command_path(char *command);
 void		external_command(char *input, t_mini *mini);
 void		exec_command(t_mini *mini);
+void		expand_env(t_mini *mini, char *input, int i);
 //builtin
 int			ft_echo(t_token *input);
 int			ft_cd(t_token *token, t_mini *mini);

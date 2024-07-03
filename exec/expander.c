@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
+/*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/19 13:14:50 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/03 16:31:30 by dhasan           ###   ########.fr       */
+/*   Created: 2024/07/03 14:13:09 by dhasan            #+#    #+#             */
+/*   Updated: 2024/07/03 16:34:48 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	exec_command(t_mini *mini)
-{
-	int		i;
+//just $KEY: $HOME (HOME=/root) -> minishell: /root: is a directory
+// with echo: echo $HOME (HOME=/root) -> /root
+//$? - exit status of the last command
 
-	i = 0;
-	while (mini->cmd_list[i])
+void	expand_env(t_mini *mini, char *key, int cmd)
+{
+	char	*value;
+
+	key++;
+	value = get_env(mini->env, key);
+	if (cmd)
+		printf("%s\n", value);
+	else
 	{
-		if (check_builtin(mini->cmd_list[i]))
-			exec_builtin(mini);
-		else if (!ft_strncmp(mini->cmd_list[i], "$", 1))
-			expand_env(mini, mini->cmd_list[i], 0);
-		else
-			external_command(mini->cmd_list[i], mini);
-		i++;
+		printf("%s: ", value);
+		external_command(value, mini);
 	}
 }

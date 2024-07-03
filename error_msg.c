@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 15:42:14 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/02 18:12:49 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/03 16:30:43 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	error(t_error_type type, char *input)
 	if (type == E_CMD)
 	{
 		ft_putstr_fd(input, 2);
-		ft_putstr_fd(": command not found\n");
+		ft_putstr_fd(": command not found\n", 2);
 	}
 	if (type == E_PERMISSION)
 		perror("Permission denied\n");
@@ -42,23 +42,23 @@ void	builtin_msg(t_error_type type, char *msg)
 	if (type == E_EXPORT)
 	{
 		ft_putstr_fd("export: not a valid identifier : ", 2);
-		ft_putstr_fd(input, 2);
+		ft_putstr_fd(msg, 2);
 	}
 	if (type == E_UNSET)
 	{
 		ft_putstr_fd("unset: not a valid identifier : ", 2);
-		ft_putstr_fd(input, 2);
+		ft_putstr_fd(msg, 2);
 	}
 	if (type == E_EXIT)
 	{
 		ft_putstr_fd("exit: ", 2);
-		ft_putstr_fd(input, 2);
+		ft_putstr_fd(msg, 2);
 		ft_putstr_fd(": numeric argument required", 2);
 	}
 	if (type == E_CD)
 	{
 		ft_putstr_fd("cd: ", 2);
-		ft_putstr_fd(input, 2);
+		ft_putstr_fd(msg, 2);
 	}
 	ft_putstr_fd("\n", 2);
 }

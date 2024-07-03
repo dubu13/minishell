@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 19:06:47 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/01 18:49:33 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/03 16:33:24 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void	external_command(char *input, t_mini *mini)
 	}
 	cmd_path = command_path(cmd[0]);
 	if (!cmd_path)
-		error_cmd(cmd[0]);
+		error(E_CMD, cmd[0]);
 	if (pid == 0)
 		execve(cmd_path, cmd, mini->env);
 	else

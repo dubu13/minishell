@@ -3,82 +3,83 @@
 /*                                                        :::      ::::::::   */
 /*   built_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de>   +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 20:12:58 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/03 16:38:45 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/03 19:03:40 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_tree	*create_node(t_token *token)
+t_tree *create_node(t_token *token)
 {
-	t_tree	*node;
-
-	node = malloc(sizeof(t_tree));
-	if (!node)
-		return (NULL);
-	node->type = token->type;
-	node->cmd = append_cmd(node->cmd, token->value);
-	node->left = NULL;
-	node->right = NULL;
-	return (node);
+    t_tree *node = malloc(sizeof(t_tree));
+    if (!node)
+        return (NULL);
+    node->type = token->type;
+    node->left = NULL;
+    node->right = NULL;
+    if (token->type == CMD)
+	{
+        int i = 0;
+        t_token *current_token = token;
+        while (current_token && current_token->type != PIPE)
+		{
+            i++;
+            current_token = current_token->next;
+        }
+        node->cmd = malloc(sizeof(char *) * (i + 1));
+        if (!node->cmd) {
+            free(node);
+            return (NULL);
+        }
+        i = 0;
+        current_token = token;
+        while (current_token && current_token->type != PIPE)
+		{
+            node->cmd[i++] = ft_strdup(current_token->value);
+            current_token = current_token->next;
+        }
+        node->cmd[i] = NULL;
+    }
+	else 
+        node->cmd = NULL;
+    return node;
 }
 
-char	**append_cmd(char **cmd, char *value)
+t_tree *build_tree(t_token **tokens)
 {
-	int		i;
-	char	**new_cmd;
-
-	i = 0;
-	while (cmd[i])
-		i++;
-	new_cmd = (char **)ft_calloc(i + 2, sizeof(char *));
-	if (!new_cmd)
-		return (NULL);
-	i = 0;
-	while (cmd[i])
+    if (!*tokens)
+        return (NULL);
+    t_tree *root = NULL, *current = NULL;
+    t_token *token = *tokens;
+    while (token)
 	{
-		new_cmd[i] = cmd[i];
-		i++;
-	}
-	new_cmd[i] = ft_strdup(value);
-	new_cmd[i + 1] = NULL;
-	free(cmd);
-	return (new_cmd);
+        if (token->type == CMD || token->type == PIPE)
+		{
+            t_tree *new_node = create_node(token);
+            if (!root)
+                root = new_node;
+			else if (current->type == PIPE)
+                current->right = new_node;
+            else
+			{
+                t_tree *pipe_node = malloc(sizeof(t_tree));
+                if (!pipe_node)
+                    return (NULL);
+                pipe_node->type = PIPE;
+                pipe_node->left = root;
+                pipe_node->right = new_node;
+                root = pipe_node;
+            }
+            current = new_node;
+        }
+        token = token->next;
+    }
+    return root;
 }
-
-t_tree	*build_tree(t_token **tokens)
-{
-	t_tree	*node;
-	t_tree	*cmd_node;
-	t_tree	*arg_node;
-
-	node = NULL;
-	if (!*tokens)
-		return (NULL);
-	cmd_node = create_node(*tokens);
-	*tokens = (*tokens)->next;
-	while (*tokens && (*tokens)->type != PIPE)
-	{
-		cmd_node->cmd = append_cmd(cmd_node->cmd, (*tokens)->value);
-		if (!cmd_node->cmd)
-			return (NULL);
-		*tokens = (*tokens)->next;
-	}
-	if (*tokens && (*tokens)->type == PIPE)
-	{
-		node = create_node(*tokens);
-		*tokens = (*tokens)->next;
-		node->left = cmd_node;
-		node->right = build_tree(tokens);
-	}
-	else
-		node = cmd_node;
-	return (node);
-}
-
+/*
 void	execute_pipe(t_tree *node, t_mini *mini)
 {
 	int		fd[2];
@@ -120,8 +121,9 @@ void	execute_pipe(t_tree *node, t_mini *mini)
 	waitpid(pid_right, NULL, 0);
 	waitpid(pid_left, NULL, 0);
 }
+*/
 
-void	execute_tree(t_tree *node, t_mini *mini)
+/*void	execute_tree(t_tree *node, t_mini *mini)
 {
 	if (!node)
 		return ;
@@ -131,4 +133,4 @@ void	execute_tree(t_tree *node, t_mini *mini)
 	else
 		execute_command(node, mini);
 	execute_tree(node->right, mini);
-}
+}*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/03 16:31:54 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/03 19:04:41 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef enum e_token_type
 	RDIR_OUT,
 	RDIR_APPEND,
 	RDIR_HEREDOC,
+	CMD,
 }	t_token_type;
 
 typedef struct s_tree
@@ -124,5 +125,11 @@ int			is_meta_char(char c);
 int			is_append_heredoc(char *input);
 int			count_pipes(t_token *token_list);
 int			ft_pipe(t_mini *mini, t_token *token_list);
+t_tree	*build_tree(t_token **tokens);
+t_tree	*create_node(t_token *token);
 
+void handle_append_heredoc(char *input, int *i, t_token **token_list, int *is_next_cmd);
+void handle_meta_char(char *input, int *i, t_token **token_list, int *is_next_cmd);
+void handle_word(char *input, int *i, t_token **token_list, int *is_next_cmd);
+void token_type(char *input, int *i, t_token **token_list, int *is_next_cmd);
 #endif

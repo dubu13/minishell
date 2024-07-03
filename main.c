@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/02 15:40:38 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/03 18:58:46 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,38 @@ char	**test(char *input)
 	return (test);
 }
 
+void print_tree_vertical(t_tree *node, int level)
+{
+    if (node == NULL)
+        return;
+
+    // Increase the vertical space before printing the current node
+    printf("\n");
+
+    // Print indentation for the current level
+    for (int i = 0; i < level; i++)
+        printf("    "); // 4 spaces per level for better readability
+
+    // Print the current node
+    if (node->type == PIPE)
+        printf("|-- PIPE");
+    else if (node->cmd != NULL)
+    {
+        printf("|-- WORD: ");
+        for (int i = 0; node->cmd[i] != NULL; i++)
+            printf("%s ", node->cmd[i]);
+    }
+    else
+        printf("|-- UNKNOWN");
+
+    // Process children with increased level
+    print_tree_vertical(node->right, level + 1);
+    print_tree_vertical(node->left, level + 1);
+	printf("\n");
+}
+
 void	parse(t_mini *mini)
 {
-	t_tree	*root;
 	t_token	*tmp;
 
 	mini->input = get_input(mini);
@@ -33,8 +62,9 @@ void	parse(t_mini *mini)
 	{
 		tokenize(mini->input, &mini->token_list);
 		tmp = mini->token_list;
-		root = build_tree(&tmp);
-		execute_tree(root, mini);
+		mini->binary_tree = build_tree(&tmp);
+		print_tree_vertical(mini->binary_tree, 0);
+	//	execute_tree(root, mini);
 	}
 }
 

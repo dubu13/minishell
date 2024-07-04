@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/28 14:25:17 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/04 14:47:23 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,40 @@ char	**test(char *input)
 	return (test);
 }
 
+void print_tree_vertical(t_tree *node, int level) {
+    if (node == NULL)
+        return;
+
+    // Print indentation for the current level
+    for (int i = 0; i < level; i++)
+        printf("    "); // 4 spaces per level for better readability
+
+    // Print the current node
+    if (node->type == PIPE) {
+        printf("PIPE\n");
+    } else if (node->cmd != NULL) {
+        printf("|-- ");
+        for (int i = 0; node->cmd[i] != NULL; i++) {
+            printf("%s ", node->cmd[i]);
+        }
+        printf("\n");
+    }
+
+    // Process the left child with increased level
+    if (node->left != NULL) {
+        print_tree_vertical(node->left, level + 1);
+    }
+
+    // Process the right child with increased level
+    if (node->right != NULL) {
+        print_tree_vertical(node->right, level + 1);
+    }
+}
+
 void	parse(t_mini *mini)
 {
+	t_token	*tmp;
+
 	mini->input = get_input(mini);
 	mini->cmd_list = test(mini->input);
 	if (!is_str_closed(mini->input))
@@ -29,11 +61,10 @@ void	parse(t_mini *mini)
 	else
 	{
 		tokenize(mini->input, &mini->token_list);
-		if (count_pipes(mini->token_list) > 0)
-			ft_pipe(mini, mini->token_list);
-		else
-			if (mini->token_list != NULL)
-				exec_command(mini);
+		tmp = mini->token_list;
+		mini->binary_tree = build_tree(&tmp);
+		print_tree_vertical(mini->binary_tree, 0);
+		//execute_tree(mini->binary_tree, mini);
 	}
 }
 
@@ -58,6 +89,7 @@ t_mini	*init_mini(void)
 	mini->env = save_env();
 	mini->input = NULL;
 	mini->token_list = NULL;
+	mini->binary_tree = NULL;
 	return (mini);
 }
 

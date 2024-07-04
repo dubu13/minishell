@@ -3,27 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:22:12 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/01 20:14:09 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/04 16:04:28 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/**
- * Skips over any whitespace characters in the input string.
- *
- * This function takes a pointer to a string `input` and returns the number of
-
-	* characters that should be skipped to reach the first non-whitespace character.
- * Whitespace characters are defined as characters with ASCII values between 9
- * and 13 (inclusive), as well as the space character (ASCII value 32).
- *
- * @param input The input string to skip whitespace in.
- * @return The number of whitespace characters to skip.
- */
 int	skip_ws(char *input)
 {
 	int	i;
@@ -34,16 +22,6 @@ int	skip_ws(char *input)
 	return (i);
 }
 
-/**
- * Checks if the given character is a meta character in the shell.
- *
- * Meta characters in the shell include '>', '<', '|', '\'',
-	and '"'. This function
- * returns 1 if the input character is a meta character, and 0 otherwise.
- *
- * @param c The character to check.
- * @return 1 if the character is a meta character, 0 otherwise.
- */
 int	is_meta_char(char c)
 {
 	if (c == '>' || c == '<' || c == '|')
@@ -51,20 +29,20 @@ int	is_meta_char(char c)
 	return (0);
 }
 
-/**
- * Checks if the input string represents an append heredoc operator.
- *
- * This function examines the first two characters of the input string and
- * returns 1 if they represent the append heredoc operator (">>" or "<<"),
- * and 0 otherwise.
- *
- * @param input The input string to check.
- * @return 1 if the input represents an append heredoc operator, 0 otherwise.
- */
 int	is_append_heredoc(char *input)
 {
 	if ((*input == '>' && *(input + 1) == '>') || (*input == '<' && *(input
 				+ 1) == '<'))
 		return (1);
 	return (0);
+}
+
+void	check_next_char(char *input, int *i, t_token **token_list, \
+		int *is_next_cmd)
+{
+	if (input[*i] && is_meta_char(input[*i]))
+		handle_meta_char(input, i, token_list, is_next_cmd);
+	else
+		(*i)++;
+	*i += skip_ws(&input[*i]);
 }

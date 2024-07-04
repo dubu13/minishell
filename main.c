@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/03 18:58:46 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/04 14:47:23 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,34 @@ char	**test(char *input)
 	return (test);
 }
 
-void print_tree_vertical(t_tree *node, int level)
-{
+void print_tree_vertical(t_tree *node, int level) {
     if (node == NULL)
         return;
-
-    // Increase the vertical space before printing the current node
-    printf("\n");
 
     // Print indentation for the current level
     for (int i = 0; i < level; i++)
         printf("    "); // 4 spaces per level for better readability
 
     // Print the current node
-    if (node->type == PIPE)
-        printf("|-- PIPE");
-    else if (node->cmd != NULL)
-    {
-        printf("|-- WORD: ");
-        for (int i = 0; node->cmd[i] != NULL; i++)
+    if (node->type == PIPE) {
+        printf("PIPE\n");
+    } else if (node->cmd != NULL) {
+        printf("|-- ");
+        for (int i = 0; node->cmd[i] != NULL; i++) {
             printf("%s ", node->cmd[i]);
+        }
+        printf("\n");
     }
-    else
-        printf("|-- UNKNOWN");
 
-    // Process children with increased level
-    print_tree_vertical(node->right, level + 1);
-    print_tree_vertical(node->left, level + 1);
-	printf("\n");
+    // Process the left child with increased level
+    if (node->left != NULL) {
+        print_tree_vertical(node->left, level + 1);
+    }
+
+    // Process the right child with increased level
+    if (node->right != NULL) {
+        print_tree_vertical(node->right, level + 1);
+    }
 }
 
 void	parse(t_mini *mini)
@@ -64,7 +64,7 @@ void	parse(t_mini *mini)
 		tmp = mini->token_list;
 		mini->binary_tree = build_tree(&tmp);
 		print_tree_vertical(mini->binary_tree, 0);
-	//	execute_tree(root, mini);
+		//execute_tree(mini->binary_tree, mini);
 	}
 }
 

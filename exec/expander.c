@@ -16,17 +16,31 @@
 // with echo: echo $HOME (HOME=/root) -> /root
 //$? - exit status of the last command
 
-void	expand_env(t_mini *mini, char *key, int cmd)
+void	handle_env_var(t_mini *mini)
 {
+	t_token	*current;
 	char	*value;
 
-	key++;
-	value = get_env(mini->env, key);
-	if (cmd)
-		printf("%s\n", value);
-	else
+	current = mini->token_list;
+	value = NULL;
+	while (current)
 	{
-		printf("%s: ", value);
-		external_command(value, mini);
+		if (current->type == WORD)
+		{
+			if (current->value[0] == '$')
+			{
+				if (current->value[1] == '?')
+				{
+					//free(current->value);
+					//current->value = ft_itoa(mini->exit_status);
+				}
+				else if (current->value[1] != '\0')
+				{
+					value = get_env(mini->env, current->value + 1);
+					current->value = value;
+				}
+			}
+		}
+		current = current->next;
 	}
 }

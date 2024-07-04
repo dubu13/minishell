@@ -21,8 +21,6 @@ void	exec_command(t_mini *mini)
 	{
 		if (check_builtin(mini->cmd_list[i]))
 			exec_builtin(mini);
-		else if (!ft_strncmp(mini->cmd_list[i], "$", 1))
-			expand_env(mini, mini->cmd_list[i], 0);
 		else
 			external_command(mini->cmd_list[i], mini);
 		i++;

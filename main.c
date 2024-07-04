@@ -12,14 +12,6 @@
 
 #include "minishell.h"
 
-char	**test(char *input)
-{
-	char	**test;
-
-	test = ft_split(input, '|');
-	return (test);
-}
-
 void print_tree_vertical(t_tree *node, int level) {
     if (node == NULL)
         return;
@@ -50,23 +42,6 @@ void print_tree_vertical(t_tree *node, int level) {
     }
 }
 
-void	parse(t_mini *mini)
-{
-	t_token	*tmp;
-
-	mini->input = get_input(mini);
-	mini->cmd_list = test(mini->input);
-	if (!is_str_closed(mini->input))
-		error(E_SYNTAX, NULL);
-	else
-	{
-		tokenize(mini->input, &mini->token_list);
-		tmp = mini->token_list;
-		mini->binary_tree = build_tree(&tmp);
-		print_tree_vertical(mini->binary_tree, 0);
-		//execute_tree(mini->binary_tree, mini);
-	}
-}
 
 /**
  * Initializes a new t_mini struct, which is the main data structure used in the
@@ -127,5 +102,6 @@ int	main(void)
 		mini->token_list = NULL;
 	}
 	rl_clear_history();
+	//free everything
 	return (0);
 }

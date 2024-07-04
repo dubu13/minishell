@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/04 16:10:11 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/04 16:28:46 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,10 +134,18 @@ void				handle_meta_char(char *input, int *i, t_token **token_list,
 						int *is_next_cmd);
 void				handle_word(char *input, int *i, t_token **token_list,
 						int *is_next_cmd);
+void				process_word(char *input, int *i, t_token **token_list,
+						int *is_next_cmd);
+void				manage_token_creation(t_token **token_list, char *value,
+						int *is_next_cmd);
 void				token_type(char *input, int *i, t_token **token_list,
 						int *is_next_cmd);
 void				check_next_char(char *input, int *i, t_token **token_list,
 						int *is_next_cmd);
 void				execute_tree(t_tree *node, t_mini *mini);
+t_tree				*initialize_node(t_token *token);
+char				**create_cmd_array(t_token *token, int cmd_count);
+t_tree				*process_token(t_tree *root, t_tree **current,
+						t_token *token);
 
 #endif

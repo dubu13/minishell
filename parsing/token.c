@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 20:13:06 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/04 16:04:02 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/04 16:37:03 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,17 @@ void	handle_meta_char(char *input, int *i, t_token **token_list,
 		*is_next_cmd = 0;
 }
 
+t_token_type	set_type(int *is_next_cmd)
+{
+	if (*is_next_cmd)
+	{
+		*is_next_cmd = 0;
+		return (CMD);
+	}
+	else
+		return (WORD);
+}
+
 void	handle_word(char *input, int *i, t_token **token_list, int *is_next_cmd)
 {
 	int				start;
@@ -75,13 +86,15 @@ void	handle_word(char *input, int *i, t_token **token_list, int *is_next_cmd)
 	value = malloc(length + 1);
 	ft_memcpy(value, &input[start], length);
 	value[length] = '\0';
-	if (*is_next_cmd)
-		type = CMD;
-	else
-		type = WORD;
+	type = set_type(is_next_cmd);
 	new_token = create_token(type, value);
 	add_back_token(token_list, new_token);
 	*is_next_cmd = 0;
+	if (input[*i] && is_meta_char(input[*i]))
+		handle_meta_char(input, i, token_list, is_next_cmd);
+	else
+		(*i)++;
+	*i += skip_ws(&input[*i]);
 }
 
 void	token_type(char *input, int *i, t_token **token_list, int *is_next_cmd)
@@ -99,8 +112,8 @@ void	token_type(char *input, int *i, t_token **token_list, int *is_next_cmd)
 
 void	tokenize(char *input, t_token **token_list)
 {
-	int	i;
-	int	is_next_cmd;
+	int i;
+	int is_next_cmd;
 
 	i = 0;
 	is_next_cmd = 1;

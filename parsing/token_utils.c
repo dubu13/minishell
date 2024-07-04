@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:22:12 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/04 16:04:28 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/04 16:32:52 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,4 @@ int	is_append_heredoc(char *input)
 				+ 1) == '<'))
 		return (1);
 	return (0);
-}
-
-void	check_next_char(char *input, int *i, t_token **token_list, \
-		int *is_next_cmd)
-{
-	if (input[*i] && is_meta_char(input[*i]))
-		handle_meta_char(input, i, token_list, is_next_cmd);
-	else
-		(*i)++;
-	*i += skip_ws(&input[*i]);
 }

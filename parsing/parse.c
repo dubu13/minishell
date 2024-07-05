@@ -28,13 +28,12 @@ void	handle_env_var(t_mini *mini)
 		current = current->next;
 	}
 }
-
+/*
 void	parse(t_mini *mini)
 {
 	t_token	*tmp;
 
 	mini->input = get_input(mini);
-	mini->cmd_list = test(mini->input);
 	if (!is_str_closed(mini->input))
 		error(E_SYNTAX, NULL);
 	else
@@ -47,3 +46,4 @@ void	parse(t_mini *mini)
 		//execute_tree(mini->binary_tree, mini);
 	}
 }
+*/

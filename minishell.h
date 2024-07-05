@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/05 12:55:54 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/05 19:09:21 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,8 +150,10 @@ t_tree				*process_token(t_tree *root, t_tree **current,
 						t_token *token);
 t_token_type		set_type(int *is_next_cmd);
 
-void	free_token_list(t_token *token_list);
-void free_tree(t_tree *tree);
-void free_mini(t_mini *mini);
+void				free_token_list(t_token *token_list);
+void				free_tree(t_tree *tree);
+void				free_mini(t_mini *mini);
+int					is_not_space(char *input, int i);
+void				free_and_error(char *field, t_error_type type, char *input);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 20:13:06 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/05 13:13:03 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/05 19:09:54 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	handle_meta_char(char *input, int *i, t_token **token_list,
 	add_back_token(token_list, new_token);
 	(*i) += length;
 	*i += skip_ws(&input[*i]);
-	if (type == PIPE)
+	if (type == PIPE || type == RDIR_OUT || type == RDIR_IN)
 		*is_next_cmd = 1;
 	else
 		*is_next_cmd = 0;
@@ -72,8 +72,7 @@ void	handle_word(char *input, int *i, t_token **token_list, int *is_next_cmd)
 	t_token			*new_token;
 
 	start = *i;
-	while (input[*i] && !is_meta_char(input[*i]) && input[*i] != ' '
-		&& input[*i] != '\t' && input[*i] != '\n')
+	while (is_not_space(input, *i))
 		(*i)++;
 	length = *i - start;
 	value = ft_calloc(length + 1, sizeof(char));
@@ -84,16 +83,12 @@ void	handle_word(char *input, int *i, t_token **token_list, int *is_next_cmd)
 	type = set_type(is_next_cmd);
 	new_token = create_token(type, value);
 	if (!new_token)
-	{
-		free(value);
-		error(E_ALLOC, NULL);
-	}
+		free_and_error(value, E_ALLOC, NULL);
 	add_back_token(token_list, new_token);
 	*is_next_cmd = 0;
 	if (input[*i] && is_meta_char(input[*i]))
 		handle_meta_char(input, i, token_list, is_next_cmd);
-	else
-		*i += skip_ws(&input[*i]);
+	*i += skip_ws(&input[*i]);
 	free(value);
 }
 

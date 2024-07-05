@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 12:50:06 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/05 12:57:18 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/05 18:48:30 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,43 @@ void	free_tree(t_tree *tree)
 {
 	int	i;
 
+	i = -1;
 	if (tree)
 	{
 		if (tree->cmd)
 		{
-			i = 0;
-			while (tree->cmd[i])
-			{
+			while (tree->cmd[++i])
 				free(tree->cmd[i]);
-				i++;
-			}
 			free(tree->cmd);
 		}
 		free_tree(tree->left);
 		free_tree(tree->right);
 		free(tree);
+	}
+}
+
+void	free_array(char **array)
+{
+	int	i;
+
+	i = -1;
+	while (array[++i])
+		free(array[i]);
+	free(array);
+}
+
+void	free_mini(t_mini *mini)
+{
+	if (mini)
+	{
+		if (mini->env)
+			free_array(mini->env);
+		if (mini->input)
+			free(mini->input);
+		if (mini->token_list)
+			free_token_list(mini->token_list);
+		if (mini->binary_tree)
+			free_tree(mini->binary_tree);
+		free(mini);
 	}
 }

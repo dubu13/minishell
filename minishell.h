@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/05 16:10:00 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/05 18:51:47 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_mini
 {
 	char			**env;
 	char			*input;
+	int				exit_status;
 	char			**cmd_list;
 	t_token			*token_list;
 	t_tree			*binary_tree;
@@ -92,19 +93,17 @@ void				handle_env_var(t_mini *mini);
 // exec
 int					check_builtin(char *input);
 char				*command_path(char *command);
-void				external_command(char *input, t_mini *mini);
-void				exec_command(t_mini *mini);
-void				expand_env(t_mini *mini, char *input, int i);
+void				external_command(char **cmd, t_mini *mini);
+void				exec_command(char **cmd, t_mini *mini);
+void				exec_builtin(char **cmd, t_mini *mini);
 // builtin
-int					ft_echo(t_token *input);
-int					ft_cd(t_token *token, t_mini *mini);
-void				ft_exit(t_token *input);
-char				*get_newpath(char *input, char *old_path, t_mini *mini);
-int					ft_pwd(void);
-void				ft_env(t_token *input, t_mini *mini);
-void				ft_export(t_token *input, t_mini *mini);
-void				ft_unset(t_token *input, t_mini *mini);
-void				exec_builtin(t_mini *mini);
+void				ft_echo(char **input, t_mini *mini);
+void				ft_cd(char **token, t_mini *mini);
+void				ft_exit(char **input, t_mini *mini);
+void				ft_pwd(char **cmd, t_mini *mini);
+void				ft_env(char **input, t_mini *mini);
+void				ft_export(char **input, t_mini *mini);
+void				ft_unset(char **input, t_mini *mini);
 // builtin_utils
 char				*put_quotes(char *env);
 char				**sort_env(char **env);
@@ -150,9 +149,10 @@ char				**create_cmd_array(t_token *token, int cmd_count);
 t_tree				*process_token(t_tree *root, t_tree **current,
 						t_token *token);
 t_token_type		set_type(int *is_next_cmd);
-
+// free
 void	free_token_list(t_token *token_list);
-void free_tree(t_tree *tree);
-void free_mini(t_mini *mini);
+void	free_tree(t_tree *tree);
+void	free_mini(t_mini *mini);
+void	free_array(char **array);
 
 #endif

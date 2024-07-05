@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:39:30 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/02 18:17:25 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/05 18:50:26 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,31 +37,31 @@ int	check_n(char *args)
  * @param input A linked list of tokens representing the command arguments.
  * @return 0 on success, EXIT_FAILURE on error.
  */
-int	ft_echo(t_token *input)
+void	ft_echo(char **input, t_mini *mini)
 {
-	//if its only echo have to print a newline
+	int		i;
 	int		option;
 	bool	flag;
 
+	i = 0;
 	flag = false;
-	option = check_n(input->value);
-	while (input && check_n(input->value))
-		input = input->next;
-	while (input && input->type == WORD)
+	option = check_n(input[i]);
+	while (input[i] && check_n(input[i]))
+		i++;
+	while (input[i])
 	{
 		if (flag)
 		{
 			if (printf(" ") == -1)
-				return (EXIT_FAILURE);
+				mini->exit_status = 1;
 		}
-		if (printf("%s", input->value) == -1)
-			return (EXIT_FAILURE);
+		if (printf("%s", input[i]) == -1)
+			mini->exit_status = 1;
 		flag = true;
-		input = input->next;
+		i++;
 	}
 	if (!option)
 		printf("\n");
-	return (0);
 }
 
 /**
@@ -71,29 +71,23 @@ int	ft_echo(t_token *input)
  * @param mini The minishell context.
  * @return 0 on success, EXIT_FAILURE on error.
  */
-void	ft_env(t_token *input, t_mini *mini)
+void	ft_env(char **input, t_mini *mini)
 {
 	int	i;
 
 	i = 0;
-	while (input && input->type == WORD)
+	if (input[0])
 	{
-		i++;
-		input = input->next;
+		ft_putstr_fd("env: too many arguments", 2);
+		mini->exit_status = 2;
 	}
-	if (i != 0)
-		error(E_SYNTAX, "too many arguments");
-	else
+	while (mini->env[i])
 	{
-		i = 0;
-		while (mini->env[i])
-		{
-			if (!ft_strchr(mini->env[i], '='))
-				i++;
-			if (mini->env[i])
-				printf("%s\n", mini->env[i]);
+		if (!ft_strchr(mini->env[i], '='))
 			i++;
-		}
+		if (mini->env[i])
+			printf("%s\n", mini->env[i]);
+		i++;
 	}
 }
 
@@ -102,15 +96,20 @@ void	ft_env(t_token *input, t_mini *mini)
  *
  * @return 0 on success, EXIT_FAILURE on error.
  */
-int	ft_pwd(void)
+void	ft_pwd(char **cmd, t_mini *mini)
 {
 	char	cwd[PATH_MAX];
 
-	// if (input->next != NULL)
-	// 	ft_putstr_fd("minishell: pwd: too many arguments\n", 2);
-	if (getcwd(cwd, PATH_MAX))
-		printf("%s\n", cwd);
+	if (cmd[0])
+	{
+		ft_putstr_fd("pwd: too many arguments\n", 2);
+		mini->exit_status = 2;
+	}
+	if (!getcwd(cwd, PATH_MAX))
+	{
+		ft_putstr_fd("pwd: error getting path\n", 2);
+		mini->exit_status = 1;
+	}
 	else
-		return (EXIT_FAILURE);
-	return (0);
+		printf("%s\n", cwd);
 }

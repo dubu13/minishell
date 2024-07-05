@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/05 16:09:16 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/05 18:46:40 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_mini	*init_mini(void)
 		return (perror("Malloc"), NULL);
 	mini->env = save_env();
 	mini->input = NULL;
+	mini->exit_status = 0;
 	mini->token_list = NULL;
 	mini->binary_tree = NULL;
 	return (mini);
@@ -75,6 +76,6 @@ int	main(void)
 		mini->binary_tree = NULL;
 	}
 	rl_clear_history();
-	//free everything
+	free_mini(mini);
 	return (0);
 }

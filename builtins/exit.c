@@ -6,38 +6,11 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 15:11:37 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/02 18:21:28 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/05 18:46:24 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	ft_exit(t_token *input)
-{
-	unsigned int	exit_code;
-	bool			error;
-
-	printf("exit\n");
-	exit_code = 0;
-	error = false;
-	if (input)
-	{
-		if (input->next != NULL)
-		{
-			ft_putstr_fd("exit: too many arguments\n", 2);
-			exit_code = 1;
-		}
-		exit_code = ft_atoull(input->value, &error);
-		if ((!is_digit(input->value) && input->value) || error)
-		{
-			builtin_msg(E_EXIT, input->value);
-			exit_code = 255;
-		}
-	}
-	//free stuff
-	rl_clear_history();
-	exit((unsigned char)exit_code);
-}
 
 int	is_digit(const char *str)
 {
@@ -70,4 +43,31 @@ long long	ft_atoull(const char *str, bool *error)
 		|| (sign == -1 && num > 9223372036854775808ULL))
 		*error = true;
 	return (num * sign);
+}
+
+void	ft_exit(char **input, t_mini *mini)
+{
+	unsigned int	exit_code;
+	bool			error;
+
+	printf("exit\n");
+	exit_code = mini->exit_status;
+	error = false;
+	if (input)
+	{
+		if (input[1])
+		{
+			ft_putstr_fd("exit: too many arguments\n", 2);
+			exit_code = 1;
+		}
+		exit_code = ft_atoull(input[0], &error);
+		if ((!is_digit(input[0]) && input[0]) || error)
+		{
+			builtin_msg(E_EXIT, input[0]);
+			exit_code = 255;
+		}
+	}
+	free_mini(mini);
+	rl_clear_history();
+	exit((unsigned char)exit_code);
 }

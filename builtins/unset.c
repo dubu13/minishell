@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:35:17 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/02 18:18:47 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/05 18:39:29 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,21 +66,25 @@ char	**rm_env(char **env, int index)
 	return (new_env);
 }
 
-void	ft_unset(t_token *input, t_mini *mini)
+void	ft_unset(char **input, t_mini *mini)
 {
 	int	index;
+	int	i;
 
-	if (input == NULL || input->type != WORD)
+	i = -1;
+	index = 0;
+	if (!input)
 		return ;
-	while (input && input->type == WORD)
+	while (input[++i])
 	{
-		index = index_env(input->value, mini->env);
+		index = index_env(input[i], mini->env);
 		if (index == -1)
 			return ;
-		if (input)
-			if (!is_valid_key(input->value))
-				builtin_msg(E_UNSET, input->value);
+		if (input[i] && !is_valid_key(input[i]))
+		{
+			builtin_msg(E_UNSET, input[i]);
+			mini->exit_status = 2;
+		}
 		mini->env = rm_env(mini->env, index);
-		input = input->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/05 18:46:40 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/05 18:04:18 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,19 @@
 //     if (node == NULL)
 //         return;
 
-//     // Print indentation for the current level
-//     for (int i = 0; i < level; i++)
-//         printf("    "); // 4 spaces per level for better readability
+    // Print the current node
+    printf("%s: ", side);
+    if (node->type == PIPE)
+        printf("PIPE\n");
+    else if (node->cmd != NULL)
+    {
+        printf("WORD: ");
+        for (int i = 0; node->cmd[i] != NULL; i++)
+            printf("%s ", node->cmd[i]);
+        printf("\n");
+    }
+    else
+        printf("REDIRECT\n");
 
 //     // Print the current node
 //     printf("%s: ", side);
@@ -71,9 +81,9 @@ int	main(void)
 			break ;
 		}
 		free_token_list(mini->token_list);
-		free_tree(mini->binary_tree);
+		//free_tree(mini->binary_tree);
 		mini->token_list = NULL;
-		mini->binary_tree = NULL;
+		//mini->binary_tree = NULL;
 	}
 	rl_clear_history();
 	free_mini(mini);

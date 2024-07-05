@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:21:04 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/04 17:55:59 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/05 14:33:50 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_token	*create_token(t_token_type type, char *value)
 	if (!new_token->value)
 	{
 		free(new_token);
-		return (NULL);
+		error(E_ALLOC, NULL);
 	}
 	new_token->next = NULL;
 	new_token->prev = NULL;

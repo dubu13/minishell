@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 20:12:58 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/04 16:37:16 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/05 18:51:25 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_tree	*create_node(t_token *token)
 
 	node = initialize_node(token);
 	if (!node)
-		return (NULL);
+		error(E_ALLOC, NULL);
 	if (token->type == CMD)
 	{
 		cmd_count = 0;
@@ -34,7 +34,7 @@ t_tree	*create_node(t_token *token)
 		if (!node->cmd)
 		{
 			free(node);
-			return (NULL);
+			error(E_ALLOC, NULL);
 		}
 	}
 	return (node);
@@ -62,10 +62,10 @@ char	**create_cmd_array(t_token *token, int cmd_count)
 
 	cmd_array = malloc(sizeof(char *) * (cmd_count + 1));
 	if (!cmd_array)
-		return (NULL);
+		error(E_ALLOC, NULL);
 	i = 0;
 	current_token = token;
-	while (current_token && current_token->type != PIPE)
+	while (current_token && current_token->type != PIPE && (current_token->type == WORD || current_token->type == CMD))
 	{
 		cmd_array[i++] = ft_strdup(current_token->value);
 		current_token = current_token->next;
@@ -87,11 +87,11 @@ t_tree	*build_tree(t_token **tokens)
 	token = *tokens;
 	while (token)
 	{
-		if (token->type == CMD || token->type == PIPE)
+		if (token->type == CMD || token->type == PIPE || token->type == RDIR_APPEND || token->type == RDIR_HEREDOC || token->type == RDIR_IN || token->type == RDIR_OUT)
 		{
 			root = process_token(root, &current, token);
 			if (!root)
-				return (NULL);
+				error(E_ALLOC, NULL);
 		}
 		token = token->next;
 	}
@@ -105,19 +105,20 @@ t_tree	*process_token(t_tree *root, t_tree **current, t_token *token)
 
 	new_node = create_node(token);
 	if (!root)
+	{
 		root = new_node;
-	else if ((*current)->type == PIPE)
-		(*current)->right = new_node;
+		*current = root;
+	}
+	else if (token->type == PIPE || token->type == RDIR_APPEND || token->type == RDIR_HEREDOC || token->type == RDIR_IN || token->type == RDIR_OUT)
+	{
+		pipe_node = create_node(token);
+		(*current)->right = pipe_node;
+		*current = pipe_node;
+	}
 	else
 	{
-		pipe_node = malloc(sizeof(t_tree));
-		if (!pipe_node)
-			return (NULL);
-		pipe_node->type = PIPE;
-		pipe_node->left = root;
-		pipe_node->right = new_node;
-		root = pipe_node;
+		(*current)->left = new_node;
+		*current = new_node;
 	}
-	*current = new_node;
 	return (root);
 }

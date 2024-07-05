@@ -28,7 +28,7 @@ void	handle_env_var(t_mini *mini)
 		current = current->next;
 	}
 }
-/*
+
 void	parse(t_mini *mini)
 {
 	t_token	*tmp;
@@ -42,8 +42,6 @@ void	parse(t_mini *mini)
 		handle_env_var(mini);
 		tmp = mini->token_list;
 		mini->binary_tree = build_tree(&tmp);
-		// print_tree_vertical(mini->binary_tree, 0);
 		//execute_tree(mini->binary_tree, mini);
 	}
 }
-*/

@@ -6,49 +6,34 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/05 18:04:18 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/05 19:27:00 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void print_tree_vertical(t_tree *node, int level, char *side)
-// {
-//     if (node == NULL)
-//         return;
+void print_tree_vertical(t_tree *node, int level, char *side)
+{
+	 if (node == NULL)
+			 return;
 
-    // Print the current node
-    printf("%s: ", side);
-    if (node->type == PIPE)
-        printf("PIPE\n");
-    else if (node->cmd != NULL)
-    {
-        printf("WORD: ");
-        for (int i = 0; node->cmd[i] != NULL; i++)
-            printf("%s ", node->cmd[i]);
-        printf("\n");
-    }
-    else
-        printf("REDIRECT\n");
-
-//     // Print the current node
-//     printf("%s: ", side);
-//     if (node->type == PIPE)
-//         printf("PIPE\n");
-//     else if (node->cmd != NULL)
-//     {
-//         printf("WORD: ");
-//         for (int i = 0; node->cmd[i] != NULL; i++)
-//             printf("%s ", node->cmd[i]);
-//         printf("\n");
-//     }
-//     else
-//         printf("UNKNOWN\n");
-
-//     // Process children with increased level
-//     print_tree_vertical(node->left, level + 1, "L");
-//     print_tree_vertical(node->right, level + 1, "R");
-// }
+	// Print the current node
+	printf("%s: ", side);
+	if (node->type == PIPE)
+			printf("PIPE\n");
+	else if (node->cmd != NULL)
+	{
+			printf("WORD: ");
+			for (int i = 0; node->cmd[i] != NULL; i++)
+					printf("%s ", node->cmd[i]);
+			printf("\n");
+	}
+	else
+			printf("REDIRECT\n");
+	 // Process children with increased level
+	 print_tree_vertical(node->left, level + 1, "L");
+	 print_tree_vertical(node->right, level + 1, "R");
+}
 
 t_mini	*init_mini(void)
 {
@@ -75,6 +60,7 @@ int	main(void)
 	while (1)
 	{
 		parse(mini);
+		print_tree_vertical(mini->binary_tree, 0, "root");
 		if (!mini->input)
 		{
 			printf("exit\n");

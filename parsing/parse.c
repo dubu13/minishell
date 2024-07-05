@@ -34,7 +34,6 @@ void	parse(t_mini *mini)
 	t_token	*tmp;
 
 	mini->input = get_input(mini);
-	mini->cmd_list = test(mini->input);
 	if (!is_str_closed(mini->input))
 		error(E_SYNTAX, NULL);
 	else
@@ -43,7 +42,7 @@ void	parse(t_mini *mini)
 		handle_env_var(mini);
 		tmp = mini->token_list;
 		mini->binary_tree = build_tree(&tmp);
-		print_tree_vertical(mini->binary_tree, 0);
+		// print_tree_vertical(mini->binary_tree, 0);
 		//execute_tree(mini->binary_tree, mini);
 	}
 }

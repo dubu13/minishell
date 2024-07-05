@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/05 12:55:54 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/05 16:10:00 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ char				**new_env(char **env, char *new);
 void				export_print(char **env);
 // parse
 char				*get_input(t_mini *mini);
+void				parse(t_mini *mini);
 // env_utils.c
 int					index_env(char *type, char **env);
 void				update_env(char *type, char *value, t_mini *mini);

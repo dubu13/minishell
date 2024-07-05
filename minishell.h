@@ -88,6 +88,7 @@ int					is_digit(const char *str);
 void				error(t_error_type type, char *input);
 void				builtin_msg(t_error_type type, char *msg);
 void				handle_signal(void);
+void				handle_env_var(t_mini *mini);
 // exec
 int					check_builtin(char *input);
 char				*command_path(char *command);

@@ -93,5 +93,6 @@ int	main(void)
 		mini->binary_tree = NULL;
 	}
 	rl_clear_history();
+	//free everything
 	return (0);
 }

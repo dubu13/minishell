@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:22:12 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/04 18:06:01 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/05 19:02:40 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	skip_ws(char *input)
 	int	i;
 
 	i = 0;
-	while (input[i] && ((input[i] == '\t' || input[i] == '\n') || input[i] == ' '))
+	while (input[i]\
+		&& ((input[i] == '\t' || input[i] == '\n') || input[i] == ' '))
 		i++;
 	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 19:06:47 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/03 16:33:24 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/05 18:53:13 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,46 +26,39 @@
 
 	* @param mini The mini shell structure containing the token list and other state.
  */
-void	exec_builtin(t_mini *mini)
+void	exec_builtin(char **cmd, t_mini *mini)
 {
-	t_token	*current;
-
-	current = mini->token_list;
-	while (current)
-	{
-		if (!ft_strncmp(current->value, "echo", 4))
-			ft_echo(current->next);
-		else if (!ft_strncmp(current->value, "pwd", 3))
-			ft_pwd();
-		else if (!ft_strncmp(current->value, "cd", 2))
-			ft_cd(current->next, mini);
-		if (!ft_strncmp(current->value, "exit", 4))
-			return (ft_exit(current->next));
-		else if (!ft_strncmp(current->value, "export", 6))
-			return (ft_export(current->next, mini));
-		else if (!ft_strncmp(current->value, "unset", 5))
-			return (ft_unset(current->next, mini));
-		else if (!ft_strncmp(current->value, "env", 3))
-			return (ft_env(current->next, mini));
-		current = current->next;
-	}
+	if (!ft_strncmp(cmd[0], "echo", 4))
+		ft_echo(cmd + 1, mini);
+	else if (!ft_strncmp(cmd[0], "pwd", 3))
+		ft_pwd(cmd + 1, mini);
+	else if (!ft_strncmp(cmd[0], "env", 3))
+		ft_env(cmd + 1, mini);
+	else if (!ft_strncmp(cmd[0], "cd", 2))
+		ft_cd(cmd, mini);
+	if (!ft_strncmp(cmd[0], "exit", 4))
+		ft_exit(cmd + 1, mini);
+	else if (!ft_strncmp(cmd[0], "export", 6))
+		ft_export(cmd + 1, mini);
+	else if (!ft_strncmp(cmd[0], "unset", 5))
+		ft_unset(cmd + 1, mini);
 }
 
-int	check_builtin(char *input)
+int	check_builtin(char *cmd)
 {
-	if (!ft_strncmp(input, "echo", 4))
+	if (!ft_strncmp(cmd, "echo", 4))
 		return (1);
-	else if (!ft_strncmp(input, "pwd", 3))
+	else if (!ft_strncmp(cmd, "pwd", 3))
 		return (1);
-	else if (!ft_strncmp(input, "cd", 2))
+	else if (!ft_strncmp(cmd, "cd", 2))
 		return (1);
-	else if (!ft_strncmp(input, "export", 6))
+	else if (!ft_strncmp(cmd, "export", 6))
 		return (1);
-	else if (!ft_strncmp(input, "unset", 5))
+	else if (!ft_strncmp(cmd, "unset", 5))
 		return (1);
-	else if (!ft_strncmp(input, "env", 3))
+	else if (!ft_strncmp(cmd, "env", 3))
 		return (1);
-	else if (!ft_strncmp(input, "exit", 4))
+	else if (!ft_strncmp(cmd, "exit", 4))
 		return (1);
 	return (0);
 }
@@ -114,15 +107,15 @@ char	**check_cmd(char **cmd)
 	return (cmd);
 }
 
-void	external_command(char *input, t_mini *mini)
+void	external_command(char **cmd, t_mini *mini)
 {
 	char	*cmd_path;
-	char	**cmd;
 	pid_t	pid;
 	int		status;
 
-	cmd = split_cmd(input, ' ');
-	cmd = check_cmd(cmd);
+	// char	**cmd;
+	// cmd = split_cmd(input, ' ');
+	// cmd = check_cmd(cmd);
 	if (!cmd)
 		return ;
 	pid = fork();

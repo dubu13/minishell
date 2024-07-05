@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:31:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/02 18:19:25 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/05 18:35:59 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,17 @@
  *            "KEY+=VALUE".
  * @return A newly allocated string containing the extracted key.
  */
-char	*get_key(char *env)
+char	*get_key(char *env, t_mini *mini)
 {
 	char	*key;
 	int		i;
 
 	i = 0;
 	if (!ft_isalpha(env[i]) && env[i] != '_')
+	{
 		builtin_msg(E_EXPORT, env);
+		mini->exit_status = 2;
+	}
 	while (env[i] && env[i] != '=' && !(env[i] == '+' && env[i + 1] == '='))
 	{
 		if (!ft_isalnum(env[i]) && env[i] != '_')
@@ -73,18 +76,19 @@ void	handle_plus(t_mini *mini, char *key, char *env, int index)
 {
 	char	*value;
 
+	value = NULL;
 	if (index != -1)
 	{
 		value = get_env(mini->env, key);
 		value = ft_strjoin(value, ft_strchr(env, '=') + 1);
 		update_env(key, value, mini);
-		free(value);
 	}
 	else
 	{
 		value = ft_strjoin(key, ft_strchr(env, '+') + 1);
 		mini->env = new_env(mini->env, value);
 	}
+	free(value);
 }
 
 void	export_w_arg(char *key, char *env, t_mini *mini)
@@ -123,13 +127,12 @@ void	export_print(char **env)
 	int		i;
 	char	*quoted_env;
 
-	i = 0;
+	i = -1;
 	env = sort_env(env);
-	while (env[i])
+	while (env[++i])
 	{
 		quoted_env = put_quotes(env[i]);
 		printf("declare -x %s\n", quoted_env);
-		i++;
 	}
 }
 
@@ -150,16 +153,18 @@ void	export_print(char **env)
  * @param input The linked list of tokens representing the 'export' command.
  * @param mini The Minishell program context.
  */
-void	ft_export(t_token *input, t_mini *mini)
+void	ft_export(char **input, t_mini *mini)
 {
 	char	*key;
+	int		i;
 
-	if (input == NULL || input->type != WORD)
+	i = -1;
+	if (!input[0])
 		export_print(mini->env);
-	while (input && input->type == WORD)
+	while (input[++i])
 	{
-		key = get_key(input->value);
-		export_w_arg(key, input->value, mini);
-		input = input->next;
+		key = get_key(input[i], mini);
+		export_w_arg(key, input[i], mini);
 	}
+	free(key);
 }

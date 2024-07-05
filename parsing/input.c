@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 15:40:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/06/28 14:18:38 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/05 12:59:18 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ char	*get_input(t_mini *mini)
 	{
 		rl_on_new_line();
 		input = readline(get_prompt(mini));
+		if (!input)
+			return (NULL);
 	}
 	else
 	{

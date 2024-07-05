@@ -6,13 +6,14 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/04 16:28:46 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/05 12:55:54 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stdio.h>
 # include "lib/inc/libft.h"
 # include <fcntl.h>
 # include <limits.h>
@@ -20,7 +21,6 @@
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <unistd.h>
@@ -91,8 +91,8 @@ void				handle_signal(void);
 // exec
 int					check_builtin(char *input);
 char				*command_path(char *command);
-void				external_command(char **cmd, t_mini *mini);
-void				exec_command(t_mini *mini, char **cmd);
+void				external_command(char *input, t_mini *mini);
+void				exec_command(t_mini *mini);
 void				expand_env(t_mini *mini, char *input, int i);
 // builtin
 int					ft_echo(t_token *input);
@@ -103,7 +103,7 @@ int					ft_pwd(void);
 void				ft_env(t_token *input, t_mini *mini);
 void				ft_export(t_token *input, t_mini *mini);
 void				ft_unset(t_token *input, t_mini *mini);
-void				exec_builtin(char **cmd, t_mini *mini);
+void				exec_builtin(t_mini *mini);
 // builtin_utils
 char				*put_quotes(char *env);
 char				**sort_env(char **env);
@@ -147,5 +147,10 @@ t_tree				*initialize_node(t_token *token);
 char				**create_cmd_array(t_token *token, int cmd_count);
 t_tree				*process_token(t_tree *root, t_tree **current,
 						t_token *token);
+t_token_type		set_type(int *is_next_cmd);
+
+void	free_token_list(t_token *token_list);
+void free_tree(t_tree *tree);
+void free_mini(t_mini *mini);
 
 #endif

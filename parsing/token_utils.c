@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:22:12 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/04 16:32:52 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/04 18:06:01 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	skip_ws(char *input)
 	int	i;
 
 	i = 0;
-	while (input[i] && ((input[i] >= 9 && input[i] <= 13) || input[i] == ' '))
+	while (input[i] && ((input[i] == '\t' || input[i] == '\n') || input[i] == ' '))
 		i++;
 	return (i);
 }
@@ -35,4 +35,15 @@ int	is_append_heredoc(char *input)
 				+ 1) == '<'))
 		return (1);
 	return (0);
+}
+
+t_token_type	set_type(int *is_next_cmd)
+{
+	if (*is_next_cmd)
+	{
+		*is_next_cmd = 0;
+		return (CMD);
+	}
+	else
+		return (WORD);
 }

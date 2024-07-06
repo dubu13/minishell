@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 19:06:47 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/06 18:15:24 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/06 19:23:34 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	external_command(char **cmd, t_mini *mini)
 	if (pid == 0)
 	{
 		execve(cmd_path, cmd, mini->env);
-		// perror(cmd_path);
+		perror(cmd_path);
 		free(cmd_path);
 		exit(EXIT_FAILURE);
 	}
@@ -119,3 +119,8 @@ void	external_command(char **cmd, t_mini *mini)
 		waitpid(pid, &status, 0);
 	free(cmd_path);
 }
+/*use strerror :
+code 21: is a directory
+code 2: no such file or directory
+for command not found write by yourself
+*/

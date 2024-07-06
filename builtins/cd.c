@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:40:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/06 14:28:02 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/06 14:27:08 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	ft_cd(char **input, t_mini *mini)
 	{
 		builtin_msg(E_CD, "too many arguments");
 		mini->exit_status = 2;
+		return ;
 	}
 	if (!getcwd(old_path, PATH_MAX))
 	{

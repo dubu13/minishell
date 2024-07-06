@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 19:06:47 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/06 14:02:56 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/06 18:15:24 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,46 +91,31 @@ char	*command_path(char *command)
 	return (NULL);
 }
 
-char	**check_cmd(char **cmd)
-{
-	int		i;
-	char	*arg;
-
-	i = 0;
-	while (cmd[i])
-	{
-		arg = remove_quotes(cmd[i]);
-		free(cmd[i]);
-		cmd[i] = arg;
-		i++;
-	}
-	return (cmd);
-}
-
 void	external_command(char **cmd, t_mini *mini)
 {
 	char	*cmd_path;
 	pid_t	pid;
 	int		status;
 
-	// char	**cmd;
-	// cmd = split_cmd(input, ' ');
-	// cmd = check_cmd(cmd);
 	if (!cmd)
 		return ;
+	cmd_path = command_path(cmd[0]);
+	if (!cmd_path)
+		cmd_path = ft_strdup(cmd[0]);
 	pid = fork();
 	if (pid < 0)
 	{
 		perror("fork");
 		exit(EXIT_FAILURE);
 	}
-	cmd_path = command_path(cmd[0]);
-	if (!cmd_path)
-		error(E_CMD, cmd[0]);
 	if (pid == 0)
+	{
 		execve(cmd_path, cmd, mini->env);
+		// perror(cmd_path);
+		free(cmd_path);
+		exit(EXIT_FAILURE);
+	}
 	else
 		waitpid(pid, &status, 0);
 	free(cmd_path);
-	free(cmd);
 }

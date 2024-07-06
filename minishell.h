@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/05 19:09:21 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/06 19:08:59 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ typedef struct s_tree
 {
 	t_token_type	type;
 	char			**cmd;
+	// char			*in;
+	// char			*out;
+	// char			*limit;
 	struct s_tree	*left;
 	struct s_tree	*right;
 }					t_tree;
@@ -155,5 +158,8 @@ void				free_tree(t_tree *tree);
 void				free_mini(t_mini *mini);
 int					is_not_space(char *input, int i);
 void				free_and_error(char *field, t_error_type type, char *input);
-
+void				exec_redir(t_token_type type, t_mini *mini);
+void				exec_append_heredoc(t_token_type type, t_mini *mini);
+void				exec_pipe(t_tree *tree, t_mini *mini);
+void				check_exec(t_mini *mini);
 #endif

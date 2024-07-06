@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 20:12:58 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/05 18:51:25 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/06 20:33:05 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ t_tree	*initialize_node(t_token *token)
 	node->left = NULL;
 	node->right = NULL;
 	node->cmd = NULL;
+	// node->in = NULL;
+	// node->out = NULL;
+	// node->limit = NULL;
 	return (node);
 }
 
@@ -65,7 +68,8 @@ char	**create_cmd_array(t_token *token, int cmd_count)
 		error(E_ALLOC, NULL);
 	i = 0;
 	current_token = token;
-	while (current_token && current_token->type != PIPE && (current_token->type == WORD || current_token->type == CMD))
+	while (current_token && current_token->type != PIPE
+		&& (current_token->type == WORD || current_token->type == CMD))
 	{
 		cmd_array[i++] = ft_strdup(current_token->value);
 		current_token = current_token->next;
@@ -87,7 +91,9 @@ t_tree	*build_tree(t_token **tokens)
 	token = *tokens;
 	while (token)
 	{
-		if (token->type == CMD || token->type == PIPE || token->type == RDIR_APPEND || token->type == RDIR_HEREDOC || token->type == RDIR_IN || token->type == RDIR_OUT)
+		if (token->type == CMD || token->type == PIPE
+			|| token->type == RDIR_APPEND || token->type == RDIR_HEREDOC
+			|| token->type == RDIR_IN || token->type == RDIR_OUT)
 		{
 			root = process_token(root, &current, token);
 			if (!root)
@@ -96,6 +102,42 @@ t_tree	*build_tree(t_token **tokens)
 		token = token->next;
 	}
 	return (root);
+}
+
+t_tree	*handle_pipe(t_tree *root, t_tree **current, t_tree *pipe_node)
+{
+	if (root->type != PIPE)
+	{
+		pipe_node->left = root;
+		root = pipe_node;
+		*current = root;
+	}
+	else if ((*current)->right != NULL)
+	{
+		pipe_node->left = (*current)->right;
+		(*current)->right = pipe_node;
+		*current = pipe_node;
+	}
+	else
+	{
+		(*current)->right = pipe_node;
+		*current = pipe_node;
+	}
+	return (root);
+}
+
+t_tree	*handle_non_pipe(t_tree **current, t_tree *new_node)
+{
+	if ((*current)->right == NULL)
+	{
+		(*current)->right = new_node;
+	}
+	else
+	{
+		(*current)->right->right = new_node;
+		*current = new_node;
+	}
+	return (*current);
 }
 
 t_tree	*process_token(t_tree *root, t_tree **current, t_token *token)
@@ -109,16 +151,14 @@ t_tree	*process_token(t_tree *root, t_tree **current, t_token *token)
 		root = new_node;
 		*current = root;
 	}
-	else if (token->type == PIPE || token->type == RDIR_APPEND || token->type == RDIR_HEREDOC || token->type == RDIR_IN || token->type == RDIR_OUT)
+	else if (token->type == PIPE)
 	{
 		pipe_node = create_node(token);
-		(*current)->right = pipe_node;
-		*current = pipe_node;
+		root = handle_pipe(root, current, pipe_node);
 	}
 	else
 	{
-		(*current)->left = new_node;
-		*current = new_node;
+		*current = handle_non_pipe(current, new_node);
 	}
 	return (root);
 }

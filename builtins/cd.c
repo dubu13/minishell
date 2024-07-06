@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:40:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/05 18:48:42 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/06 14:27:08 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*cd_up(char *old_path, char *path)
 	char	*new_path;
 	int		len;
 
-	len = strlen(old_path) - 1;
+	len = ft_strlen(old_path) - 1;
 	while (old_path[len] != '/' && len >= 0)
 		len--;
 	new_path = ft_calloc(len + 1, sizeof(char));
@@ -75,13 +75,18 @@ char	*get_newpath(char *input, char *old_path, t_mini *mini)
 
 void	ft_cd(char **input, t_mini *mini)
 {
+	int		i;
 	char	*new_path;
 	char	old_path[PATH_MAX];
 
-	if (input[1])
+	i = 0;
+	while (input[i])
+		i++;
+	if (i > 1)
 	{
 		builtin_msg(E_CD, "too many arguments");
 		mini->exit_status = 2;
+		return ;
 	}
 	if (!getcwd(old_path, PATH_MAX))
 	{

@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 19:06:47 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/05 18:53:13 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/06 14:02:56 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	exec_builtin(char **cmd, t_mini *mini)
 	else if (!ft_strncmp(cmd[0], "env", 3))
 		ft_env(cmd + 1, mini);
 	else if (!ft_strncmp(cmd[0], "cd", 2))
-		ft_cd(cmd, mini);
+		ft_cd(cmd + 1, mini);
 	if (!ft_strncmp(cmd[0], "exit", 4))
 		ft_exit(cmd + 1, mini);
 	else if (!ft_strncmp(cmd[0], "export", 6))

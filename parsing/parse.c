@@ -42,6 +42,7 @@ void	parse(t_mini *mini)
 		handle_env_var(mini);
 		tmp = mini->token_list;
 		mini->binary_tree = build_tree(&tmp);
+		exec_command(mini->binary_tree->cmd, mini);
 		//execute_tree(mini->binary_tree, mini);
 	}
 }

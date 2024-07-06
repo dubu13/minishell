@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:31:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/05 18:35:59 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/06 13:57:38 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,5 +166,5 @@ void	ft_export(char **input, t_mini *mini)
 		key = get_key(input[i], mini);
 		export_w_arg(key, input[i], mini);
 	}
-	free(key);
+	// free(key);
 }

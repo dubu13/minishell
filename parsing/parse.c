@@ -29,6 +29,45 @@ void	handle_env_var(t_mini *mini)
 	}
 }
 
+void print_tree_vertical(t_tree *node, int level, const char *side) {
+    if (node == NULL)
+        return;
+
+    // Print indentation for the current level
+    for (int i = 0; i < level; i++)
+        printf("    "); // 4 spaces per level for better readability
+
+    // Print the current node
+    printf("%s: ", side);
+    if (node->type == PIPE)
+        printf("PIPE\n");
+    else if (node->type == CMD || node->type == WORD)
+    {
+        printf("WORD: ");
+        if (node->cmd) {
+            for (int i = 0; node->cmd[i] != NULL; i++)
+                printf("%s ", node->cmd[i]);
+        } else {
+            printf("Unknown Command ");
+        }
+        printf("\n");
+    }
+    else if (node->type == RDIR_IN)
+        printf("RDIR_IN\n");
+    else if (node->type == RDIR_OUT)
+        printf("RDIR_OUT\n");
+    else if (node->type == RDIR_APPEND)
+        printf("RDIR_APPEND\n");
+    else if (node->type == RDIR_HEREDOC)
+        printf("RDIR_HEREDOC\n");
+    else
+        printf("UNKNOWN\n");
+
+    // Process children with increased level
+    print_tree_vertical(node->left, level + 1, "L");
+    print_tree_vertical(node->right, level + 1, "R");
+}
+
 void	parse(t_mini *mini)
 {
 	t_token	*tmp;
@@ -51,7 +90,9 @@ void	parse(t_mini *mini)
 		handle_env_var(mini);
 		tmp = mini->token_list;
 		mini->binary_tree = build_tree(&tmp);
-		exec_command(mini->binary_tree->cmd, mini);
+		check_exec(mini);
+		//print_tree_vertical(mini->binary_tree, 0, "Root");
+	//	exec_command(mini->binary_tree->cmd, mini);
 		//execute_tree(mini->binary_tree, mini);
 	}
 }

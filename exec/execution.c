@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:14:50 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/06 19:06:45 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/07 00:43:29 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,16 @@ void	check_exec(t_mini *mini)
 {
 	t_tree	*tree;
 
+	if (!mini->binary_tree)
+		return ;
 	tree = mini->binary_tree;
-	if (tree->right->type == PIPE)
+	if (tree->type == PIPE)
 		exec_pipe(tree, mini);
-	else if (tree->right->type == RDIR_IN || tree->right->type == RDIR_OUT)
+	/*else if (tree->right->type == RDIR_IN || tree->right->type == RDIR_OUT)
 		exec_redir(tree->right->type, mini);
 	else if (tree->right->type == RDIR_APPEND || \
 			tree->right->type == RDIR_HEREDOC)
-		exec_append_heredoc(tree->right->type, mini);
+		exec_append_heredoc(tree->right->type, mini);*/
 	else
 		exec_command(tree->cmd, mini);
 }
@@ -48,7 +50,7 @@ void	exec_command(char **cmd, t_mini *mini)
 	else
 		external_command(cmd, mini);
 }
-
+/*
 void	exec_redir(t_token_type type, t_mini *mini)
 {
 	t_tree	*tree;
@@ -61,7 +63,8 @@ void	exec_redir(t_token_type type, t_mini *mini)
 	{
 	}
 }
-
+*/
+/*
 void	exec_append_heredoc(t_token_type type, t_mini *mini)
 {
 	t_tree	*tree;
@@ -74,20 +77,19 @@ void	exec_append_heredoc(t_token_type type, t_mini *mini)
 	{
 	}
 }
-
+*/
 void	exec_tree(t_tree *node, t_mini *mini)
 {
-	node = mini->binary_tree;
 	if (!node)
 		return ;
 	if (node->type == CMD)
 		exec_command(node->cmd, mini);
 	else if (node->type == PIPE)
 		exec_pipe(node, mini);
-	else if (node->type == RDIR_IN || node->type == RDIR_OUT)
+	/*else if (node->type == RDIR_IN || node->type == RDIR_OUT)
 		exec_redir(node->type, mini);
 	else if (node->type == RDIR_APPEND || node->type == RDIR_HEREDOC)
-		exec_append_heredoc(node->type, mini);
+		exec_append_heredoc(node->type, mini);*/
 	else
 	{
 		ft_putendl_fd("UNSUPPORTED TOKEN TYPE!", 2);
@@ -97,20 +99,28 @@ void	exec_tree(t_tree *node, t_mini *mini)
 
 void	exec_pipe(t_tree *tree, t_mini *mini)
 {
-	int		pipefd[2];
-	pid_t	pid;
+	int pipefd[2];
+	pid_t pid;
+	int fd_temp;
 
+	fd_temp = dup(STDIN_FILENO);
 	if (pipe(pipefd) == -1)
 		exit(EXIT_FAILURE);
+
 	pid = fork();
 	if (pid == -1)
+	{
+		close(pipefd[0]);
+		close(pipefd[1]);
 		exit(EXIT_FAILURE);
+	}
 	else if (pid == 0)
 	{
 		close(pipefd[0]);
 		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 		{
 			perror("dup2");
+			close(pipefd[1]);
 			exit(EXIT_FAILURE);
 		}
 		close(pipefd[1]);
@@ -123,6 +133,7 @@ void	exec_pipe(t_tree *tree, t_mini *mini)
 		if (dup2(pipefd[0], STDIN_FILENO) == -1)
 		{
 			perror("dup2");
+			close(pipefd[0]);
 			exit(EXIT_FAILURE);
 		}
 		close(pipefd[0]);
@@ -133,4 +144,7 @@ void	exec_pipe(t_tree *tree, t_mini *mini)
 			exit(EXIT_FAILURE);
 		}
 	}
+	if (dup2(fd_temp, STDIN_FILENO) < 0)
+		perror("dup2");
+	close(fd_temp);
 }

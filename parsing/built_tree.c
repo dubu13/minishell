@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 20:12:58 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/06 20:33:05 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/07 00:55:07 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,10 @@ t_tree	*initialize_node(t_token *token)
 {
 	t_tree	*node;
 
-	node = malloc(sizeof(t_tree));
+	node = ft_calloc(sizeof(t_tree), 1);
 	if (!node)
 		return (NULL);
 	node->type = token->type;
-	node->left = NULL;
-	node->right = NULL;
-	node->cmd = NULL;
-	// node->in = NULL;
-	// node->out = NULL;
-	// node->limit = NULL;
 	return (node);
 }
 
@@ -63,7 +57,7 @@ char	**create_cmd_array(t_token *token, int cmd_count)
 	t_token	*current_token;
 	int		i;
 
-	cmd_array = malloc(sizeof(char *) * (cmd_count + 1));
+	cmd_array = ft_calloc(sizeof(char *), (cmd_count + 1));
 	if (!cmd_array)
 		error(E_ALLOC, NULL);
 	i = 0;
@@ -104,42 +98,6 @@ t_tree	*build_tree(t_token **tokens)
 	return (root);
 }
 
-t_tree	*handle_pipe(t_tree *root, t_tree **current, t_tree *pipe_node)
-{
-	if (root->type != PIPE)
-	{
-		pipe_node->left = root;
-		root = pipe_node;
-		*current = root;
-	}
-	else if ((*current)->right != NULL)
-	{
-		pipe_node->left = (*current)->right;
-		(*current)->right = pipe_node;
-		*current = pipe_node;
-	}
-	else
-	{
-		(*current)->right = pipe_node;
-		*current = pipe_node;
-	}
-	return (root);
-}
-
-t_tree	*handle_non_pipe(t_tree **current, t_tree *new_node)
-{
-	if ((*current)->right == NULL)
-	{
-		(*current)->right = new_node;
-	}
-	else
-	{
-		(*current)->right->right = new_node;
-		*current = new_node;
-	}
-	return (*current);
-}
-
 t_tree	*process_token(t_tree *root, t_tree **current, t_token *token)
 {
 	t_tree	*new_node;
@@ -157,8 +115,6 @@ t_tree	*process_token(t_tree *root, t_tree **current, t_token *token)
 		root = handle_pipe(root, current, pipe_node);
 	}
 	else
-	{
 		*current = handle_non_pipe(current, new_node);
-	}
 	return (root);
 }

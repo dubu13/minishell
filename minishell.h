@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/06 19:08:59 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/07 00:57:04 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ typedef struct s_tree
 {
 	t_token_type	type;
 	char			**cmd;
-	// char			*in;
-	// char			*out;
-	// char			*limit;
+	char			*in;
+	char			*out;
+	char			*limit;
 	struct s_tree	*left;
 	struct s_tree	*right;
 }					t_tree;
@@ -162,4 +162,8 @@ void				exec_redir(t_token_type type, t_mini *mini);
 void				exec_append_heredoc(t_token_type type, t_mini *mini);
 void				exec_pipe(t_tree *tree, t_mini *mini);
 void				check_exec(t_mini *mini);
+t_tree				*handle_non_pipe(t_tree **current, t_tree *new_node);
+t_tree				*handle_pipe(t_tree *root, t_tree **current, \
+						t_tree *pipe_node);
+
 #endif

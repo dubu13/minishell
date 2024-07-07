@@ -6,14 +6,13 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 20:13:06 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/05 19:09:54 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/07 02:33:20 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	handle_append_heredoc(char *input, int *i, t_token **token_list,
-		int *is_next_cmd)
+void	handle_append_heredoc(char *input, int *i, t_token **token_list)
 {
 	int				length;
 	char			value[3];
@@ -32,7 +31,7 @@ void	handle_append_heredoc(char *input, int *i, t_token **token_list,
 	add_back_token(token_list, new_token);
 	(*i) += length;
 	*i += skip_ws(&input[*i]);
-	*is_next_cmd = 1;
+	//*is_next_cmd = 1;
 }
 
 void	handle_meta_char(char *input, int *i, t_token **token_list,
@@ -57,7 +56,7 @@ void	handle_meta_char(char *input, int *i, t_token **token_list,
 	add_back_token(token_list, new_token);
 	(*i) += length;
 	*i += skip_ws(&input[*i]);
-	if (type == PIPE || type == RDIR_OUT || type == RDIR_IN)
+	if (type == PIPE)
 		*is_next_cmd = 1;
 	else
 		*is_next_cmd = 0;
@@ -97,7 +96,7 @@ void	token_type(char *input, int *i, t_token **token_list, int *is_next_cmd)
 	while (input[*i])
 	{
 		if (is_append_heredoc(&input[*i]))
-			handle_append_heredoc(input, i, token_list, is_next_cmd);
+			handle_append_heredoc(input, i, token_list);
 		else if (is_meta_char(input[*i]))
 			handle_meta_char(input, i, token_list, is_next_cmd);
 		else if (input[*i] != '|' && input[*i] != '<' && input[*i] != '>')

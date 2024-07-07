@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/07 00:57:04 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/07 03:03:19 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_tree
 	char			**cmd;
 	char			*in;
 	char			*out;
+	char			*append;
 	char			*limit;
 	struct s_tree	*left;
 	struct s_tree	*right;
@@ -133,7 +134,7 @@ t_tree				*build_tree(t_token **tokens);
 t_tree				*create_node(t_token *token);
 
 void				handle_append_heredoc(char *input, int *i,
-						t_token **token_list, int *is_next_cmd);
+						t_token **token_list);
 void				handle_meta_char(char *input, int *i, t_token **token_list,
 						int *is_next_cmd);
 void				handle_word(char *input, int *i, t_token **token_list,
@@ -165,5 +166,9 @@ void				check_exec(t_mini *mini);
 t_tree				*handle_non_pipe(t_tree **current, t_tree *new_node);
 t_tree				*handle_pipe(t_tree *root, t_tree **current, \
 						t_tree *pipe_node);
+void				out_rdirect(t_tree *tree, t_mini *mini);
+void				in_rdirect(t_tree *tree, t_mini *mini);
+void				exec_tree(t_tree *node, t_mini *mini);
+void				append_rdirect(t_tree *tree, t_mini *mini);
 
 #endif

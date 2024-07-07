@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:14:50 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/07 00:43:29 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/07 03:03:45 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,12 @@ void	check_exec(t_mini *mini)
 	tree = mini->binary_tree;
 	if (tree->type == PIPE)
 		exec_pipe(tree, mini);
-	/*else if (tree->right->type == RDIR_IN || tree->right->type == RDIR_OUT)
-		exec_redir(tree->right->type, mini);
-	else if (tree->right->type == RDIR_APPEND || \
-			tree->right->type == RDIR_HEREDOC)
-		exec_append_heredoc(tree->right->type, mini);*/
+	else if (tree->in)
+		in_rdirect(tree, mini);
+	else if (tree->out)
+		out_rdirect(tree, mini);
+	else if (tree->append)
+		append_rdirect(tree, mini);
 	else
 		exec_command(tree->cmd, mini);
 }
@@ -50,34 +51,7 @@ void	exec_command(char **cmd, t_mini *mini)
 	else
 		external_command(cmd, mini);
 }
-/*
-void	exec_redir(t_token_type type, t_mini *mini)
-{
-	t_tree	*tree;
 
-	tree = mini->binary_tree;
-	if (type == RDIR_IN)
-	{
-	}
-	else
-	{
-	}
-}
-*/
-/*
-void	exec_append_heredoc(t_token_type type, t_mini *mini)
-{
-	t_tree	*tree;
-
-	tree = mini->binary_tree;
-	if (type == RDIR_APPEND)
-	{
-	}
-	else
-	{
-	}
-}
-*/
 void	exec_tree(t_tree *node, t_mini *mini)
 {
 	if (!node)
@@ -86,10 +60,12 @@ void	exec_tree(t_tree *node, t_mini *mini)
 		exec_command(node->cmd, mini);
 	else if (node->type == PIPE)
 		exec_pipe(node, mini);
-	/*else if (node->type == RDIR_IN || node->type == RDIR_OUT)
-		exec_redir(node->type, mini);
-	else if (node->type == RDIR_APPEND || node->type == RDIR_HEREDOC)
-		exec_append_heredoc(node->type, mini);*/
+	else if (node->in)
+		in_rdirect(node, mini);
+	else if (node->out)
+		out_rdirect(node, mini);
+	else if (node->append)
+		append_rdirect(node, mini);
 	else
 	{
 		ft_putendl_fd("UNSUPPORTED TOKEN TYPE!", 2);

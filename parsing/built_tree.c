@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 20:12:58 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/07 00:55:07 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/07 03:02:18 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,19 @@ t_tree	*build_tree(t_token **tokens)
 	return (root);
 }
 
+t_tree	*handle_rdir(t_tree **current, t_token *token)
+{
+	if (token->type == RDIR_IN)
+		(*current)->in = ft_strdup(token->next->value);
+	else if (token->type == RDIR_OUT)
+		(*current)->out = ft_strdup(token->next->value);
+	else if (token->type == RDIR_APPEND)
+		(*current)->append = ft_strdup(token->next->value);
+	else if (token->type == RDIR_HEREDOC)
+		(*current)->limit = ft_strdup(token->next->value);
+	return (*current);
+}
+
 t_tree	*process_token(t_tree *root, t_tree **current, t_token *token)
 {
 	t_tree	*new_node;
@@ -114,7 +127,10 @@ t_tree	*process_token(t_tree *root, t_tree **current, t_token *token)
 		pipe_node = create_node(token);
 		root = handle_pipe(root, current, pipe_node);
 	}
-	else
+	else if (token->type == RDIR_APPEND || token->type == RDIR_HEREDOC
+		|| token->type == RDIR_IN || token->type == RDIR_OUT)
+		*current = handle_rdir(current, token);
+	else if (token->type == CMD)
 		*current = handle_non_pipe(current, new_node);
 	return (root);
 }

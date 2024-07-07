@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/07 07:48:30 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/07 16:38:04 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,5 +173,5 @@ void				append_rdirect(t_tree *tree, t_mini *mini);
 t_tree				*handle_rdir(t_tree **current, t_token *token);
 char				**create_out_array(t_token *token, int out_count);
 char				**create_append_array(t_token *token, int append_count);
-
+void				heredoc(t_tree *tree, t_mini *mini);
 #endif

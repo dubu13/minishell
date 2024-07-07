@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 20:12:58 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/07 08:25:08 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/07 12:44:50 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,17 +95,13 @@ char	**create_out_array(t_token *token, int out_count)
 	out_array = ft_calloc(sizeof(char *), (out_count + 1));
 	if (!out_array)
 		error(E_ALLOC, NULL);
-
 	current_token = token;
 	while (current_token && current_token->type != PIPE)
 	{
 		if (current_token->type == RDIR_OUT)
-		{
 			out_array[i++] = ft_strdup(current_token->next->value);
-		}
 		current_token = current_token->next;
 	}
-
 	out_array[i] = NULL;
 	return (out_array);
 }
@@ -120,17 +116,13 @@ char	**create_append_array(t_token *token, int append_count)
 	append_array = ft_calloc(sizeof(char *), (append_count + 1));
 	if (!append_array)
 		error(E_ALLOC, NULL);
-
 	current_token = token;
 	while (current_token && current_token->type != PIPE)
 	{
 		if (current_token->type == RDIR_APPEND)
-		{
 			append_array[i++] = ft_strdup(current_token->next->value);
-		}
 		current_token = current_token->next;
 	}
-
 	append_array[i] = NULL;
 	return (append_array);
 }

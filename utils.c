@@ -12,13 +12,6 @@
 
 #include "minishell.h"
 
-/**
-
-	* Checks if a given string is properly closed with respect to single and double quotes.
- *
- * @param str The string to check.
- * @return 1 if the string is properly closed, 0 otherwise.
- */
 int	is_str_closed(char *str)
 {
 	bool	s_quote_open;

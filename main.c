@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/06 19:10:29 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/07 05:08:57 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,10 @@ t_mini	*init_mini(void)
 {
 	t_mini	*mini;
 
-	mini = malloc(sizeof(t_mini));
+	mini = ft_calloc(sizeof(t_mini), 1);
 	if (!mini)
 		return (perror("Malloc"), NULL);
 	mini->env = save_env();
-	mini->input = NULL;
-	mini->exit_status = 0;
-	mini->token_list = NULL;
-	mini->binary_tree = NULL;
 	return (mini);
 }
 

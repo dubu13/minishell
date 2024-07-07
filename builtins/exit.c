@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 15:11:37 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/05 18:46:24 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/07 05:06:45 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+/*
+exit status :
+0 = success
+1 = general errors
+2 = misuse of shell builtins
+126 = command invoked cannot execute
+127 = command not found
+128 = invalid argument to exit (non numeric)
+130 = terminated by ctrl-c
+128 + signal number = terminated by signal
+*/
 
 int	is_digit(const char *str)
 {

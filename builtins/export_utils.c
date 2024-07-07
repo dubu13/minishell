@@ -3,24 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:54:25 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/02 17:16:37 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/07 05:33:03 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/**
-
-	* Creates a new environment variable array with the given new environment variable added.
- *
- * @param env The existing environment variable array.
- * @param new The new environment variable to be added.
-
-	* @return A newly allocated environment variable array with the new variable added.
- */
 char	**new_env(char **env, char *new)
 {
 	char	**new_env;
@@ -47,12 +38,6 @@ char	**new_env(char **env, char *new)
 	return (new_env);
 }
 
-/**
- * Sorts the given environment variable array in alphabetical order.
- *
- * @param env The environment variable array to be sorted.
- * @return The sorted environment variable array.
- */
 char	**sort_env(char **env)
 {
 	int		i;
@@ -78,13 +63,6 @@ char	**sort_env(char **env)
 	return (env);
 }
 
-/**
- * Encloses the given environment variable string in double quotes.
- *
- * @param env The environment variable string to be quoted.
-
-	* @return A newly allocated string with the environment variable enclosed in double quotes.
- */
 char	*put_quotes(char *env)
 {
 	char	*key;

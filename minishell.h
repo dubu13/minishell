@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/07 03:03:19 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/07 07:48:30 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ typedef struct s_tree
 	t_token_type	type;
 	char			**cmd;
 	char			*in;
-	char			*out;
-	char			*append;
+	char			**out;
+	char			**append;
 	char			*limit;
 	struct s_tree	*left;
 	struct s_tree	*right;
@@ -170,5 +170,8 @@ void				out_rdirect(t_tree *tree, t_mini *mini);
 void				in_rdirect(t_tree *tree, t_mini *mini);
 void				exec_tree(t_tree *node, t_mini *mini);
 void				append_rdirect(t_tree *tree, t_mini *mini);
+t_tree				*handle_rdir(t_tree **current, t_token *token);
+char				**create_out_array(t_token *token, int out_count);
+char				**create_append_array(t_token *token, int append_count);
 
 #endif

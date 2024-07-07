@@ -3,29 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 19:06:47 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/06 19:23:34 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/07 09:11:45 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/**
-
-	* Executes the appropriate built-in command based on the tokens in the mini shell.
-
-	* This function iterates through the token list and calls the corresponding built-in
- * function for each recognized command, such as echo, pwd, cd, export, unset,
-	and env.
-
-	* The built-in functions are responsible for executing the command and updating the
- * mini shell state as necessary.
- *
-
-	* @param mini The mini shell structure containing the token list and other state.
- */
 void	exec_builtin(char **cmd, t_mini *mini)
 {
 	if (!ft_strncmp(cmd[0], "echo", 4))
@@ -46,19 +32,13 @@ void	exec_builtin(char **cmd, t_mini *mini)
 
 int	check_builtin(char *cmd)
 {
-	if (!ft_strncmp(cmd, "echo", 4))
-		return (1);
-	else if (!ft_strncmp(cmd, "pwd", 3))
-		return (1);
-	else if (!ft_strncmp(cmd, "cd", 2))
-		return (1);
-	else if (!ft_strncmp(cmd, "export", 6))
-		return (1);
-	else if (!ft_strncmp(cmd, "unset", 5))
-		return (1);
-	else if (!ft_strncmp(cmd, "env", 3))
-		return (1);
-	else if (!ft_strncmp(cmd, "exit", 4))
+	if (!ft_strncmp(cmd, "echo", 4) || \
+		!ft_strncmp(cmd, "pwd", 3) || \
+		!ft_strncmp(cmd, "cd", 2) || \
+		!ft_strncmp(cmd, "export", 6) || \
+		!ft_strncmp(cmd, "unset", 5) || \
+		!ft_strncmp(cmd, "env", 3) || \
+		!ft_strncmp(cmd, "exit", 4))
 		return (1);
 	return (0);
 }

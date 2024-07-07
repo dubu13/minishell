@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 00:55:23 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/07 00:55:32 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/07 07:42:34 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,15 @@ t_tree	*handle_pipe(t_tree *root, t_tree **current, t_tree *pipe_node)
 		*current = pipe_node;
 	}
 	return (root);
+}
+
+t_tree	*handle_rdir(t_tree **current, t_token *token)
+{
+	if (token->type == RDIR_IN)
+		(*current)->in = ft_strdup(token->next->value);
+	else if (token->type == RDIR_HEREDOC)
+		(*current)->limit = ft_strdup(token->next->value);
+	return (*current);
 }
 
 t_tree	*handle_non_pipe(t_tree **current, t_tree *new_node)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 15:40:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/05 15:00:53 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/07 18:26:38 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,23 @@
 
 char	*get_prompt(t_mini *mini)
 {
+	char	cwd[PATH_MAX];
 	char	*prompt;
 	char	*cwf;
-	char	cwd[PATH_MAX];
+	char	*temp;
 
 	getcwd(cwd, PATH_MAX);
 	cwf = ft_strdup(ft_strrchr(cwd, '/') + 1);
 	if (!cwf)
 		cwf = ft_strdup(cwd);
-	prompt = get_env(mini->env, "USER");
-	prompt = ft_strjoin(CYN, prompt);
-	prompt = ft_strjoin(prompt, "@minishell:" YLW);
-	prompt = ft_strjoin(prompt, cwf);
-	prompt = ft_strjoin(prompt, CYN "$ " RESET);
+	temp = get_env(mini->env, "USER");
+	temp = ft_strjoin(CYN, temp);
+	temp = ft_strjoin(CYN, temp);
+	temp = ft_strjoin(temp, "@minishell:" YLW);
+	temp = ft_strjoin(temp, cwf);
+	prompt = ft_strjoin(temp, CYN "$ " RESET);
+	free(cwf);
+	free(temp);
 	return (prompt);
 }
 

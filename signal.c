@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:15:13 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/07 05:31:15 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/07 13:40:42 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,6 @@ void	sig_action(int sig)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	// else if (sig == SIGQUIT)
-	// {
-	// 	write(1, "Quit: 3\n", 8);
-	// 	rl_on_new_line();
-	// 	write(1, "\r", 1);
-	// }
 }
 
 void	handle_signal(void)

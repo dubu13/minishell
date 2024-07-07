@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 19:06:47 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/07 09:11:45 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/07 13:50:02 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,21 @@ int	check_builtin(char *cmd)
 		!ft_strncmp(cmd, "exit", 4))
 		return (1);
 	return (0);
+}
+
+void	env_var_msg(char *cmd)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd, 2);
+	if (cmd[0] == '/')
+	{
+		if (!access(cmd, F_OK))
+			ft_putstr_fd(": Is a directory\n", 2);
+		else
+			ft_putstr_fd(": No such file or directory\n", 2);
+	}
+	else
+		ft_putstr_fd(": command not found\n", 2);
 }
 
 char	*command_path(char *command)
@@ -81,7 +96,7 @@ void	external_command(char **cmd, t_mini *mini)
 		return ;
 	cmd_path = command_path(cmd[0]);
 	if (!cmd_path)
-		cmd_path = ft_strdup(cmd[0]);
+		env_var_msg(cmd[0]);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -91,7 +106,6 @@ void	external_command(char **cmd, t_mini *mini)
 	if (pid == 0)
 	{
 		execve(cmd_path, cmd, mini->env);
-		perror(cmd_path);
 		free(cmd_path);
 		exit(EXIT_FAILURE);
 	}
@@ -99,8 +113,3 @@ void	external_command(char **cmd, t_mini *mini)
 		waitpid(pid, &status, 0);
 	free(cmd_path);
 }
-/*use strerror :
-code 21: is a directory
-code 2: no such file or directory
-for command not found write by yourself
-*/

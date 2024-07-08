@@ -21,12 +21,15 @@ char	*get_key(char *env, t_mini *mini)
 	if (!ft_isalpha(env[i]) && env[i] != '_')
 	{
 		builtin_msg(E_EXPORT, env);
-		mini->exit_status = 2;
+		mini->exit_status = 1;
 	}
 	while (env[i] && env[i] != '=' && !(env[i] == '+' && env[i + 1] == '='))
 	{
 		if (!ft_isalnum(env[i]) && env[i] != '_')
+		{
 			builtin_msg(E_EXPORT, env);
+			mini->exit_status = 1;
+		}
 		i++;
 	}
 	key = ft_substr(env, 0, i);

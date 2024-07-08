@@ -32,30 +32,39 @@ void	exec_builtin(char **cmd, t_mini *mini)
 
 int	check_builtin(char *cmd)
 {
-	if (!ft_strncmp(cmd, "echo", 4) || \
-		!ft_strncmp(cmd, "pwd", 3) || \
-		!ft_strncmp(cmd, "cd", 2) || \
-		!ft_strncmp(cmd, "export", 6) || \
-		!ft_strncmp(cmd, "unset", 5) || \
-		!ft_strncmp(cmd, "env", 3) || \
-		!ft_strncmp(cmd, "exit", 4))
+	if (!ft_strncmp(cmd, "echo", 5) || \
+		!ft_strncmp(cmd, "pwd", 4) || \
+		!ft_strncmp(cmd, "cd", 3) || \
+		!ft_strncmp(cmd, "export", 7) || \
+		!ft_strncmp(cmd, "unset", 6) || \
+		!ft_strncmp(cmd, "env", 4) || \
+		!ft_strncmp(cmd, "exit", 5))
 		return (1);
 	return (0);
 }
 
-void	env_var_msg(char *cmd)
+void	env_var_msg(char *cmd, t_mini *mini)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
 	if (cmd[0] == '/')
 	{
 		if (!access(cmd, F_OK))
+		{
 			ft_putstr_fd(": Is a directory\n", 2);
+			mini->exit_status = 126;
+		}
 		else
+		{
 			ft_putstr_fd(": No such file or directory\n", 2);
+			mini->exit_status = 127;
+		}
 	}
 	else
+	{
 		ft_putstr_fd(": command not found\n", 2);
+		mini->exit_status = 127;
+	}
 }
 
 char	*command_path(char *command)
@@ -84,6 +93,7 @@ char	*command_path(char *command)
 			return (path);
 	}
 	free_array(directories);
+	// free(path);
 	return (NULL);
 }
 
@@ -97,7 +107,7 @@ void	external_command(char **cmd, t_mini *mini)
 		return ;
 	cmd_path = command_path(cmd[0]);
 	if (!cmd_path)
-		env_var_msg(cmd[0]);
+		env_var_msg(cmd[0], mini);
 	pid = fork();
 	if (pid < 0)
 	{

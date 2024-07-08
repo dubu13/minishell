@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 15:11:37 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/07 05:06:45 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/08 17:56:56 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ exit status :
 
 int	is_digit(const char *str)
 {
+	if (str == NULL || *str == '\0')
+		return (0);
 	if (*str == '-' || *str == '+')
 		str++;
 	while (*str != '\0')
@@ -44,6 +46,8 @@ long long	ft_atoull(const char *str, bool *error)
 
 	sign = 1;
 	num = 0;
+	if (!str)
+		return (0);
 	if (*str == '-')
 	{
 		sign *= -1;

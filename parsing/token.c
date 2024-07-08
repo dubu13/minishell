@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 20:13:06 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/07 02:33:20 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/08 13:33:08 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	handle_append_heredoc(char *input, int *i, t_token **token_list)
 	add_back_token(token_list, new_token);
 	(*i) += length;
 	*i += skip_ws(&input[*i]);
-	//*is_next_cmd = 1;
 }
 
 void	handle_meta_char(char *input, int *i, t_token **token_list,
@@ -88,7 +87,6 @@ void	handle_word(char *input, int *i, t_token **token_list, int *is_next_cmd)
 	if (input[*i] && is_meta_char(input[*i]))
 		handle_meta_char(input, i, token_list, is_next_cmd);
 	*i += skip_ws(&input[*i]);
-	free(value);
 }
 
 void	token_type(char *input, int *i, t_token **token_list, int *is_next_cmd)

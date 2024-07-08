@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 12:50:06 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/05 18:48:30 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/08 14:11:05 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_token_list(t_token *token_list)
+void	free_token_list(t_token **token_list)
 {
 	t_token	*current;
 	t_token	*next;
 
-	if (!token_list)
+	if (!token_list || !*token_list)
 		return ;
-	current = token_list;
+	current = *token_list;
 	while (current)
 	{
 		next = current->next;
@@ -28,6 +28,7 @@ void	free_token_list(t_token *token_list)
 		free(current);
 		current = next;
 	}
+	*token_list = NULL;
 }
 
 void	free_tree(t_tree *tree)
@@ -68,7 +69,7 @@ void	free_mini(t_mini *mini)
 		if (mini->input)
 			free(mini->input);
 		if (mini->token_list)
-			free_token_list(mini->token_list);
+			free_token_list(&(mini->token_list));
 		if (mini->binary_tree)
 			free_tree(mini->binary_tree);
 		free(mini);

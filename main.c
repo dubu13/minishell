@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/07 13:41:56 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/08 17:29:13 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int	main(void)
 		parse(mini);
 		if (!mini->input)
 			break ;
-		free_token_list(mini->token_list);
-		//free_tree(mini->binary_tree);
+		free_token_list(&(mini->token_list));
 		mini->token_list = NULL;
 		//mini->binary_tree = NULL;
 	}

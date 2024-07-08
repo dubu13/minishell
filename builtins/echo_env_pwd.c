@@ -24,6 +24,20 @@ int	check_n(char *args)
 	return (args[i] == '\0');
 }
 
+void	prnt_w_exitcode(char *str, bool flag, t_mini *mini)
+{
+	if (flag)
+	{
+		if (printf(" ") == -1)
+			mini->exit_status = 1;
+		else
+			mini->exit_status = 0;
+	}
+	if (printf("%s", str) == -1)
+		mini->exit_status = 1;
+	else
+		mini->exit_status = 0;
+}
 void	ft_echo(char **input, t_mini *mini)
 {
 	int		i;
@@ -37,13 +51,7 @@ void	ft_echo(char **input, t_mini *mini)
 		i++;
 	while (input[i])
 	{
-		if (flag)
-		{
-			if (printf(" ") == -1)
-				mini->exit_status = 1;
-		}
-		if (printf("%s", input[i]) == -1)
-			mini->exit_status = 1;
+		prnt_w_exitcode(input[i], flag, mini);
 		flag = true;
 		i++;
 	}
@@ -60,6 +68,7 @@ void	ft_env(char **input, t_mini *mini)
 	{
 		ft_putstr_fd("env: too many arguments", 2);
 		mini->exit_status = 2;
+		return ;
 	}
 	while (mini->env[i])
 	{
@@ -69,6 +78,7 @@ void	ft_env(char **input, t_mini *mini)
 			printf("%s\n", mini->env[i]);
 		i++;
 	}
+	mini->exit_status = 0;
 }
 
 void	ft_pwd(char **cmd, t_mini *mini)
@@ -86,5 +96,8 @@ void	ft_pwd(char **cmd, t_mini *mini)
 		mini->exit_status = 1;
 	}
 	else
+	{
 		printf("%s\n", cwd);
+		mini->exit_status = 0;
+	}
 }

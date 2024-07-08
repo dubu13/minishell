@@ -94,6 +94,11 @@ void				error(t_error_type type, char *input);
 void				builtin_msg(t_error_type type, char *msg);
 void				handle_signal(void);
 void				handle_env_var(t_mini *mini);
+// free
+void				free_token_list(t_token *token_list);
+void				free_tree(t_tree *tree);
+void				free_mini(t_mini *mini);
+void				free_array(char **array);
 // exec
 int					check_builtin(char *input);
 char				*command_path(char *command);

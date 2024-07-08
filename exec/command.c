@@ -83,6 +83,7 @@ char	*command_path(char *command)
 		if (!(access(path, X_OK | F_OK)))
 			return (path);
 	}
+	free_array(directories);
 	return (NULL);
 }
 

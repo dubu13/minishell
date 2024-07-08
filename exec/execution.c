@@ -58,22 +58,3 @@ void	exec_tree(t_tree *node, t_mini *mini)
 	else if (node->limit)
 		heredoc(node, mini);
 }
-
-void	check_exec(t_mini *mini)
-{
-	t_tree	*tree;
-
-	if (!mini->binary_tree)
-		return ;
-	tree = mini->binary_tree;
-	if (tree->type == PIPE)
-		exec_pipe(tree, mini);
-	else if (tree->in)
-		in_rdirect(tree, mini);
-	else if (tree->out)
-		out_rdirect(tree, mini);
-	else if (tree->append)
-		append_rdirect(tree, mini);
-	else
-		exec_tree(tree, mini);
-}

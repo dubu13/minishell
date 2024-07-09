@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 15:40:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/07 18:26:38 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/09 17:44:06 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,13 @@ char	*get_prompt(t_mini *mini)
 	if (!cwf)
 		cwf = ft_strdup(cwd);
 	temp = get_env(mini->env, "USER");
-	temp = ft_strjoin(CYN, temp);
-	temp = ft_strjoin(CYN, temp);
-	temp = ft_strjoin(temp, "@minishell:" YLW);
-	temp = ft_strjoin(temp, cwf);
+	prompt = ft_strjoin(CYN, temp);
+	free(temp);
+	temp = ft_strjoin(CYN, prompt);
+	free(prompt);
+	prompt = ft_strjoin(temp, "@minishell:" YLW);
+	free(temp);
+	temp = ft_strjoin(prompt, cwf);
 	prompt = ft_strjoin(temp, CYN "$ " RESET);
 	free(cwf);
 	free(temp);

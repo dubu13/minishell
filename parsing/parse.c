@@ -46,6 +46,8 @@ void	parse(t_mini *mini)
 		mini->exit_status = 0;
 		return ;
 	}
+	if (!ft_strncmp(mini->input, "", 1))
+		return ;
 	if (!is_str_closed(mini->input))
 	{
 		mini->exit_status = 1;

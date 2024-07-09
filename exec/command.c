@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 19:06:47 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/07 13:50:02 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/09 17:58:39 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ char	*command_path(char *command)
 	char	*path;
 	char	**directories;
 
+	if (!ft_strncmp(command, "/", 1) || !ft_strncmp(command, "./", 2)\
+		|| !ft_strncmp(command, "../", 3))
+		return (command);
 	directories = ft_split(getenv("PATH"), ':');
 	if (!directories)
 		return (ft_putstr_fd \

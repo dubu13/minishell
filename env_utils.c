@@ -12,6 +12,14 @@
 
 #include "minishell.h"
 
+int	len_env(char **env)
+{
+	int	i;
+
+	i = -1;
+	while (env[++i]);
+	return (i);
+}
 int	index_env(char *type, char **env)
 {
 	int	i;
@@ -35,9 +43,6 @@ void	update_env(char *type, char *value, t_mini *mini)
 	int		i;
 
 	i = index_env(type, mini->env);
-	// if (i == -1)
-	// 	exit (EXIT_FAILURE);
-	free(mini->env[i]);
 	temp = ft_strjoin(type, "=");
 	if (!value)
 		mini->env[i] = ft_strdup(temp);
@@ -67,7 +72,7 @@ char	**save_env(void)
 	i = 0;
 	while (environ[i])
 		i++;
-	env = ft_calloc(i + 1, sizeof(char *));
+	env = ft_calloc(i + 2, sizeof(char *));
 	if (!env)
 		return (error(E_ALLOC, NULL), NULL);
 	i = 0;
@@ -78,5 +83,7 @@ char	**save_env(void)
 			return (error(E_ALLOC, NULL), NULL);
 		i++;
 	}
+	env[i] = ft_strdup("OLDPWD");
+	env[i + 1] = '\0';
 	return (env);
 }

@@ -103,5 +103,5 @@ void	ft_export(char **input, t_mini *mini)
 		key = get_key(input[i], mini);
 		export_w_arg(key, input[i], mini);
 	}
-	// free(key);
+	free(key);
 }

@@ -19,18 +19,14 @@ char	*get_prompt(t_mini *mini)
 	char	*cwf;
 	char	*temp;
 
+	(void)mini;
 	getcwd(cwd, PATH_MAX);
 	cwf = ft_strdup(ft_strrchr(cwd, '/') + 1);
 	if (!cwf)
 		cwf = ft_strdup(cwd);
-	temp = get_env(mini->env, "USER");
-	prompt = ft_strjoin(CYN, temp);
-	free(temp);
-	temp = ft_strjoin(CYN, prompt);
-	free(prompt);
-	prompt = ft_strjoin(temp, "@minishell:" YLW);
-	free(temp);
+	prompt = ft_strdup(CYN "minishell:" YLW);
 	temp = ft_strjoin(prompt, cwf);
+	free(prompt);
 	prompt = ft_strjoin(temp, CYN "$ " RESET);
 	free(cwf);
 	free(temp);
@@ -40,12 +36,15 @@ char	*get_prompt(t_mini *mini)
 char	*get_input(t_mini *mini)
 {
 	char	*input;
+	char	*prompt;
 
 	handle_signal();
 	if (isatty(STDIN_FILENO))
 	{
 		rl_on_new_line();
-		input = readline(get_prompt(mini));
+		prompt = get_prompt(mini);
+		input = readline(prompt);
+		free(prompt);
 		if (!input)
 			return (NULL);
 	}

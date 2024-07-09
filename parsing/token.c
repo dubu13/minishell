@@ -87,6 +87,7 @@ void	handle_word(char *input, int *i, t_token **token_list, int *is_next_cmd)
 	if (input[*i] && is_meta_char(input[*i]))
 		handle_meta_char(input, i, token_list, is_next_cmd);
 	*i += skip_ws(&input[*i]);
+	// free(value);
 }
 
 void	token_type(char *input, int *i, t_token **token_list, int *is_next_cmd)

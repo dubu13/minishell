@@ -24,6 +24,7 @@ int	cd_path(char *new_path, char *old_path, t_mini *mini)
 char	*cd_up(char *old_path, char *path)
 {
 	char	*new_path;
+	char	*temp;
 	int		len;
 
 	len = ft_strlen(old_path) - 1;
@@ -33,11 +34,15 @@ char	*cd_up(char *old_path, char *path)
 	if (!new_path)
 		error(E_ALLOC, NULL);
 	ft_strlcpy(new_path, old_path, len + 1);
-	new_path[len + 1] = '\0';
+	new_path[len] = '\0';
 	while (*path && *path == '.')
 		path++;
 	if (*path == '/')
-		new_path = ft_strjoin(new_path, path);
+	{
+		temp = ft_strjoin(new_path, path);
+		free(new_path);
+		new_path = temp;
+	}
 	return (new_path);
 }
 

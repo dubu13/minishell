@@ -72,9 +72,7 @@ void	ft_env(char **input, t_mini *mini)
 	}
 	while (mini->env[i])
 	{
-		if (!ft_strchr(mini->env[i], '='))
-			i++;
-		if (mini->env[i])
+		if(ft_strchr(mini->env[i], '='))
 			printf("%s\n", mini->env[i]);
 		i++;
 	}

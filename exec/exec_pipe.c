@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 05:02:18 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/07 05:02:28 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/10 18:12:23 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	execute_child_process(int pipefd[2], t_tree *tree, t_mini *mini)
 		exit(EXIT_FAILURE);
 	}
 	close(pipefd[1]);
-	exec_tree(tree->left, mini);
+	exec_node(tree->left, mini);
 	exit(EXIT_SUCCESS);
 }
 
@@ -37,7 +37,10 @@ static void	execute_parent_process(int pipefd[2], pid_t pid, t_tree *tree,
 		exit(EXIT_FAILURE);
 	}
 	close(pipefd[0]);
-	exec_tree(tree->right, mini);
+	if (tree->right)
+		exec_node(tree->right, mini);
+	else
+		exec_node(tree, mini);
 	if (waitpid(pid, NULL, 0) == -1)
 	{
 		perror("waitpid");

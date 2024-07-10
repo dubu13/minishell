@@ -35,6 +35,40 @@ void	handle_env_var(t_mini *mini)
 	}
 }
 
+void	print_tree(t_tree *node)
+{
+	if (node == NULL)
+		return;
+	printf("Type: %d\n", node->type);
+	if (node->cmd)
+	{
+		printf("Command: ");
+		for (int i = 0; node->cmd[i]; i++)
+			printf("%s ", node->cmd[i]);
+		printf("\n");
+	}
+	if (node->in)
+		printf("Input: %s\n", node->in);
+	if (node->out)
+	{
+		printf("Output: ");
+		for (int i = 0; node->out[i]; i++)
+			printf("%s ", node->out[i]);
+		printf("\n");
+	}
+	if (node->append)
+	{
+		printf("Append: ");
+		for (int i = 0; node->append[i]; i++)
+			printf("%s ", node->append[i]);
+		printf("\n");
+	}
+	if (node->limit)
+		printf("Limit: %s\n", node->limit);
+	print_tree(node->left);
+	print_tree(node->right);
+}
+
 void	parse(t_mini *mini)
 {
 	t_token	*tmp;
@@ -59,7 +93,8 @@ void	parse(t_mini *mini)
 		handle_env_var(mini);
 		tmp = mini->token_list;
 		mini->binary_tree = build_tree(&tmp);
-		check_exec(mini);
+		print_tree(mini->binary_tree);
+		exec_command(mini->binary_tree, mini);
 		//execute_tree(mini->binary_tree, mini);
 	}
 }

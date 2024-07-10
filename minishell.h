@@ -103,7 +103,7 @@ void				free_array(char **array);
 int					check_builtin(char *input);
 char				*command_path(char *command);
 void				external_command(char **cmd, t_mini *mini);
-void				exec_command(char **cmd, t_mini *mini);
+pid_t				exec_command(t_tree *node, t_mini *mini);
 void				exec_builtin(char **cmd, t_mini *mini);
 // builtin
 void				ft_echo(char **input, t_mini *mini);
@@ -173,10 +173,17 @@ t_tree				*handle_pipe(t_tree *root, t_tree **current, \
 						t_tree *pipe_node);
 void				out_rdirect(t_tree *tree, t_mini *mini);
 void				in_rdirect(t_tree *tree, t_mini *mini);
-void				exec_tree(t_tree *node, t_mini *mini);
+int					exec_tree(t_tree *node, t_mini *mini);
 void				append_rdirect(t_tree *tree, t_mini *mini);
 t_tree				*handle_rdir(t_tree **current, t_token *token);
 char				**create_out_array(t_token *token, int out_count);
 char				**create_append_array(t_token *token, int append_count);
 void				heredoc(t_tree *tree, t_mini *mini);
+int					setup_redir(t_tree *node);
+void	exec_node(t_tree *node, t_mini *mini);
+void	count_tokens(t_token *token, int *counts);
+char	**create_array(t_token *token, int count, t_token_type type1, t_token_type type2);
+
+t_tree	*handle_node(t_tree *root, t_tree **current, t_tree *new_node, t_token *token);
+int	is_valid_token_type(t_token_type type);
 #endif

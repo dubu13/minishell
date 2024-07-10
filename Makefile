@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/31 15:40:08 by dhasan            #+#    #+#              #
-#    Updated: 2024/06/19 13:02:51 by dkremer          ###   ########.fr        #
+#    Updated: 2024/07/10 12:20:13 by dhasan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,9 @@ BINDIR = bin
 PARSEDIR = $(BINDIR)/parsing
 BUILDDIR = $(BINDIR)/builtins
 EXECDIR = $(BINDIR)/exec
+MAINDIR = $(BINDIR)/main
 
-SRCS = $(wildcard *.c) $(wildcard parsing/*.c) $(wildcard builtins/*.c) $(wildcard exec/*.c)
+SRCS = $(wildcard *.c) $(wildcard parsing/*.c) $(wildcard builtins/*.c) $(wildcard exec/*.c) $(wildcard main/*.c)
 OBJS = $(SRCS:%.c=$(BINDIR)/%.o)
 
 all: $(NAME)
@@ -40,10 +41,10 @@ $(NAME): $(LIBFT) $(OBJS)
 $(LIBFT):
 	make -C $(LIBFT_PATH)
 
-$(BINDIR) $(PARSEDIR) $(BUILDDIR) $(EXECDIR):
+$(BINDIR) $(PARSEDIR) $(BUILDDIR) $(EXECDIR) $(MAINDIR):
 	mkdir -p $@
 
-$(BINDIR)/%.o: %.c | $(BINDIR) $(PARSEDIR) $(BUILDDIR) $(EXECDIR)
+$(BINDIR)/%.o: %.c | $(BINDIR) $(PARSEDIR) $(BUILDDIR) $(EXECDIR) $(MAINDIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 submodule:

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:54:25 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/07 05:33:03 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/10 15:07:11 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,20 @@ char	**new_env(char **env, char *new)
 		i++;
 	new_env = ft_calloc(i + 2, sizeof(char *));
 	if (!new_env)
-		error(E_ALLOC, NULL);
+		return (error(E_ALLOC, NULL), NULL);
 	i = 0;
 	while (env[i])
 	{
 		new_env[i] = ft_strdup(env[i]);
 		if (!new_env[i])
-			error(E_ALLOC, NULL);
+			return (free_array(new_env), error(E_ALLOC, NULL), NULL);
+		free(env[i]);
 		i++;
 	}
+	free(env);
 	new_env[i] = ft_strdup(new);
 	if (!new_env[i])
-		error(E_ALLOC, NULL);
-	free(env);
+		return (free_array(new_env), error(E_ALLOC, NULL), NULL);
 	return (new_env);
 }
 
@@ -67,6 +68,7 @@ char	*put_quotes(char *env)
 {
 	char	*key;
 	char	*value;
+	char	*tmp;
 	size_t	i;
 
 	i = 0;
@@ -75,11 +77,14 @@ char	*put_quotes(char *env)
 	if (ft_strlen(env) == i)
 		return (env);
 	key = ft_substr(env, 0, i);
-	value = ft_strdup(env + i + 1);
-	value = ft_strjoin("\"", value);
-	value = ft_strjoin(value, "\"");
-	key = ft_strjoin(key, "=");
-	env = ft_strjoin(key, value);
+	tmp = ft_strdup(env + i + 1);
+	value = ft_strjoin("\"", tmp);
+	free(tmp);
+	tmp = ft_strjoin(value, "\"");
+	free(value);
+	value = ft_strjoin(key, "=");
+	env = ft_strjoin(value, tmp);
+	free(tmp);
 	free(key);
 	free(value);
 	return (env);

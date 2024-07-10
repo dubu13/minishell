@@ -6,11 +6,11 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:15:13 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/07 13:40:42 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/10 12:10:44 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	sig_action(int sig)
 {

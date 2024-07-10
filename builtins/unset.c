@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:35:17 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/05 18:39:29 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/10 16:53:34 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ char	**rm_and_copy_env(char **env, char **new_env, int index)
 		}
 		new_env[j] = ft_strdup(env[i]);
 		if (!new_env[j])
-			error(E_ALLOC, NULL);
+			return (free_array(new_env), error(E_ALLOC, NULL), NULL);
 		i++;
 		j++;
 	}
-	new_env[j] = NULL;
+	// new_env[j] = NULL;
 	free(env);
 	return (new_env);
 }
@@ -61,7 +61,7 @@ char	**rm_env(char **env, int index)
 		i++;
 	new_env = ft_calloc(i, sizeof(char *));
 	if (!new_env)
-		error(E_ALLOC, NULL);
+		return (error(E_ALLOC, NULL), NULL);
 	new_env = rm_and_copy_env(env, new_env, index);
 	return (new_env);
 }
@@ -73,6 +73,7 @@ void	ft_unset(char **input, t_mini *mini)
 
 	i = -1;
 	index = 0;
+	mini->exit_status = 0;
 	if (!input)
 		return ;
 	while (input[++i])

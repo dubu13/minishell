@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/08 17:29:13 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/10 19:18:42 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_mini	*init_mini(void)
 {
@@ -36,8 +36,7 @@ int	main(void)
 		if (!mini->input)
 			break ;
 		free_token_list(&(mini->token_list));
-		mini->token_list = NULL;
-		//mini->binary_tree = NULL;
+		free_binary(mini->binary_tree);
 	}
 	rl_clear_history();
 	free_mini(mini);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/08 14:11:43 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/10 19:19:09 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ t_tree				*process_token(t_tree *root, t_tree **current,
 						t_token *token);
 t_token_type		set_type(int *is_next_cmd);
 
+void				free_binary(t_tree *tree);
 void				free_tree(t_tree *tree);
 void				free_mini(t_mini *mini);
 int					is_not_space(char *input, int i);

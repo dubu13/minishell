@@ -3,23 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 13:41:56 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/07 05:12:16 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/10 17:09:37 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	len_env(char **env)
 {
 	int	i;
 
-	i = -1;
-	while (env[++i]);
+	i = 0;
+	while (env[i])
+		i++;
 	return (i);
 }
+
 int	index_env(char *type, char **env)
 {
 	int	i;
@@ -44,10 +46,15 @@ void	update_env(char *type, char *value, t_mini *mini)
 
 	i = index_env(type, mini->env);
 	temp = ft_strjoin(type, "=");
+	if (!temp)
+		error(E_ALLOC, NULL);
+	free(mini->env[i]);
 	if (!value)
 		mini->env[i] = ft_strdup(temp);
 	else
 		mini->env[i] = ft_strjoin(temp, value);
+	if (!mini->env[i])
+		error(E_ALLOC, NULL);
 	free(temp);
 }
 
@@ -58,7 +65,8 @@ char	*get_env(char **env, char *type)
 
 	i = index_env(type, env);
 	if (i == -1)
-		return (ft_strdup(""));
+		return (NULL);
+		// return (ft_strdup(""));
 	len = ft_strlen(type);
 	return (ft_strdup(env[i] + len + 1));
 }
@@ -72,7 +80,7 @@ char	**save_env(void)
 	i = 0;
 	while (environ[i])
 		i++;
-	env = ft_calloc(i + 2, sizeof(char *));
+	env = ft_calloc(i + 1, sizeof(char *));
 	if (!env)
 		return (error(E_ALLOC, NULL), NULL);
 	i = 0;
@@ -83,7 +91,5 @@ char	**save_env(void)
 			return (error(E_ALLOC, NULL), NULL);
 		i++;
 	}
-	env[i] = ft_strdup("OLDPWD");
-	env[i + 1] = '\0';
 	return (env);
 }

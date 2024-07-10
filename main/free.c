@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 12:50:06 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/08 14:11:05 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/10 19:28:31 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
+
+void	free_array(char **array)
+{
+	int	i;
+
+	i = -1;
+	while (array[++i])
+		free(array[i]);
+	free(array);
+}
 
 void	free_token_list(t_token **token_list)
 {
@@ -33,31 +43,36 @@ void	free_token_list(t_token **token_list)
 
 void	free_tree(t_tree *tree)
 {
-	int	i;
-
-	i = -1;
-	if (tree)
+	if (!tree)
+		return ;
+	if (tree->cmd)
 	{
-		if (tree->cmd)
-		{
-			while (tree->cmd[++i])
-				free(tree->cmd[i]);
-			free(tree->cmd);
-		}
-		free_tree(tree->left);
-		free_tree(tree->right);
-		free(tree);
+		free_array(tree->cmd);
+		if (tree->in)
+			free(tree->in);
+		if (tree->out)
+			free(tree->out);
+		if (tree->limit)
+			free(tree->limit);
+		if (tree->append)
+			free_array(tree->append);
 	}
+	tree->cmd = NULL;
+	tree->in = NULL;
+	tree->out = NULL;
+	tree->limit = NULL;
+	tree->append = NULL;
 }
 
-void	free_array(char **array)
+void	free_binary(t_tree *tree)
 {
-	int	i;
-
-	i = -1;
-	while (array[++i])
-		free(array[i]);
-	free(array);
+	if (tree->type == PIPE)
+	{
+		free_binary(tree->left);
+		free_binary(tree->right);
+	}
+	else
+		free_tree(tree);
 }
 
 void	free_mini(t_mini *mini)
@@ -71,7 +86,10 @@ void	free_mini(t_mini *mini)
 		if (mini->token_list)
 			free_token_list(&(mini->token_list));
 		if (mini->binary_tree)
-			free_tree(mini->binary_tree);
+		{
+			free_binary(mini->binary_tree);
+			mini->binary_tree = NULL;
+		}
 		free(mini);
 	}
 }

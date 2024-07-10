@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:44:42 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/10 18:21:51 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/10 22:03:12 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	heredoc(t_tree *tree, t_mini *mini)
 		perror("dup2");
 	if (close(fd[0]) == -1 || close(fd[1]) == -1)
 		perror("close");
+	tree->limit = NULL;
 	exec_node(tree, mini);
 	if (dup2(fd_temp, STDIN_FILENO) == -1)
 		perror("dup2");
@@ -73,6 +74,7 @@ void	append_rdirect(t_tree *tree, t_mini *mini)
 		}
 		out_files++;
 	}
+	tree->append = NULL;
 	exec_node(tree->right, mini);
 	if (dup2(fd_temp, STDOUT_FILENO) < 0)
 		perror("dup2");
@@ -100,6 +102,7 @@ void	out_rdirect(t_tree *tree, t_mini *mini)
 		}
 		out_files++;
 	}
+	tree->out = NULL;
 	exec_node(tree, mini);
 	if (dup2(fd_temp, STDOUT_FILENO) < 0)
 		perror("dup2");
@@ -122,6 +125,7 @@ void	in_rdirect(t_tree *tree, t_mini *mini)
 	fd_temp = dup(STDIN_FILENO);
 	if (dup2(fd_in, STDIN_FILENO) < 0)
 		perror("dup2");
+	tree->in = NULL;
 	exec_node(tree, mini);
 	if (dup2(fd_temp, STDIN_FILENO) < 0)
 		perror("dup2");

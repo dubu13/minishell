@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:14:50 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/10 18:19:24 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/10 22:00:27 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void	exec_node(t_tree *node, t_mini *mini)
 {
 	if (node->type == PIPE)
 		exec_pipe(node, mini);
-	else if (node->type == RDIR_IN)
+	else if (node->in)
 		in_rdirect(node, mini);
-	else if (node->type == RDIR_OUT)
+	else if (node->out)
 		out_rdirect(node, mini);
-	else if (node->type == RDIR_APPEND)
+	else if (node->append)
 		append_rdirect(node, mini);
-	else if (node->type == RDIR_HEREDOC)
+	else if (node->limit)
 		heredoc(node, mini);
 	else if (node->type == CMD)
 		exec_cmd(node, mini);

@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 20:13:06 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/10 17:10:50 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/10 20:10:55 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	handle_word(char *input, int *i, t_token **token_list, int *is_next_cmd)
 	new_token = create_token(type, value);
 	if (!new_token)
 		free_and_error(value, E_ALLOC, NULL);
+	free(value);
 	add_back_token(token_list, new_token);
 	*is_next_cmd = 0;
 	if (input[*i] && is_meta_char(input[*i]))

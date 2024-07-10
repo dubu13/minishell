@@ -27,7 +27,7 @@ void	handle_env_var(t_mini *mini)
 			value = get_env(mini->env, current->value + 1);
 			if (value)
 			{
-				// free(current->value);
+				free(current->value);
 				current->value = ft_strdup(value);
 			}
 		}
@@ -93,8 +93,9 @@ void	parse(t_mini *mini)
 		handle_env_var(mini);
 		tmp = mini->token_list;
 		mini->binary_tree = build_tree(&tmp);
+		free_token_list(&mini->token_list);
 		print_tree(mini->binary_tree);
-		exec_command(mini->binary_tree, mini);
+		exec_node(mini->binary_tree, mini);
 		//execute_tree(mini->binary_tree, mini);
 	}
 }

@@ -3,14 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   built_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 20:12:58 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/10 19:45:44 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/10 21:32:21 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	cmd_node(t_token *token, t_tree *node, int *counts)
+{
+	node->cmd = create_cmd_array(token, counts[0]);
+	if (!node->cmd)
+	{
+		free_binary(node);
+		error(E_ALLOC, NULL);
+	}
+	if (counts[1] > 0)
+	{
+		node->out = create_out_array(token, counts[1]);
+		if (!node->out)
+		{
+			free_binary(node);
+			error(E_ALLOC, NULL);
+		}
+	}
+	if (counts[2] > 0)
+	{
+		node->append = create_append_array(token, counts[2]);
+		if (!node->append)
+		{
+			free_binary(node);
+			error(E_ALLOC, NULL);
+		}
+	}
+}
 
 t_tree	*create_node(t_token *token)
 {
@@ -22,18 +50,10 @@ t_tree	*create_node(t_token *token)
 	counts[2] = 0;
 	node = initialize_node(token);
 	if (!node)
-		error(E_ALLOC, NULL);
+		return (error(E_ALLOC, NULL), NULL);
+	count_tokens(token, counts);
 	if (token->type == CMD)
-	{
-		count_tokens(token, counts);
-		node->cmd = create_cmd_array(token, counts[0]);
-		if (!node->cmd)
-			error(E_ALLOC, NULL);
-	}
-	if (counts[1] > 0)
-		node->out = create_out_array(token, counts[1]);
-	if (counts[2] > 0)
-		node->append = create_append_array(token, counts[2]);
+		cmd_node(token, node, counts);
 	return (node);
 }
 
@@ -43,6 +63,8 @@ t_tree	*process_token(t_tree *root, t_tree **current, t_token *token)
 	t_tree	*pipe_node;
 
 	new_node = create_node(token);
+	if (!new_node)
+		return (error(E_ALLOC, NULL), NULL);
 	if (!root)
 	{
 		root = new_node;
@@ -51,6 +73,8 @@ t_tree	*process_token(t_tree *root, t_tree **current, t_token *token)
 	else if (token->type == PIPE)
 	{
 		pipe_node = create_node(token);
+		if (!pipe_node)
+			return (free_binary(root), error(E_ALLOC, NULL), NULL);
 		root = handle_pipe(root, current, pipe_node);
 	}
 	else if (token->type == RDIR_HEREDOC || token->type == RDIR_IN)
@@ -73,14 +97,9 @@ t_tree	*build_tree(t_token **tokens)
 	token = *tokens;
 	while (token)
 	{
-		if (token->type == CMD || token->type == PIPE
-			|| token->type == RDIR_APPEND || token->type == RDIR_HEREDOC
-			|| token->type == RDIR_IN || token->type == RDIR_OUT)
-		{
-			root = process_token(root, &current, token);
-			if (!root)
-				error(E_ALLOC, NULL);
-		}
+		root = process_token(root, &current, token);
+		if (!root)
+			return (free_binary(root), error(E_ALLOC, NULL), NULL);
 		token = token->next;
 	}
 	return (root);

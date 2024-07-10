@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 12:50:06 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/10 19:28:31 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/10 20:56:00 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	free_tree(t_tree *tree)
 		if (tree->in)
 			free(tree->in);
 		if (tree->out)
-			free(tree->out);
+			free_array(tree->out);
 		if (tree->limit)
 			free(tree->limit);
 		if (tree->append)
@@ -80,7 +80,10 @@ void	free_mini(t_mini *mini)
 	if (mini)
 	{
 		if (mini->env)
+		{
 			free_array(mini->env);
+			mini->env = NULL;
+		}
 		if (mini->input)
 			free(mini->input);
 		if (mini->token_list)

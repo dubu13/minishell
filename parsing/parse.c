@@ -98,4 +98,7 @@ void	parse(t_mini *mini)
 		exec_node(mini->binary_tree, mini);
 		//execute_tree(mini->binary_tree, mini);
 	}
+	free_binary(mini->binary_tree);
+	free(mini->binary_tree);
+	mini->binary_tree = NULL;
 }

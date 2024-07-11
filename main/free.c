@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 12:50:06 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/11 13:24:21 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/11 18:40:05 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,16 @@ void	free_binary(t_tree *tree)
 	if (tree->type == PIPE)
 	{
 		free_binary(tree->left);
+		free(tree->left);
+		tree->left = NULL;
 		free_binary(tree->right);
+		free(tree->right);
+		tree->right = NULL;
 	}
 	else
+	{
 		free_tree(tree);
+	}
 }
 
 void	free_mini(t_mini *mini)

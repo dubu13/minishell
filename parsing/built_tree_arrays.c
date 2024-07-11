@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 19:45:49 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/10 22:44:16 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/11 14:15:59 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ char	**create_out_array(t_token *token, int out_count)
 	int		i;
 
 	i = 0;
-	out_array = ft_calloc(sizeof(char *), (out_count + 1));
+	out_array = ft_calloc(sizeof(char *), (out_count + 1));//
 	if (!out_array)
 		return (error(E_ALLOC, NULL), NULL);
 	current_token = token;
 	while (current_token && current_token->type != PIPE)
 	{
 		if (current_token->type == RDIR_OUT)
-			out_array[i++] = ft_strdup(current_token->next->value);
+			out_array[i++] = ft_strdup(current_token->next->value);//
 		current_token = current_token->next;
 	}
 	return (out_array);

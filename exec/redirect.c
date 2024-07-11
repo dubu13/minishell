@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:44:42 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/10 22:03:12 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/11 16:02:18 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ void	read_heredoc(t_tree *tree, int fd[2])
 	{
 		write(1, "> ", 2);
 		read = get_next_line(STDIN_FILENO);
-		if (ft_strncmp(read, tree->limit, ft_strlen(tree->limit)) == 0)
+		if (!read || !ft_strncmp(read, tree->limit, ft_strlen(tree->limit)))
 		{
 			free(read);
+			read = NULL;
 			break ;
 		}
 		write(fd[1], read, ft_strlen(read));
@@ -46,6 +47,7 @@ void	heredoc(t_tree *tree, t_mini *mini)
 		perror("dup2");
 	if (close(fd[0]) == -1 || close(fd[1]) == -1)
 		perror("close");
+	free(tree->limit);
 	tree->limit = NULL;
 	exec_node(tree, mini);
 	if (dup2(fd_temp, STDIN_FILENO) == -1)
@@ -74,6 +76,7 @@ void	append_rdirect(t_tree *tree, t_mini *mini)
 		}
 		out_files++;
 	}
+	free_array(tree->append);
 	tree->append = NULL;
 	exec_node(tree->right, mini);
 	if (dup2(fd_temp, STDOUT_FILENO) < 0)
@@ -102,6 +105,7 @@ void	out_rdirect(t_tree *tree, t_mini *mini)
 		}
 		out_files++;
 	}
+	free_array(tree->out);
 	tree->out = NULL;
 	exec_node(tree, mini);
 	if (dup2(fd_temp, STDOUT_FILENO) < 0)
@@ -125,6 +129,7 @@ void	in_rdirect(t_tree *tree, t_mini *mini)
 	fd_temp = dup(STDIN_FILENO);
 	if (dup2(fd_in, STDIN_FILENO) < 0)
 		perror("dup2");
+	free(tree->in);
 	tree->in = NULL;
 	exec_node(tree, mini);
 	if (dup2(fd_temp, STDIN_FILENO) < 0)

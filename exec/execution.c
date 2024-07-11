@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:14:50 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/11 00:40:54 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/11 23:39:40 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	exec_cmd(t_tree *tree, t_mini *mini)
 	builtin = check_builtin(tree->cmd[0]);
 	if (builtin == 1)
 		exec_builtin(tree->cmd, mini);
-	external_command(tree->cmd, mini);
+	else
+		external_command(tree->cmd, mini);
 }
 
 void	exec_node(t_tree *node, t_mini *mini)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:44:42 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/11 16:02:18 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/11 23:41:21 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	append_rdirect(t_tree *tree, t_mini *mini)
 	}
 	free_array(tree->append);
 	tree->append = NULL;
-	exec_node(tree->right, mini);
+	exec_node(tree, mini);
 	if (dup2(fd_temp, STDOUT_FILENO) < 0)
 		perror("dup2");
 	close(fd_temp);

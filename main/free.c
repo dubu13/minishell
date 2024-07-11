@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 12:50:06 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/10 20:56:00 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/11 13:24:21 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	free_mini(t_mini *mini)
 		if (mini->binary_tree)
 		{
 			free_binary(mini->binary_tree);
-			mini->binary_tree = NULL;
+			free(mini->binary_tree);
 		}
 		free(mini);
 	}

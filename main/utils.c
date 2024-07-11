@@ -56,5 +56,6 @@ char	*remove_quotes(char *str)
 		i++;
 	}
 	new_str[j] = '\0';
+	free(str);
 	return (new_str);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 19:06:47 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/10 17:51:12 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/11 23:32:38 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,9 +123,11 @@ void	external_command(char **cmd, t_mini *mini)
 	{
 		execve(cmd_path, cmd, mini->env);
 		free(cmd_path);
+		cmd_path = NULL;
 		exit(EXIT_FAILURE);
 	}
 	else
 		waitpid(pid, &status, 0);
 	free(cmd_path);
+	cmd_path = NULL;
 }

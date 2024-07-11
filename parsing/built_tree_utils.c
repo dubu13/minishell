@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 00:55:23 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/10 19:14:52 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/11 14:03:13 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,14 @@ void	count_tokens(t_token *token, int *counts)
 	while (current_token && current_token->type != PIPE)
 	{
 		if (current_token->type == CMD || current_token->type == WORD)
+		{
+			if (current_token->type == RDIR_OUT || \
+					current_token->type == RDIR_IN || \
+					current_token->type == RDIR_APPEND || \
+					current_token->type == RDIR_HEREDOC)
+				break ;
 			counts[0]++;
+		}
 		else if (current_token->type == RDIR_OUT)
 			counts[1]++;
 		else if (current_token->type == RDIR_APPEND)

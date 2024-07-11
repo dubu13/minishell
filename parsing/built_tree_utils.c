@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   built_tree_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 00:55:23 by dkremer           #+#    #+#             */
 /*   Updated: 2024/07/11 14:03:13 by dkremer          ###   ########.fr       */

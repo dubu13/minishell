@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:14:50 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/10 22:00:27 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/11 00:40:54 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	exec_cmd(t_tree *tree, t_mini *mini)
 
 void	exec_node(t_tree *node, t_mini *mini)
 {
+	if (!node)
+		return ;
 	if (node->type == PIPE)
 		exec_pipe(node, mini);
 	else if (node->in)

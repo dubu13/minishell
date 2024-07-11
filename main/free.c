@@ -16,9 +16,12 @@ void	free_array(char **array)
 {
 	int	i;
 
-	i = -1;
-	while (array[++i])
+	i = 0;
+	while (array[i])
+	{
 		free(array[i]);
+		i++;
+	}
 	free(array);
 }
 
@@ -47,7 +50,8 @@ void	free_tree(t_tree *tree)
 		return ;
 	if (tree->cmd)
 	{
-		free_array(tree->cmd);
+		if (tree->cmd)
+			free_array(tree->cmd);
 		if (tree->in)
 			free(tree->in);
 		if (tree->out)
@@ -66,6 +70,8 @@ void	free_tree(t_tree *tree)
 
 void	free_binary(t_tree *tree)
 {
+	if (!tree)
+		return;
 	if (tree->type == PIPE)
 	{
 		free_binary(tree->left);

@@ -17,7 +17,7 @@ void	exec_cmd(t_tree *tree, t_mini *mini)
 	int	builtin;
 
 	builtin = check_builtin(tree->cmd[0]);
-	if (builtin == 0)
+	if (builtin == 1)
 		exec_builtin(tree->cmd, mini);
 	external_command(tree->cmd, mini);
 }

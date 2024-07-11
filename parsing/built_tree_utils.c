@@ -71,6 +71,8 @@ t_tree	*handle_pipe(t_tree *root, t_tree **current, t_tree *pipe_node)
 
 void	handle_rdir(t_tree *node, t_token *token)
 {
+	if (!token->next)
+		return ;
 	if (token->next->type == RDIR_IN)
 		node->in = ft_strdup(token->next->next->value);
 	else if (token->next->type == RDIR_HEREDOC)

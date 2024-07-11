@@ -21,8 +21,8 @@ static void execute_child_process(int pipefd[2], t_tree *tree, t_mini *mini)
 		close(pipefd[1]);
 		exit(EXIT_FAILURE);
 	}
-	close(pipefd[0]);
-	close(pipefd[1]);
+	// close(pipefd[0]);
+	// close(pipefd[1]);
 	exec_node(tree->left, mini);
 	exit(EXIT_SUCCESS);
 }
@@ -36,8 +36,8 @@ static void execute_parent_process(int pipefd[2], pid_t pid, t_tree *tree, t_min
 		close(pipefd[1]);
 		exit(EXIT_FAILURE);
 	}
-	close(pipefd[0]);
-	close(pipefd[1]);
+	// close(pipefd[0]);
+	// close(pipefd[1]);
 	exec_node(tree->right, mini);
 	if (waitpid(pid, NULL, 0) == -1)
 	{

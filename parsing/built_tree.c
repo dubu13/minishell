@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 20:12:58 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/11 16:38:54 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/11 20:13:52 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	cmd_node(t_token *token, t_tree *node, int *counts)
 			error(E_ALLOC, NULL);
 		}
 	}
+	else
+		handle_rdir(node, token);
 }
 
 t_tree	*create_node(t_token *token)
@@ -48,7 +50,7 @@ t_tree	*create_node(t_token *token)
 	counts[0] = 0;
 	counts[1] = 0;
 	counts[2] = 0;
-	node = initialize_node(token);//
+	node = initialize_node(token);
 	if (!node)
 		return (error(E_ALLOC, NULL), NULL);
 	count_tokens(token, counts);
@@ -80,8 +82,8 @@ t_tree	*process_token(t_tree *root, t_tree **current, t_token *token)
 			return (free_binary(root), error(E_ALLOC, NULL), NULL);
 		root = handle_pipe(root, current, pipe_node);
 	}
-	else if (token->type == RDIR_HEREDOC || token->type == RDIR_IN)
-		*current = handle_rdir(current, token);
+/* 	else if (token->type == RDIR_HEREDOC || token->type == RDIR_IN)
+		*current = handle_rdir(current, token); */
 	else if (token->type == CMD)
 	{
 		*current = handle_non_pipe(current, new_node);

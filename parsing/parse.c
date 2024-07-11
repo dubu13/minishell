@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dkremer <dkremer@student.42heilbronn.de>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/11 20:15:45 by dkremer           #+#    #+#             */
+/*   Updated: 2024/07/11 20:16:04 by dkremer          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../minishell.h"
 
@@ -94,7 +105,7 @@ void	parse(t_mini *mini)
 		tmp = mini->token_list;
 		mini->binary_tree = build_tree(&tmp);
 		free_token_list(&mini->token_list);
-		// print_tree(mini->binary_tree);
+		//print_tree(mini->binary_tree);
 		exec_node(mini->binary_tree, mini);
 		//execute_tree(mini->binary_tree, mini);
 	}

@@ -97,7 +97,10 @@ void	free_mini(t_mini *mini)
 			mini->env = NULL;
 		}
 		if (mini->input)
+		{
 			free(mini->input);
+			mini->input = NULL;
+		}
 		if (mini->token_list)
 			free_token_list(&(mini->token_list));
 		if (mini->binary_tree)

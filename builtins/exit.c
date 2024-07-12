@@ -69,7 +69,7 @@ void	ft_exit(char **input, t_mini *mini)
 	printf("exit\n");
 	exit_code = mini->exit_status;
 	error = false;
-	if (input)
+	if (*input)
 	{
 		if (input[1])
 		{

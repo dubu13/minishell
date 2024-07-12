@@ -29,7 +29,6 @@ char	**create_cmd_array(t_token *token, int cmd_count)
 		cmd_array[i++] = ft_strdup(current_token->value);
 		current_token = current_token->next;
 	}
-	cmd_array[i] = NULL;
 	return (cmd_array);
 }
 

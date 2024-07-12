@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 19:07:13 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/05 19:07:28 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/12 18:15:21 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,23 @@ int	is_not_space(char *input, int i)
 		return (1);
 	else
 		return (0);
+}
+
+void	handle_quotes_with_space(char *input, int *i)
+{
+	int	quote;
+
+	quote = 0;
+	while (input[*i] && (is_not_space(input, *i) || quote))
+	{
+		if ((input[*i] == '"' || input[*i] == '\'') && !quote)
+		{
+			quote = input[*i];
+		}
+		else if (input[*i] == quote)
+		{
+			quote = 0;
+		}
+		(*i)++;
+	}
 }

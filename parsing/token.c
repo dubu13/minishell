@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 20:13:06 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/10 20:10:55 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/12 18:15:08 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ void	handle_word(char *input, int *i, t_token **token_list, int *is_next_cmd)
 	t_token			*new_token;
 
 	start = *i;
-	while (is_not_space(input, *i))
-		(*i)++;
+	handle_quotes_with_space(input, i);
 	length = *i - start;
 	value = ft_calloc(length + 1, sizeof(char));
 	if (!value)

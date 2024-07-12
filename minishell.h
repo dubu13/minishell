@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/11 20:15:16 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/12 18:30:40 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,10 +180,13 @@ char				**create_out_array(t_token *token, int out_count);
 char				**create_append_array(t_token *token, int append_count);
 void				heredoc(t_tree *tree, t_mini *mini);
 int					setup_redir(t_tree *node);
-void	exec_node(t_tree *node, t_mini *mini);
-void	count_tokens(t_token *token, int *counts);
-char	**create_array(t_token *token, int count, t_token_type type1, t_token_type type2);
+void				exec_node(t_tree *node, t_mini *mini);
+void				count_tokens(t_token *token, int *counts);
+char				**create_array(t_token *token, int count, \
+												t_token_type type1, t_token_type type2);
+t_tree			*handle_node(t_tree *root, t_tree **current, \
+												t_tree *new_node, t_token *token);
+int					is_valid_token_type(t_token_type type);
+void				handle_quotes_with_space(char *input, int *i);
 
-t_tree	*handle_node(t_tree *root, t_tree **current, t_tree *new_node, t_token *token);
-int	is_valid_token_type(t_token_type type);
 #endif

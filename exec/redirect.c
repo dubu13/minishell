@@ -6,13 +6,11 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:44:42 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/12 16:53:57 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/12 19:42:44 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <stdio.h>
-#include <unistd.h>
 
 void	read_heredoc(t_tree *tree, int fd[2])
 {

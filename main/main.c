@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/11 18:23:48 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/12 19:48:30 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ int	main(void)
 		parse(mini);
 		if (!mini->input)
 			break ;
-		// free_binary(mini->binary_tree);
-		// free(mini->binary_tree);
+		free_binary(mini->binary_tree);
+		free(mini->binary_tree);
+		mini->binary_tree = NULL;
 	}
 	rl_clear_history();
 	free_mini(mini);

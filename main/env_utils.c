@@ -6,21 +6,11 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 13:41:56 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/10 17:09:37 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/12 19:46:58 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	len_env(char **env)
-{
-	int	i;
-
-	i = 0;
-	while (env[i])
-		i++;
-	return (i);
-}
 
 int	index_env(char *type, char **env)
 {
@@ -48,7 +38,6 @@ void	update_env(char *type, char *value, t_mini *mini)
 	temp = ft_strjoin(type, "=");
 	if (!temp)
 		error(E_ALLOC, NULL);
-	// free(mini->env[i]);
 	if (!value)
 		mini->env[i] = ft_strdup(temp);
 	else
@@ -65,15 +54,16 @@ void	update_env(char *type, char *value, t_mini *mini)
 
 char	*get_env(char **env, char *type)
 {
-	int	i;
-	int	len;
+	char	*value;
+	int		i;
+	int		len;
 
 	i = index_env(type, env);
 	if (i == -1)
 		return (NULL);
-		// return (ft_strdup(""));
 	len = ft_strlen(type);
-	return (ft_strdup(env[i] + len + 1));
+	value = ft_strdup(env[i] + len + 1);
+	return (value);
 }
 
 char	**save_env(void)
@@ -81,19 +71,11 @@ char	**save_env(void)
 	extern char	**environ;
 	char		**env;
 	int			i;
-	int			oldpwd;
 
 	i = 0;
 	while (environ[i])
-	{
-		if (ft_strncmp(environ[i], "OLDPWD", 6))
-			oldpwd = 0;
 		i++;
-	}
-	if (!oldpwd)
-		env = ft_calloc(i + 2, sizeof(char *));
-	else
-		env = ft_calloc(i + 1, sizeof(char *));
+	env = ft_calloc(i + 1, sizeof(char *));
 	if (!env)
 		return (error(E_ALLOC, NULL), NULL);
 	i = 0;
@@ -104,7 +86,5 @@ char	**save_env(void)
 			return (error(E_ALLOC, NULL), NULL);
 		i++;
 	}
-	if (!oldpwd)
-		env[i] = ft_strdup("OLDPWD");
 	return (env);
 }

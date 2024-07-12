@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:31:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/10 17:24:51 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/12 18:57:33 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,8 @@ void	export_print(char **env)
 	{
 		quoted_env = put_quotes(env[i]);
 		printf("declare -x %s\n", quoted_env);
-		free(quoted_env);
-		free(env[i]);
-		env[i] = NULL;
+		if (ft_strchr(quoted_env, '='))
+			free(quoted_env);
 	}
 }
 

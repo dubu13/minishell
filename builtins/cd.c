@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:40:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/10 14:11:16 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/12 19:05:48 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ char	*get_newpath(char *input, t_mini *mini)
 	if (!input || (*input == '~' && *(input + 1) == '\0'))
 		new_path = get_env(mini->env, "HOME");
 	else if (*input == '-' && *(input + 1) == '\0')
+	{
 		new_path = get_env(mini->env, "OLDPWD");
+		printf("%s\n", new_path);
+	}
 	else
 		new_path = ft_strdup(input);
 	if (!new_path)

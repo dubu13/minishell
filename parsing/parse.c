@@ -6,19 +6,27 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 20:15:45 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/12 19:49:18 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/12 21:23:12 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+static void	replace_env_var(t_token *current, t_mini *mini)
+{
+	char	*value;
+
+	value = get_env(mini->env, current->value + 1);
+	free(current->value);
+	current->value = ft_strdup(value);
+	free(value);
+}
+
 void	handle_env_var(t_mini *mini)
 {
 	t_token	*current;
-	char	*value;
 
 	current = mini->token_list;
-	value = NULL;
 	while (current)
 	{
 		if (current->value[0] == '\'')
@@ -33,13 +41,8 @@ void	handle_env_var(t_mini *mini)
 			free(current->value);
 			current->value = ft_itoa(mini->exit_status);
 		}
-		if (current->value[0] == '$' && current->value[1] != '\0')
-		{
-			value = get_env(mini->env, current->value + 1);
-			free(current->value);
-			current->value = ft_strdup(value);
-			free(value);
-		}
+		else if (current->value[0] == '$' && current->value[1] != '\0')
+			replace_env_var(current, mini);
 		current = current->next;
 	}
 }

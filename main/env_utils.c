@@ -48,14 +48,19 @@ void	update_env(char *type, char *value, t_mini *mini)
 	temp = ft_strjoin(type, "=");
 	if (!temp)
 		error(E_ALLOC, NULL);
-	free(mini->env[i]);
+	// free(mini->env[i]);
 	if (!value)
 		mini->env[i] = ft_strdup(temp);
 	else
+	{
+		if (mini->env[i])
+			free(mini->env[i]);
 		mini->env[i] = ft_strjoin(temp, value);
+	}
 	if (!mini->env[i])
 		error(E_ALLOC, NULL);
 	free(temp);
+	temp = NULL;
 }
 
 char	*get_env(char **env, char *type)
@@ -76,11 +81,19 @@ char	**save_env(void)
 	extern char	**environ;
 	char		**env;
 	int			i;
+	int			oldpwd;
 
 	i = 0;
 	while (environ[i])
+	{
+		if (ft_strncmp(environ[i], "OLDPWD", 6))
+			oldpwd = 0;
 		i++;
-	env = ft_calloc(i + 1, sizeof(char *));
+	}
+	if (!oldpwd)
+		env = ft_calloc(i + 2, sizeof(char *));
+	else
+		env = ft_calloc(i + 1, sizeof(char *));
 	if (!env)
 		return (error(E_ALLOC, NULL), NULL);
 	i = 0;
@@ -91,5 +104,7 @@ char	**save_env(void)
 			return (error(E_ALLOC, NULL), NULL);
 		i++;
 	}
+	if (!oldpwd)
+		env[i] = ft_strdup("OLDPWD");
 	return (env);
 }

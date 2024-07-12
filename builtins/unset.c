@@ -41,12 +41,12 @@ char	**rm_and_copy_env(char **env, char **new_env, int index)
 			continue ;
 		}
 		new_env[j] = ft_strdup(env[i]);
+		free(env[i]);
 		if (!new_env[j])
 			return (free_array(new_env), error(E_ALLOC, NULL), NULL);
 		i++;
 		j++;
 	}
-	// new_env[j] = NULL;
 	free(env);
 	return (new_env);
 }

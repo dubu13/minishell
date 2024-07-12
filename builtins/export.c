@@ -78,12 +78,19 @@ void	export_w_arg(char *key, char *env, t_mini *mini)
 
 void	export_print(char **env)
 {
+	char	*quoted_env;
 	int		i;
 
 	i = -1;
 	env = sort_env(env);
 	while (env[++i])
-		printf("declare -x %s\n", put_quotes(env[i]));
+	{
+		quoted_env = put_quotes(env[i]);
+		printf("declare -x %s\n", quoted_env);
+		free(quoted_env);
+		free(env[i]);
+		env[i] = NULL;
+	}
 }
 
 void	ft_export(char **input, t_mini *mini)

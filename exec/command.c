@@ -66,22 +66,13 @@ void	env_var_msg(char *cmd, t_mini *mini)
 		mini->exit_status = 127;
 	}
 }
-
-char	*command_path(char *command)
+char	*get_cmd_path(char **directories, char *command)
 {
 	int		i;
 	int		len;
 	char	*path;
 	char	*temp;
-	char	**directories;
 
-	if (!ft_strncmp(command, "/", 1) || !ft_strncmp(command, "./", 2)\
-		|| !ft_strncmp(command, "../", 3))
-		return (command);
-	directories = ft_split(getenv("PATH"), ':');
-	if (!directories)
-		return (ft_putstr_fd \
-		("minishell: Path environment variable not found\n", 2), NULL);
 	i = -1;
 	while (directories[++i])
 	{
@@ -95,11 +86,29 @@ char	*command_path(char *command)
 			free(temp);
 		}
 		if (!(access(path, X_OK | F_OK)))
-			return (free_array(directories), path);
+			return (path);
 		free(path);
 	}
-	free_array(directories);
 	return (NULL);
+}
+
+char	*command_path(char *command)
+{
+	char	**directories;
+
+	if (!ft_strncmp(command, "/", 1) || !ft_strncmp(command, "./", 2)\
+		|| !ft_strncmp(command, "../", 3))
+		{
+			if (!access(command, X_OK | F_OK))
+				return (command);
+			else
+				return (NULL);
+		}
+	directories = ft_split(getenv("PATH"), ':');
+	if (!directories)
+		return (ft_putstr_fd \
+		("minishell: Path environment variable not found\n", 2), NULL);
+	return (get_cmd_path(directories, command));
 }
 
 void	external_command(char **cmd, t_mini *mini)
@@ -111,8 +120,6 @@ void	external_command(char **cmd, t_mini *mini)
 	if (!cmd)
 		return ;
 	cmd_path = command_path(cmd[0]);
-	if (!cmd_path)
-		env_var_msg(cmd[0], mini);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -121,13 +128,12 @@ void	external_command(char **cmd, t_mini *mini)
 	}
 	if (pid == 0)
 	{
-		execve(cmd_path, cmd, mini->env);
+		if (execve(cmd_path, cmd, mini->env) == -1)
+			env_var_msg(cmd[0], mini);
 		free(cmd_path);
 		cmd_path = NULL;
 		exit(EXIT_FAILURE);
 	}
 	else
 		waitpid(pid, &status, 0);
-	free(cmd_path);
-	cmd_path = NULL;
 }

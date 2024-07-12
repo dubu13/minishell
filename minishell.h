@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/12 21:58:31 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/12 22:28:07 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void				exec_node(t_tree *node, t_mini *mini);
 int					check_builtin(char *input);
 void				external_command(char **cmd, t_mini *mini);
 void				exec_builtin(char **cmd, t_mini *mini);
+//pipe and redirects
 void				exec_pipe(t_tree *tree, t_mini *mini);
 void				in_rdirect(t_tree *tree, t_mini *mini);
 void				out_rdirect(t_tree *tree, t_mini *mini);

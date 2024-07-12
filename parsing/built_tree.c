@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 20:12:58 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/11 20:13:52 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/12 21:18:47 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ t_tree	*process_token(t_tree *root, t_tree **current, t_token *token)
 			return (free_binary(root), error(E_ALLOC, NULL), NULL);
 		root = handle_pipe(root, current, pipe_node);
 	}
-/* 	else if (token->type == RDIR_HEREDOC || token->type == RDIR_IN)
-		*current = handle_rdir(current, token); */
 	else if (token->type == CMD)
 	{
 		*current = handle_non_pipe(current, new_node);

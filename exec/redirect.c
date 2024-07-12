@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:44:42 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/11 23:41:21 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/12 16:53:57 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	read_heredoc(t_tree *tree, int fd[2])
 
 	while (1)
 	{
-		write(1, "> ", 2);
-		read = get_next_line(STDIN_FILENO);
+		read = readline("> ");
 		if (!read || !ft_strncmp(read, tree->limit, ft_strlen(tree->limit)))
 		{
 			free(read);
@@ -29,6 +28,7 @@ void	read_heredoc(t_tree *tree, int fd[2])
 			break ;
 		}
 		write(fd[1], read, ft_strlen(read));
+		write(fd[1], "\n", 1);
 		free(read);
 		read = NULL;
 	}

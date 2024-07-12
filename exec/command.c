@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 19:06:47 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/11 23:32:38 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/12 16:15:06 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	env_var_msg(char *cmd, t_mini *mini)
 		mini->exit_status = 127;
 	}
 }
+
 char	*get_cmd_path(char **directories, char *command)
 {
 	int		i;
@@ -95,20 +96,23 @@ char	*get_cmd_path(char **directories, char *command)
 char	*command_path(char *command)
 {
 	char	**directories;
+	char	*path;
 
 	if (!ft_strncmp(command, "/", 1) || !ft_strncmp(command, "./", 2)\
 		|| !ft_strncmp(command, "../", 3))
-		{
-			if (!access(command, X_OK | F_OK))
-				return (command);
-			else
-				return (NULL);
-		}
+	{
+		if (!access(command, X_OK | F_OK))
+			return (command);
+		else
+			return (NULL);
+	}
 	directories = ft_split(getenv("PATH"), ':');
 	if (!directories)
 		return (ft_putstr_fd \
 		("minishell: Path environment variable not found\n", 2), NULL);
-	return (get_cmd_path(directories, command));
+	path = get_cmd_path(directories, command);
+	free_array(directories);
+	return (path);
 }
 
 void	external_command(char **cmd, t_mini *mini)
@@ -124,6 +128,7 @@ void	external_command(char **cmd, t_mini *mini)
 	if (pid < 0)
 	{
 		perror("fork");
+		free(cmd_path);
 		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)
@@ -131,9 +136,9 @@ void	external_command(char **cmd, t_mini *mini)
 		if (execve(cmd_path, cmd, mini->env) == -1)
 			env_var_msg(cmd[0], mini);
 		free(cmd_path);
-		cmd_path = NULL;
 		exit(EXIT_FAILURE);
 	}
 	else
 		waitpid(pid, &status, 0);
+	free(cmd_path);
 }

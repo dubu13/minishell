@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 05:02:18 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/12 02:03:33 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/12 17:22:36 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void execute_child_process(int pipefd[2], t_tree *tree, t_mini *mini)
+static void	execute_child_process(int pipefd[2], t_tree *tree, t_mini *mini)
 {
 	close(pipefd[0]);
 	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
@@ -23,10 +23,12 @@ static void execute_child_process(int pipefd[2], t_tree *tree, t_mini *mini)
 		exit(EXIT_FAILURE);
 	}
 	exec_node(tree->left, mini);
+	free_mini(mini);
 	exit(EXIT_SUCCESS);
 }
 
-static void execute_parent_process(int pipefd[2], pid_t pid, t_tree *tree, t_mini *mini)
+static void	execute_parent_process(int pipefd[2], pid_t pid, \
+	t_tree *tree, t_mini *mini)
 {
 	if (dup2(pipefd[0], STDIN_FILENO) == -1)
 	{
@@ -45,11 +47,11 @@ static void execute_parent_process(int pipefd[2], pid_t pid, t_tree *tree, t_min
 	}
 }
 
-void exec_pipe(t_tree *tree, t_mini *mini)
+void	exec_pipe(t_tree *tree, t_mini *mini)
 {
-	int pipefd[2];
-	pid_t pid;
-	int fd_temp;
+	int		pipefd[2];
+	pid_t	pid;
+	int		fd_temp;
 
 	fd_temp = dup(STDIN_FILENO);
 	if (fd_temp == -1)

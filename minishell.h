@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 16:19:36 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/12 22:28:07 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/13 02:13:41 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,11 @@ char				**new_env(char **env, char *new);
 // parse
 char				*get_input(t_mini *mini);
 void				parse(t_mini *mini);
+char				*handle_single_quote(char **temp, char *new_value);
+char				*handle_double_quote(char **temp, char *new_value, t_mini *mini);
+char				*handle_env_expansion(char **temp, char *new_value, t_mini *mini);
+char				*handle_backslash(char **temp, char *new_value);
+char				*handle_regular_char(char **temp, char *new_value);
 // env_utils.c
 int					index_env(char *type, char **env);
 void				update_env(char *type, char *value, t_mini *mini);

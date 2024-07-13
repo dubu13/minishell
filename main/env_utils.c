@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 13:41:56 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/12 19:46:58 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/13 02:21:27 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,21 @@ void	update_env(char *type, char *value, t_mini *mini)
 	temp = NULL;
 }
 
-char	*get_env(char **env, char *type)
+char *get_env(char **env, char *type)
 {
-	char	*value;
-	int		i;
-	int		len;
+    static char buffer[4096];
+    int i, len;
 
-	i = index_env(type, env);
-	if (i == -1)
-		return (NULL);
-	len = ft_strlen(type);
-	value = ft_strdup(env[i] + len + 1);
-	return (value);
+    len = ft_strlen(type);
+    for (i = 0; env[i]; i++)
+    {
+        if (!ft_strncmp(env[i], type, len) && env[i][len] == '=')
+        {
+            ft_strlcpy(buffer, env[i] + len + 1, sizeof(buffer));
+            return buffer;
+        }
+    }
+    return NULL;
 }
 
 char	**save_env(void)

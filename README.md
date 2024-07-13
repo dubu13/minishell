@@ -31,7 +31,6 @@ make submodule
 make
 ```
 
-
 ## Usage
 
 Run the shell:
@@ -46,6 +45,9 @@ Run the shell:
 - `cd`: Change the current directory
 - `pwd`: Print the current working directory
 - `export`: Set environment variables
+- `exit`: Exit the shell
+- `unset`: Remove environment variables
+- `env`: Display the current environment
 
 ## Development
 

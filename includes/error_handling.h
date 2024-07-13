@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 03:12:29 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/13 03:22:09 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/13 03:47:29 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @param type The type of error.
  * @param input The input that caused the error.
  */
-void    error(t_error_type type, char *input);
+void	error(t_error_type type, char *input);
 
 /**
  * Prints a builtin error message based on the given error type and message.
@@ -29,6 +29,6 @@ void    error(t_error_type type, char *input);
  * @param type The type of error.
  * @param msg The error message.
  */
-void    builtin_msg(t_error_type type, char *msg);
+void	builtin_msg(t_error_type type, char *msg);
 
 #endif

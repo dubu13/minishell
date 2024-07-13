@@ -21,7 +21,7 @@
  * @param node The node to be executed.
  * @param mini A pointer to the minishell struct.
  */
-void    exec_node(t_tree *node, t_mini *mini);
+void	exec_node(t_tree *node, t_mini *mini);
 
 /**
  * @brief Checks if the given input is a builtin command.
@@ -29,7 +29,7 @@ void    exec_node(t_tree *node, t_mini *mini);
  * @param input The input command to be checked.
  * @return 1 if the input is a builtin command, 0 otherwise.
  */
-int     check_builtin(char *input);
+int		check_builtin(char *input);
 
 /**
  * @brief Executes an external command.
@@ -37,7 +37,7 @@ int     check_builtin(char *input);
  * @param cmd The command to be executed.
  * @param mini A pointer to the minishell struct.
  */
-void    external_command(char **cmd, t_mini *mini);
+void	external_command(char **cmd, t_mini *mini);
 
 /**
  * @brief Executes a builtin command.
@@ -45,7 +45,7 @@ void    external_command(char **cmd, t_mini *mini);
  * @param cmd The command to be executed.
  * @param mini A pointer to the minishell struct.
  */
-void    exec_builtin(char **cmd, t_mini *mini);
+void	exec_builtin(char **cmd, t_mini *mini);
 
 /**
  * @brief Executes a pipe command in the binary tree.
@@ -53,6 +53,6 @@ void    exec_builtin(char **cmd, t_mini *mini);
  * @param tree The root of the binary tree.
  * @param mini A pointer to the minishell struct.
  */
-void    exec_pipe(t_tree *tree, t_mini *mini);
+void	exec_pipe(t_tree *tree, t_mini *mini);
 
 #endif

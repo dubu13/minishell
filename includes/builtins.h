@@ -21,25 +21,25 @@
  * @param input The array of arguments to print.
  * @param mini The minishell struct.
  */
-void    ft_echo(char **input, t_mini *mini);
+void	ft_echo(char **input, t_mini *mini);
 
 /**
  * Changes the current working directory.
  *
- * @param token The array of arguments, with the first element being 
+ * @param token The array of arguments, with the first element being
  *              the directory to change to.
  * @param mini The minishell struct.
  */
-void    ft_cd(char **token, t_mini *mini);
+void	ft_cd(char **token, t_mini *mini);
 
 /**
  * Exits the minishell.
  *
- * @param input The array of arguments, 
+ * @param input The array of arguments,
  *              with the first element being the exit status.
  * @param mini The minishell struct.
  */
-void    ft_exit(char **input, t_mini *mini);
+void	ft_exit(char **input, t_mini *mini);
 
 /**
  * Prints the current working directory.
@@ -47,7 +47,7 @@ void    ft_exit(char **input, t_mini *mini);
  * @param cmd The array of arguments (unused).
  * @param mini The minishell struct.
  */
-void    ft_pwd(char **cmd, t_mini *mini);
+void	ft_pwd(char **cmd, t_mini *mini);
 
 /**
  * Prints the current environment variables.
@@ -55,24 +55,24 @@ void    ft_pwd(char **cmd, t_mini *mini);
  * @param input The array of arguments (unused).
  * @param mini The minishell struct.
  */
-void    ft_env(char **input, t_mini *mini);
+void	ft_env(char **input, t_mini *mini);
 
 /**
  * Adds or modifies an environment variable.
  *
- * @param input The array of arguments, 
+ * @param input The array of arguments,
  *              with the first element being the variable to export.
  * @param mini The minishell struct.
  */
-void    ft_export(char **input, t_mini *mini);
+void	ft_export(char **input, t_mini *mini);
 
 /**
  * Removes an environment variable.
  *
- * @param input The array of arguments, 
+ * @param input The array of arguments,
  *              with the first element being the variable to unset.
  * @param mini The minishell struct.
  */
-void    ft_unset(char **input, t_mini *mini);
+void	ft_unset(char **input, t_mini *mini);
 
 #endif

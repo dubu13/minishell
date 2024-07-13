@@ -21,7 +21,7 @@
  * @param tree The root of the binary tree.
  * @param mini A pointer to the minishell struct.
  */
-void    in_rdirect(t_tree *tree, t_mini *mini);
+void	in_rdirect(t_tree *tree, t_mini *mini);
 
 /**
  * @brief Handles output redirection in the binary tree.
@@ -29,7 +29,7 @@ void    in_rdirect(t_tree *tree, t_mini *mini);
  * @param tree The root of the binary tree.
  * @param mini A pointer to the minishell struct.
  */
-void    out_rdirect(t_tree *tree, t_mini *mini);
+void	out_rdirect(t_tree *tree, t_mini *mini);
 
 /**
  * @brief Handles append redirection in the binary tree.
@@ -37,7 +37,7 @@ void    out_rdirect(t_tree *tree, t_mini *mini);
  * @param tree The root of the binary tree.
  * @param mini A pointer to the minishell struct.
  */
-void    append_rdirect(t_tree *tree, t_mini *mini);
+void	append_rdirect(t_tree *tree, t_mini *mini);
 
 /**
  * @brief Handles heredoc redirection in the binary tree.
@@ -45,6 +45,6 @@ void    append_rdirect(t_tree *tree, t_mini *mini);
  * @param tree The root of the binary tree.
  * @param mini A pointer to the minishell struct.
  */
-void    heredoc(t_tree *tree, t_mini *mini);
+void	heredoc(t_tree *tree, t_mini *mini);
 
 #endif

@@ -20,35 +20,35 @@
  *
  * @param mini The minishell struct to free.
  */
-void    free_mini(t_mini *mini);
+void	free_mini(t_mini *mini);
 
 /**
  * Frees the memory allocated for the token list.
  *
  * @param token_list The token list to free.
  */
-void    free_token_list(t_token **token_list);
+void	free_token_list(t_token **token_list);
 
 /**
  * Frees the memory allocated for the binary tree.
  *
  * @param tree The binary tree to free.
  */
-void    free_binary(t_tree *tree);
+void	free_binary(t_tree *tree);
 
 /**
  * Frees the memory allocated for the binary tree.
  *
  * @param tree The binary tree to free.
  */
-void    free_tree(t_tree *tree);
+void	free_tree(t_tree *tree);
 
 /**
  * Frees the memory allocated for an array of strings.
  *
  * @param array The array of strings to free.
  */
-void    free_array(char **array);
+void	free_array(char **array);
 
 /**
  * Frees the memory allocated for a field and prints an error message.
@@ -57,6 +57,6 @@ void    free_array(char **array);
  * @param type The type of error.
  * @param input The input that caused the error.
  */
-void    free_and_error(char *field, t_error_type type, char *input);
+void	free_and_error(char *field, t_error_type type, char *input);
 
 #endif

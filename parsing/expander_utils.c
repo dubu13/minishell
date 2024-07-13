@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 02:14:17 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/13 02:14:44 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/13 04:19:49 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char *handle_env_expansion(char **temp, char *new_value, t_mini *mini)
     return new_value;
 }
 
-char *handle_backslash(char **temp, char *new_value)
+char    *handle_backslash(char **temp, char *new_value)
 {
     (*temp)++;
     if (**temp)

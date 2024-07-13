@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:40:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/12 19:05:48 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/13 04:59:33 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
 int	cd_path(char *new_path, char *old_path, t_mini *mini)
 {
@@ -58,5 +58,4 @@ void	ft_cd(char **input, t_mini *mini)
 	new_path = get_newpath(input[0], mini);
 	if (!new_path || cd_path(new_path, old_path, mini))
 		mini->exit_status = 1;
-	free(new_path);
 }

@@ -6,36 +6,40 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 20:15:45 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/13 02:14:34 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/13 04:22:43 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void handle_env_var(t_mini *mini)
+void	handle_env_var(t_mini *mini)
 {
-    t_token *current = mini->token_list;
-    while (current)
-    {
-        char *new_value = ft_strdup("");
-        char *temp = current->value;
-        while (*temp)
-        {
-            if (*temp == '\'')
-                new_value = handle_single_quote(&temp, new_value);
-            else if (*temp == '\"')
-                new_value = handle_double_quote(&temp, new_value, mini);
-            else if (*temp == '$' && *(temp + 1) != '\0')
-                new_value = handle_env_expansion(&temp, new_value, mini);
-            else if (*temp == '\\')
-                new_value = handle_backslash(&temp, new_value);
-            else
-                new_value = handle_regular_char(&temp, new_value);
-        }
-        free(current->value);
-        current->value = new_value;
-        current = current->next;
-    }
+	t_token	*current;
+	char	*new_value;
+	char	*temp;
+
+	current = mini->token_list;
+	while (current)
+	{
+		new_value = ft_strdup("");
+		temp = current->value;
+		while (*temp)
+		{
+			if (*temp == '\'')
+				new_value = handle_single_quote(&temp, new_value);
+			else if (*temp == '\"')
+				new_value = handle_double_quote(&temp, new_value, mini);
+			else if (*temp == '$' && *(temp + 1) != '\0')
+				new_value = handle_env_expansion(&temp, new_value, mini);
+			else if (*temp == '\\')
+				new_value = handle_backslash(&temp, new_value);
+			else
+				new_value = handle_regular_char(&temp, new_value);
+		}
+		free(current->value);
+		current->value = new_value;
+		current = current->next;
+	}
 }
 
 void	parse(t_mini *mini)

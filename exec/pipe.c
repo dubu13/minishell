@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
 static void	execute_child_process(int pipefd[2], t_tree *tree, t_mini *mini)
 {

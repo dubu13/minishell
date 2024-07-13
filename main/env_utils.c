@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 13:41:56 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/13 02:21:27 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/13 02:27:30 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,19 @@ void	update_env(char *type, char *value, t_mini *mini)
 char *get_env(char **env, char *type)
 {
     static char buffer[4096];
-    int i, len;
+    int i;
+	int len;
 
+	i = 0;
     len = ft_strlen(type);
-    for (i = 0; env[i]; i++)
+    while (env[i])
     {
         if (!ft_strncmp(env[i], type, len) && env[i][len] == '=')
         {
             ft_strlcpy(buffer, env[i] + len + 1, sizeof(buffer));
             return buffer;
         }
+		i++;
     }
     return NULL;
 }

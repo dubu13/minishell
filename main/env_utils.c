@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 13:41:56 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/13 12:25:11 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/15 17:38:01 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,27 +105,4 @@ char	*get_env(char **env, char *type)
 		i++;
 	}
 	return (NULL);
-}
-
-char	**save_env(void)
-{
-	extern char	**environ;
-	char		**env;
-	int			i;
-
-	i = 0;
-	while (environ[i])
-		i++;
-	env = ft_calloc(i + 1, sizeof(char *));
-	if (!env)
-		return (error(E_ALLOC, NULL), NULL);
-	i = 0;
-	while (environ[i])
-	{
-		env[i] = ft_strdup(environ[i]);
-		if (!env[i])
-			return (error(E_ALLOC, NULL), NULL);
-		i++;
-	}
-	return (env);
 }

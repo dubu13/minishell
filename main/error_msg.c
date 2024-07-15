@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 15:42:14 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/15 18:27:51 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/15 19:41:10 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,6 @@ void	close_and_exit(int *fd, char *msg, t_mini *mini, char *exit_status)
 
 void	free_and_exit(char *msg, t_mini *mini, char *exit_status)
 {
-	perror(msg);
+	ft_putendl_fd(msg, 2);
 	ft_exit(&exit_status, mini);
 }

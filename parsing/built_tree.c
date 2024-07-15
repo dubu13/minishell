@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 20:12:58 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/15 21:36:55 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/15 22:51:02 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ t_tree	*process_token(t_mini *mini, \
 	t_tree	*pipe_node;
 	t_token	*empty_token;
 
+	empty_token = NULL;
 	if ((token->type == RDIR_IN || token->type == RDIR_OUT || \
 				token->type == RDIR_APPEND || token->type == RDIR_HEREDOC) \
 					&& !token->prev)
@@ -115,7 +116,7 @@ t_tree	*build_tree(t_mini *mini, t_token **tokens)
 		if ((!token->prev || !token->next) && token->type == PIPE)
 		{
 			ft_putendl_fd("minishell: \
-				syntax error near unexpected token '|'", 2);
+syntax error near unexpected token '|'", 2);
 			mini->exit_status = 258;
 			return (NULL);
 		}

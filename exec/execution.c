@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:14:50 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/12 21:25:11 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/15 22:51:32 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ void	exec_node(t_tree *node, t_mini *mini)
 		append_rdirect(node, mini);
 	else if (node->limit)
 		heredoc(node, mini);
-	else if (node->type == CMD && node->cmd[1])
+	else if (node->type == CMD && node->cmd[0][0])
 		exec_cmd(node, mini);
 }

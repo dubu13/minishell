@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 03:14:45 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/13 03:15:29 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/15 22:11:19 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_cd(char **token, t_mini *mini);
  *              with the first element being the exit status.
  * @param mini The minishell struct.
  */
-void	ft_exit(char **input, t_mini *mini);
+void	ft_exit(char *input, t_mini *mini);
 
 /**
  * Prints the current working directory.

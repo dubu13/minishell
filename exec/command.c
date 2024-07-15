@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 19:06:47 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/15 20:21:54 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/15 22:59:36 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,31 +84,52 @@ char	*command_path(char *command)
 	return (path);
 }
 
-void	external_command(char **cmd, t_mini *mini)
+void	exit_child(t_mini *mini, int status)
 {
-	char	*cmd_path;
-	pid_t	pid;
-	int		status;
+	free_mini(mini);
+	exit(status);
+}
 
-	if (!cmd)
-		return ;
-	cmd_path = command_path(cmd[0]);
-	pid = fork();
+void	execute_child_process(char *cmd_path, char **cmd, t_mini *mini)
+{
+	if (execve(cmd_path, cmd, mini->env) == -1)
+	{
+		env_var_msg(cmd[0], mini);
+		free(cmd_path);
+		exit_child(mini, 127);
+	}
+}
+void	wait_for_child(pid_t pid, t_mini *mini)
+{
+	int	status;
+
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		mini->exit_status = WEXITSTATUS(status);
+}
+
+void	handle_fork_result(pid_t pid, char *cmd_path, char **cmd, t_mini *mini)
+{
 	if (pid < 0)
 	{
 		free(cmd_path);
 		free_and_exit("minishell: error in fork", mini, "1");
 	}
 	if (pid == 0)
-	{
-		if (execve(cmd_path, cmd, mini->env) == -1)
-		{
-			env_var_msg(cmd[0], mini);
-			free(cmd_path);
-			free_and_exit("minishell: command execution failed", mini, "127");
-		}
-	}
+		execute_child_process(cmd_path, cmd, mini);
 	else
-		waitpid(pid, &status, 0);
+		wait_for_child(pid, mini);
 	free(cmd_path);
+}
+
+void	external_command(char **cmd, t_mini *mini)
+{
+	char	*cmd_path;
+	pid_t	pid;
+
+	if (!cmd)
+		return ;
+	cmd_path = command_path(cmd[0]);
+	pid = fork();
+	handle_fork_result(pid, cmd_path, cmd, mini);
 }

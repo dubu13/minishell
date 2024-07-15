@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 05:02:18 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/15 21:46:27 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/15 22:58:42 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	execute_parent_process(int pipefd[2], pid_t pid, \
 	exec_node(tree->right, mini);
 	close(pipefd[0]);
 	if (waitpid(pid, NULL, 0) == -1)
-		free_and_exit("waitpid", mini, "1");//check if this is correct
+		free_and_exit("waitpid", mini, "1");
 }
 
 void	exec_pipe(t_tree *tree, t_mini *mini)

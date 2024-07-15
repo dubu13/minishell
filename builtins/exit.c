@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 15:11:37 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/15 20:45:02 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/15 22:10:21 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ long long	ft_atoull(const char *str, bool *error)
 	return (num * sign);
 }
 
-void	ft_exit(char **input, t_mini *mini)
+void	ft_exit(char *input, t_mini *mini)
 {
 	unsigned int	exit_code;
 	bool			error;
@@ -69,17 +69,12 @@ void	ft_exit(char **input, t_mini *mini)
 	printf("exit\n");
 	exit_code = mini->exit_status;
 	error = false;
-	if (*input)
+	if (input)
 	{
-		if (input[1])
+		exit_code = ft_atoull(input, &error);
+		if ((!is_digit(input) && input) || error)
 		{
-			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-			exit_code = 1;
-		}
-		exit_code = ft_atoull(input[0], &error);
-		if ((!is_digit(input[0]) && input[0]) || error)
-		{
-			builtin_msg(E_EXIT, input[0]);
+			builtin_msg(E_EXIT, input);
 			exit_code = 255;
 		}
 	}

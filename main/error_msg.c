@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 15:42:14 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/15 20:43:14 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/15 21:01:03 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ void	builtin_msg(t_error_type type, char *msg)
 	}
 }
 
-void	msg_for_rdir(char *file, t_mini *mini, char *exit_status)
+void	msg_for_rdir(char *file, t_mini *mini, int exit_status)
 {
 	printf("minishell: %s: no such file or directory\n", file);
-	free_and_exit(NULL, mini, exit_status);
+	mini->exit_status = exit_status;
 }
 
 void	close_and_exit(int *fd, char *msg, t_mini *mini, char *exit_status)

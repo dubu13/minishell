@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:44:42 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/15 20:34:48 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/15 21:01:43 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	append_rdirect(t_tree *tree, t_mini *mini)
 	{
 		fd_out = open(*out_files, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd_out < 0 && access(*out_files, F_OK) < 0)
-			msg_for_rdir(*tree->append, mini, "126");
+			msg_for_rdir(*tree->append, mini, 126);
 		else
 		{
 			if (dup2(fd_out, STDOUT_FILENO) < 0)
@@ -94,7 +94,7 @@ void	out_rdirect(t_tree *tree, t_mini *mini)
 	{
 		fd_out = open(*out_files, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd_out < 0 && access(*out_files, F_OK) < 0)
-			msg_for_rdir(*tree->out, mini, "126");
+			msg_for_rdir(*tree->out, mini, 126);
 		else
 		{
 			if (dup2(fd_out, STDOUT_FILENO) < 0)
@@ -120,12 +120,12 @@ void	in_rdirect(t_tree *tree, t_mini *mini)
 	if (fd_in < 0)
 	{
 		if (access(tree->in, F_OK) < 0)
-			msg_for_rdir(tree->in, mini, "126");
+			msg_for_rdir(tree->in, mini, 126);
 		else
 			free_and_exit("minishell: error in open", mini, "1");
 	}
 	fd_temp = dup(STDIN_FILENO);
-	if (dup2(fd_in, STDIN_FILENO) < 0)
+	if (fd_in > 0 && dup2(fd_in, STDIN_FILENO) < 0)
 		free_and_exit("minishell: error in dup2", mini, "1");
 	free(tree->in);
 	tree->in = NULL;

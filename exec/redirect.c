@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:44:42 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/15 21:04:36 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/15 21:07:53 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	out_rdirect(t_tree *tree, t_mini *mini)
 	{
 		fd_out = open(*out_files, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd_out < 0 && access(*out_files, F_OK) < 0)
-			(*tree->out, mini, 1);
+			msg_for_rdir(*tree->out, mini, 1);
 		else
 		{
 			if (dup2(fd_out, STDOUT_FILENO) < 0)

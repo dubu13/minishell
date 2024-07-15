@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 20:12:58 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/15 20:42:17 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/15 20:49:02 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,11 @@ t_tree	*process_token(t_tree *root, t_tree **current, t_token *token)
 		new_node = create_node(token);
 		if (!new_node)
 			return (error(E_ALLOC, NULL), NULL);
-		free(empty_token->value);
-		free(empty_token);
+		if (empty_token)
+		{
+			free(empty_token->value);
+			free(empty_token);
+		}
 	}
 	if (!root)
 	{

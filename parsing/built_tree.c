@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 20:12:58 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/12 21:18:47 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/15 19:37:10 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,10 @@ t_tree	*process_token(t_tree *root, t_tree **current, t_token *token)
 	t_tree	*new_node;
 	t_tree	*pipe_node;
 
+/* 	if ((token->type == RDIR_IN || token->type == RDIR_OUT || token->type == RDIR_APPEND || token->type == RDIR_HEREDOC) && !token->prev)
+	{
+		
+	} */
 	if (token->type == CMD)
 	{
 		new_node = create_node(token);
@@ -77,6 +81,8 @@ t_tree	*process_token(t_tree *root, t_tree **current, t_token *token)
 	}
 	else if (token->type == PIPE)
 	{
+		if (!token->prev || !token->next)
+			perror("syntax error near |");
 		pipe_node = create_node(token);
 		if (!pipe_node)
 			return (free_binary(root), error(E_ALLOC, NULL), NULL);

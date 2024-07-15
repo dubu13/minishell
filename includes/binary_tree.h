@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 03:17:18 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/13 03:45:58 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/15 19:48:46 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_tree	*initialize_node(t_token *token);
  * @param tokens A pointer to the head of the token list.
  * @return A pointer to the root of the binary tree.
  */
-t_tree	*build_tree(t_token **tokens);
+t_tree	*build_tree(t_mini *mini, t_token **tokens);
 
 /**
  * @brief Initializes a new node in the binary tree with the given token.

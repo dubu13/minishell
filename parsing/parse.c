@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 20:15:45 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/15 18:56:05 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/15 19:49:00 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	parse(t_mini *mini)
 		tokenize(mini->input, &mini->token_list);
 		handle_env_var(mini);
 		tmp = mini->token_list;
-		mini->binary_tree = build_tree(&tmp);
+		mini->binary_tree = build_tree(mini, &tmp);
 		free_token_list(&mini->token_list);
 		exec_node(mini->binary_tree, mini);
 	}

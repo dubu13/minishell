@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 20:12:58 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/12 21:18:47 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/15 20:42:17 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,33 @@ t_tree	*create_node(t_token *token)
 	return (node);
 }
 
+void	add_front(t_token **lst, t_token *new)
+{
+	new->next = *lst;
+	*lst = new;
+}
+
 t_tree	*process_token(t_tree *root, t_tree **current, t_token *token)
 {
 	t_tree	*new_node;
 	t_tree	*pipe_node;
+	t_token	*empty_token;
 
+	if ((token->type == RDIR_IN || token->type == RDIR_OUT || \
+				token->type == RDIR_APPEND || token->type == RDIR_HEREDOC) \
+					&& !token->prev)
+	{
+		empty_token = create_token(CMD, "");
+		add_front(&token, empty_token);
+		token = empty_token;
+	}
 	if (token->type == CMD)
 	{
 		new_node = create_node(token);
 		if (!new_node)
 			return (error(E_ALLOC, NULL), NULL);
+		free(empty_token->value);
+		free(empty_token);
 	}
 	if (!root)
 	{
@@ -87,7 +104,7 @@ t_tree	*process_token(t_tree *root, t_tree **current, t_token *token)
 	return (root);
 }
 
-t_tree	*build_tree(t_token **tokens)
+t_tree	*build_tree(t_mini *mini, t_token **tokens)
 {
 	t_tree	*root;
 	t_tree	*current;
@@ -100,6 +117,12 @@ t_tree	*build_tree(t_token **tokens)
 	token = *tokens;
 	while (token)
 	{
+		if ((!token->prev || !token->next) && token->type == PIPE)
+		{
+			ft_putendl_fd("minishell: syntax error near unexpected token '|'", 2);
+			mini->exit_status = 258;
+			return (NULL);
+		}
 		root = process_token(root, &current, token);
 		if (!root)
 			return (free_binary(root), error(E_ALLOC, NULL), NULL);

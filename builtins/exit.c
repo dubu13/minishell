@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 15:11:37 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/08 17:56:56 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/15 20:45:02 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 exit status :
 0 = success
 1 = general errors
-2 = misuse of shell builtins
+2 = misuse of shell builtins, syntax error
 126 = command invoked cannot execute
 127 = command not found
 128 = invalid argument to exit (non numeric)
@@ -73,7 +73,7 @@ void	ft_exit(char **input, t_mini *mini)
 	{
 		if (input[1])
 		{
-			ft_putstr_fd("exit: too many arguments\n", 2);
+			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 			exit_code = 1;
 		}
 		exit_code = ft_atoull(input[0], &error);

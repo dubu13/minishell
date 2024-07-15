@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:44:42 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/12 19:42:44 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/15 20:34:48 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,17 @@ void	heredoc(t_tree *tree, t_mini *mini)
 
 	fd_temp = dup(STDIN_FILENO);
 	if (pipe(fd) == -1)
-		perror("pipe");
+		free_and_exit("error in pipe", mini, "1");
 	read_heredoc(tree, fd);
 	if (dup2(fd[0], STDIN_FILENO) == -1)
-		perror("dup2");
+		free_and_exit("error in dup2", mini, "1");
 	if (close(fd[0]) == -1 || close(fd[1]) == -1)
-		perror("close");
+		free_and_exit("error in close", mini, "1");
 	free(tree->limit);
 	tree->limit = NULL;
 	exec_node(tree, mini);
 	if (dup2(fd_temp, STDIN_FILENO) == -1)
-		perror("dup2");
+		free_and_exit("error in dup2", mini, "1");
 	close(fd_temp);
 }
 
@@ -65,11 +65,11 @@ void	append_rdirect(t_tree *tree, t_mini *mini)
 	{
 		fd_out = open(*out_files, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd_out < 0 && access(*out_files, F_OK) < 0)
-			perror("minishell : <file> No such file or directory");
+			msg_for_rdir(*tree->append, mini, "126");
 		else
 		{
 			if (dup2(fd_out, STDOUT_FILENO) < 0)
-				perror("dup2");
+				free_and_exit("error in dup2", mini, "1");
 			close(fd_out);
 		}
 		out_files++;
@@ -78,7 +78,7 @@ void	append_rdirect(t_tree *tree, t_mini *mini)
 	tree->append = NULL;
 	exec_node(tree, mini);
 	if (dup2(fd_temp, STDOUT_FILENO) < 0)
-		perror("dup2");
+		free_and_exit("error in dup2", mini, "1");
 	close(fd_temp);
 }
 
@@ -94,11 +94,11 @@ void	out_rdirect(t_tree *tree, t_mini *mini)
 	{
 		fd_out = open(*out_files, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd_out < 0 && access(*out_files, F_OK) < 0)
-			perror("minishell : <file> No such file or directory");
+			msg_for_rdir(*tree->out, mini, "126");
 		else
 		{
 			if (dup2(fd_out, STDOUT_FILENO) < 0)
-				perror("dup2");
+				free_and_exit("minishell: error in dup2", mini, "1");
 			close(fd_out);
 		}
 		out_files++;
@@ -107,7 +107,7 @@ void	out_rdirect(t_tree *tree, t_mini *mini)
 	tree->out = NULL;
 	exec_node(tree, mini);
 	if (dup2(fd_temp, STDOUT_FILENO) < 0)
-		perror("dup2");
+		free_and_exit("minishell: error in dup2", mini, "1");
 	close(fd_temp);
 }
 
@@ -120,18 +120,18 @@ void	in_rdirect(t_tree *tree, t_mini *mini)
 	if (fd_in < 0)
 	{
 		if (access(tree->in, F_OK) < 0)
-			perror("minishell : <file> No such file or directory");
+			msg_for_rdir(tree->in, mini, "126");
 		else
-			perror("open");
+			free_and_exit("minishell: error in open", mini, "1");
 	}
 	fd_temp = dup(STDIN_FILENO);
 	if (dup2(fd_in, STDIN_FILENO) < 0)
-		perror("dup2");
+		free_and_exit("minishell: error in dup2", mini, "1");
 	free(tree->in);
 	tree->in = NULL;
 	exec_node(tree, mini);
 	if (dup2(fd_temp, STDIN_FILENO) < 0)
-		perror("dup2");
+		free_and_exit("minishell: error in dup2", mini, "1");
 	close(fd_in);
 	close(fd_temp);
 }

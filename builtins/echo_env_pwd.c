@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:39:30 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/10 14:16:16 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/15 20:42:20 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_env(char **input, t_mini *mini)
 	mini->exit_status = 0;
 	if (input[0])
 	{
-		ft_putstr_fd("env: too many arguments\n", 2);
+		ft_putendl_fd("minishell: env: too many arguments", 2);
 		mini->exit_status = 2;
 		return ;
 	}
@@ -77,12 +77,12 @@ void	ft_pwd(char **cmd, t_mini *mini)
 	mini->exit_status = 0;
 	if (cmd[0])
 	{
-		ft_putstr_fd("pwd: too many arguments\n", 2);
+		ft_putendl_fd("minishell: pwd: too many arguments", 2);
 		mini->exit_status = 2;
 	}
 	if (!getcwd(cwd, PATH_MAX))
 	{
-		ft_putstr_fd("pwd: error getting path\n", 2);
+		ft_putendl_fd("minishell: pwd: error getting path", 2);
 		mini->exit_status = 1;
 	}
 	else

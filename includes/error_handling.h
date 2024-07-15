@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 03:12:29 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/15 18:27:15 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/15 20:33:42 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,7 @@ void	builtin_msg(t_error_type type, char *msg);
 void	close_and_exit(int *fd, char *msg, t_mini *mini, char *exit_status);
 
 void	free_and_exit(char *msg, t_mini *mini, char *exit_status);
+
+void	msg_for_rdir(char *file, t_mini *mini, char *exit_status);
 
 #endif

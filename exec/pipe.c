@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 05:02:18 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/15 18:26:10 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/15 20:16:37 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ static void	execute_child_process(int pipefd[2], t_tree *tree, t_mini *mini)
 	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 		close_and_exit(pipefd, "dup2", mini, "1");
 	exec_node(tree->left, mini);
-	free_mini(mini);
-	exit(EXIT_SUCCESS);
+	free_and_exit(NULL, mini, "0");
 }
 
 static void	execute_parent_process(int pipefd[2], pid_t pid, \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:41:19 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/13 00:05:24 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/15 20:39:57 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	exec_builtin(char **cmd, t_mini *mini)
 		ft_cd(cmd + 1, mini);
 	if (!ft_strncmp(cmd[0], "exit", 4))
 		ft_exit(cmd + 1, mini);
-//	else if (!ft_strncmp(cmd[0], "export", 6))
-//		ft_export(cmd + 1, mini);
+	else if (!ft_strncmp(cmd[0], "export", 6))
+		ft_export(cmd + 1, mini);
 	else if (!ft_strncmp(cmd[0], "unset", 5))
 		ft_unset(cmd + 1, mini);
 }

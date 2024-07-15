@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 03:12:29 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/13 03:47:29 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/15 18:27:15 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,9 @@ void	error(t_error_type type, char *input);
  * @param msg The error message.
  */
 void	builtin_msg(t_error_type type, char *msg);
+
+void	close_and_exit(int *fd, char *msg, t_mini *mini, char *exit_status);
+
+void	free_and_exit(char *msg, t_mini *mini, char *exit_status);
 
 #endif

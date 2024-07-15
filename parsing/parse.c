@@ -3,41 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 20:15:45 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/13 04:22:43 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/15 18:56:05 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+char	*expander(char **temp, char *new_value, t_mini *mini)
+{
+	if (**temp == '\'')
+		new_value = handle_single_quote(temp, new_value);
+	else if (**temp == '\"')
+		new_value = handle_double_quote(temp, new_value, mini);
+	else if (**temp == '$' && *(*temp + 1) != '\0')
+		new_value = handle_env_expansion(temp, new_value, mini);
+	else if (**temp == '\\')
+		new_value = handle_backslash(temp, new_value);
+	else
+		new_value = handle_regular_char(temp, new_value);
+	return (new_value);
+}
+
+void	process_token_value(t_token *token, t_mini *mini)
+{
+	char	*new_value;
+	char	*temp;
+
+	new_value = ft_strdup("");
+	temp = token->value;
+	while (*temp)
+		new_value = expander(&temp, new_value, mini);
+	free(token->value);
+	token->value = new_value;
+}
+
 void	handle_env_var(t_mini *mini)
 {
 	t_token	*current;
-	char	*new_value;
-	char	*temp;
 
 	current = mini->token_list;
 	while (current)
 	{
-		new_value = ft_strdup("");
-		temp = current->value;
-		while (*temp)
-		{
-			if (*temp == '\'')
-				new_value = handle_single_quote(&temp, new_value);
-			else if (*temp == '\"')
-				new_value = handle_double_quote(&temp, new_value, mini);
-			else if (*temp == '$' && *(temp + 1) != '\0')
-				new_value = handle_env_expansion(&temp, new_value, mini);
-			else if (*temp == '\\')
-				new_value = handle_backslash(&temp, new_value);
-			else
-				new_value = handle_regular_char(&temp, new_value);
-		}
-		free(current->value);
-		current->value = new_value;
+		process_token_value(current, mini);
 		current = current->next;
 	}
 }

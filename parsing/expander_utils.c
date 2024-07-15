@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 02:14:17 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/13 04:19:49 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/15 19:00:06 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,18 @@ char	*handle_env_expansion(char **temp, char *new_value, t_mini *mini)
 	int		key_len;
 	char	*env_key;
 	char	*env_value;
+	char	*temp_itoa;
 
 	(*temp)++;
 	key_len = 0;
+	if (**temp == '?')
+	{
+		temp_itoa = ft_itoa(mini->exit_status);
+		new_value = ft_strjoin_gnl(new_value, temp_itoa);
+		(*temp)++;
+		free(temp_itoa);
+		return (new_value);
+	}
 	while ((*temp)[key_len] && (ft_isalnum((*temp)[key_len])
 			|| (*temp)[key_len] == '_'))
 		key_len++;
@@ -84,7 +93,9 @@ char	*handle_backslash(char **temp, char *new_value)
 
 char	*handle_regular_char(char **temp, char *new_value)
 {
-	char *char_str = ft_substr(*temp, 0, 1);
+	char	*char_str;
+
+	char_str = ft_substr(*temp, 0, 1);
 	new_value = ft_strjoin_gnl(new_value, char_str);
 	free(char_str);
 	(*temp)++;

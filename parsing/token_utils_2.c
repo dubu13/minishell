@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 19:07:13 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/13 00:13:13 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/15 21:37:53 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	free_and_error(char *field, t_error_type type, char *input)
-{
-	free(field);
-	error(type, input);
-}
 
 int	is_not_space(char *input, int i)
 {

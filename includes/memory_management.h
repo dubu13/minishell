@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_management.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 03:13:21 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/13 03:14:31 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/15 21:43:41 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,5 @@ void	free_tree(t_tree *tree);
  * @param array The array of strings to free.
  */
 void	free_array(char **array);
-
-/**
- * Frees the memory allocated for a field and prints an error message.
- *
- * @param field The field to free.
- * @param type The type of error.
- * @param input The input that caused the error.
- */
-void	free_and_error(char *field, t_error_type type, char *input);
 
 #endif

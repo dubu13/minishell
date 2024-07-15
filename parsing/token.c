@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 20:13:06 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/13 00:09:02 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/15 21:44:16 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	handle_word(char *input, int *i, t_token **token_list, int *is_next_cmd)
 	type = set_type(is_next_cmd);
 	new_token = create_token(type, value);
 	if (!new_token)
-		free_and_error(value, E_ALLOC, NULL);
+		free_and_error(value);
 	free(value);
 	add_back_token(token_list, new_token);
 	*is_next_cmd = 0;

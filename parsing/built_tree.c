@@ -83,9 +83,7 @@ t_tree	*process_token(t_tree *root, t_tree **current, t_token *token)
 		root = handle_pipe(root, current, pipe_node);
 	}
 	else if (token->type == CMD)
-	{
 		*current = handle_non_pipe(current, new_node);
-	}
 	return (root);
 }
 

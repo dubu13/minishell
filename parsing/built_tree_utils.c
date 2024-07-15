@@ -69,15 +69,31 @@ t_tree	*handle_pipe(t_tree *root, t_tree **current, t_tree *pipe_node)
 	return (root);
 }
 
-void	handle_rdir(t_tree *node, t_token *token)
+t_token	*find_token(t_token *token, t_token_type type)
 {
-	if (!token->next)
-		return ;
-	if (token->next->type == RDIR_IN)
-		node->in = ft_strdup(token->next->next->value);
-	else if (token->next->type == RDIR_HEREDOC)
-		node->limit = ft_strdup(token->next->next->value);
+	while(token->next)
+	{
+		if (token->type == type)
+			return (token);
+		token = token->next;
+	}
+	return (NULL);
 }
+
+void handle_rdir(t_tree *node, t_token *token)
+{
+	t_token *found_token;
+
+	if (!token)
+		return;
+	found_token = find_token(token, RDIR_IN);
+	if (found_token && found_token->next)
+		node->in = ft_strdup(found_token->next->value);
+	found_token = find_token(token, RDIR_HEREDOC);
+	if (found_token && found_token->next)
+		node->limit = ft_strdup(found_token->next->value);
+}
+
 
 t_tree	*handle_non_pipe(t_tree **current, t_tree *new_node)
 {

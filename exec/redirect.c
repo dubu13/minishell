@@ -125,7 +125,7 @@ void	in_rdirect(t_tree *tree, t_mini *mini)
 			perror("open");
 	}
 	fd_temp = dup(STDIN_FILENO);
-	if (dup2(fd_in, STDIN_FILENO) < 0)
+	if (fd_in > 0 && dup2(fd_in, STDIN_FILENO) < 0)
 		perror("dup2");
 	free(tree->in);
 	tree->in = NULL;

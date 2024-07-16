@@ -26,14 +26,14 @@ void	exec_node(t_tree *node, t_mini *mini)
 		return ;
 	if (node->type == PIPE)
 		exec_pipe(node, mini);
-	else if (node->in)
-		in_rdirect(node, mini);
+	else if (node->limit)
+		heredoc(node, mini);
 	else if (node->out)
 		out_rdirect(node, mini);
 	else if (node->append)
 		append_rdirect(node, mini);
-	else if (node->limit)
-		heredoc(node, mini);
+	else if (node->in)
+		in_rdirect(node, mini);
 	else if (node->type == CMD && node->cmd && node->cmd[0] && node->cmd[0][0])
     	exec_cmd(node, mini);
 }

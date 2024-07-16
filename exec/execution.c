@@ -34,6 +34,6 @@ void	exec_node(t_tree *node, t_mini *mini)
 		append_rdirect(node, mini);
 	else if (node->limit)
 		heredoc(node, mini);
-	else if (node->type == CMD && node->cmd[0][0])
-		exec_cmd(node, mini);
+	else if (node->type == CMD && node->cmd && node->cmd[0] && node->cmd[0][0])
+    	exec_cmd(node, mini);
 }

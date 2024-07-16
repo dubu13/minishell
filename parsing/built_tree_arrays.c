@@ -33,9 +33,10 @@ char	**create_cmd_array(t_token *token, int cmd_count, int i)
 				current_token->prev->type == RDIR_HEREDOC)
 				current_token = current_token->next;
 		}
-		if (current_token->type == CMD || current_token->type == WORD)
+		if (current_token && (current_token->type == CMD || current_token->type == WORD))
 			cmd_array[i++] = ft_strdup(current_token->value);
-		current_token = current_token->next;
+		if (current_token)
+			current_token = current_token->next;
 	}
 	return (cmd_array);
 }

@@ -6,15 +6,17 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:44:42 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/15 21:07:53 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/16 17:13:54 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	read_heredoc(t_tree *tree, int fd[2])
+void	read_heredoc(t_tree *tree, int fd[2], t_mini *mini)
 {
 	char	*read;
+	char	*expanded;
+	char	*temp;
 
 	while (1)
 	{
@@ -22,13 +24,19 @@ void	read_heredoc(t_tree *tree, int fd[2])
 		if (!read || !ft_strncmp(read, tree->limit, ft_strlen(tree->limit)))
 		{
 			free(read);
-			read = NULL;
 			break ;
 		}
-		write(fd[1], read, ft_strlen(read));
+		temp = read;
+		expanded = ft_strdup("");
+		while (*temp)
+			expanded = expander(&temp, expanded, mini);
+		if (expanded)
+		{
+			write(fd[1], expanded, ft_strlen(expanded));
+			free(expanded);
+		}
 		write(fd[1], "\n", 1);
 		free(read);
-		read = NULL;
 	}
 }
 
@@ -40,7 +48,7 @@ void	heredoc(t_tree *tree, t_mini *mini)
 	fd_temp = dup(STDIN_FILENO);
 	if (pipe(fd) == -1)
 		free_and_exit("error in pipe", mini, "1");
-	read_heredoc(tree, fd);
+	read_heredoc(tree, fd, mini);
 	if (dup2(fd[0], STDIN_FILENO) == -1)
 		free_and_exit("error in dup2", mini, "1");
 	if (close(fd[0]) == -1 || close(fd[1]) == -1)

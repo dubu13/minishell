@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_processing.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 03:16:30 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/13 03:48:05 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/16 16:26:26 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,7 @@ char	*handle_backslash(char **temp, char *new_value);
  * @return The processed input string.
  */
 char	*handle_regular_char(char **temp, char *new_value);
+
+char	*expander(char **temp, char *new_value, t_mini *mini);
 
 #endif

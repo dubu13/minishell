@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 03:17:18 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/15 19:48:46 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/16 16:43:15 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_tree	*initialize_node(t_token *token);
  * @param cmd_count The number of commands in the token list.
  * @return An array of command strings.
  */
-char	**create_cmd_array(t_token *token, int cmd_count);
+char	**create_cmd_array(t_token *token, int cmd_count, int i);
 
 /**
  * @brief Creates an array of output redirection paths from the given token list.

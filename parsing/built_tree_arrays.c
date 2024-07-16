@@ -6,27 +6,35 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 19:45:49 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/13 04:00:51 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/16 16:42:38 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	**create_cmd_array(t_token *token, int cmd_count)
+char	**create_cmd_array(t_token *token, int cmd_count, int i)
 {
 	char	**cmd_array;
 	t_token	*current_token;
-	int		i;
 
 	cmd_array = ft_calloc(sizeof(char *), (cmd_count + 1));
 	if (!cmd_array)
 		return (error(E_ALLOC, NULL), NULL);
-	i = 0;
 	current_token = token;
-	while (current_token && current_token->type != PIPE
-		&& (current_token->type == WORD || current_token->type == CMD))
+	while (current_token && current_token->type != PIPE)
 	{
-		cmd_array[i++] = ft_strdup(current_token->value);
+		if (current_token->value[0] == '\0')
+			current_token = current_token->next;
+		if (current_token->prev)
+		{
+			if (current_token->prev->type == RDIR_IN || \
+				current_token->prev->type == RDIR_OUT || \
+				current_token->prev->type == RDIR_APPEND || \
+				current_token->prev->type == RDIR_HEREDOC)
+				current_token = current_token->next;
+		}
+		if (current_token->type == CMD || current_token->type == WORD)
+			cmd_array[i++] = ft_strdup(current_token->value);
 		current_token = current_token->next;
 	}
 	return (cmd_array);

@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:41:19 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/15 22:10:46 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/16 14:15:36 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void	exec_builtin(char **cmd, t_mini *mini)
 		ft_cd(cmd + 1, mini);
 	if (!ft_strncmp(cmd[0], "exit", 4))
 	{
-		if (cmd[1])
+		if (cmd[2])
 		{
 			ft_putendl_fd("minishell: exit: too many arguments", 2);
 			mini->exit_status = 1;
 		}
 		else
-			ft_exit(cmd[0], mini);
+			ft_exit(cmd[1], mini);
 	}
 	else if (!ft_strncmp(cmd[0], "export", 6))
 		ft_export(cmd + 1, mini);

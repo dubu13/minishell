@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 03:12:29 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/15 21:52:18 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/16 14:42:03 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,7 @@ void	free_and_exit(char *msg, t_mini *mini, char *exit_status);
 void	msg_for_rdir(char *file, t_mini *mini, int exit_status);
 
 void	msg_for_cmd_node(t_tree *node, t_mini *mini);
+
+void	exit_child(t_mini *mini, int status);
 
 #endif

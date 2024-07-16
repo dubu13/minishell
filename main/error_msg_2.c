@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 21:36:30 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/15 22:31:57 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/16 14:38:28 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ void	free_and_error(char *field)
 	error(E_ALLOC, NULL);
 }
 
-// void	exit_child(t_mini *mini, int status)
-// {
-// 	free_mini(mini);
-// 	mini->exit_status = status;
-// 	exit(status);
-// }
+void	exit_child(t_mini *mini, int status)
+{
+	free_mini(mini);
+	exit(status);
+}

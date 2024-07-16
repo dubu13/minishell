@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 03:17:51 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/13 03:17:52 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/16 14:40:57 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,9 @@ void	exec_builtin(char **cmd, t_mini *mini);
  * @param mini A pointer to the minishell struct.
  */
 void	exec_pipe(t_tree *tree, t_mini *mini);
+
+char	*get_cmd_path(char **directories, char *command);
+
+char	*command_path(char *command);
 
 #endif

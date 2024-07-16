@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 19:06:47 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/15 22:59:36 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/16 14:47:27 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,69 +36,16 @@ void	env_var_msg(char *cmd, t_mini *mini)
 	}
 }
 
-char	*get_cmd_path(char **directories, char *command)
-{
-	int		i;
-	int		len;
-	char	*path;
-	char	*temp;
-
-	i = -1;
-	while (directories[++i])
-	{
-		len = ft_strlen(directories[i]);
-		if (directories[i][len - 1] == '/')
-			path = ft_strjoin(directories[i], command);
-		else
-		{
-			temp = ft_strjoin(directories[i], "/");
-			path = ft_strjoin(temp, command);
-			free(temp);
-		}
-		if (!(access(path, X_OK | F_OK)))
-			return (path);
-		free(path);
-	}
-	return (NULL);
-}
-
-char	*command_path(char *command)
-{
-	char	**directories;
-	char	*path;
-
-	if (!ft_strncmp(command, "/", 1) || !ft_strncmp(command, "./", 2) \
-		|| !ft_strncmp(command, "../", 3))
-	{
-		if (!access(command, X_OK | F_OK))
-			return (ft_strdup(command));
-		else
-			return (NULL);
-	}
-	directories = ft_split(getenv("PATH"), ':');
-	if (!directories)
-		return (ft_putendl_fd \
-		("minishell: Path environment variable not found", 2), NULL);
-	path = get_cmd_path(directories, command);
-	free_array(directories);
-	return (path);
-}
-
-void	exit_child(t_mini *mini, int status)
-{
-	free_mini(mini);
-	exit(status);
-}
-
 void	execute_child_process(char *cmd_path, char **cmd, t_mini *mini)
 {
 	if (execve(cmd_path, cmd, mini->env) == -1)
 	{
 		env_var_msg(cmd[0], mini);
 		free(cmd_path);
-		exit_child(mini, 127);
+		exit_child(mini, mini->exit_status);
 	}
 }
+
 void	wait_for_child(pid_t pid, t_mini *mini)
 {
 	int	status;
@@ -130,6 +77,11 @@ void	external_command(char **cmd, t_mini *mini)
 	if (!cmd)
 		return ;
 	cmd_path = command_path(cmd[0]);
+	if (!cmd_path)
+	{
+		env_var_msg(cmd[0], mini);
+		return ;
+	}
 	pid = fork();
 	handle_fork_result(pid, cmd_path, cmd, mini);
 }

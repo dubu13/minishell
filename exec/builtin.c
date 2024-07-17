@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:41:19 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/16 14:15:36 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/17 16:02:56 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	exec_builtin(char **cmd, t_mini *mini)
 
 int	check_builtin(char *cmd)
 {
+	ft_str_tolower(&cmd[0]);
 	if (!ft_strncmp(cmd, "echo", 5) || \
 		!ft_strncmp(cmd, "pwd", 4) || \
 		!ft_strncmp(cmd, "cd", 3) || \

@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 03:17:51 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/16 14:40:57 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/17 16:06:07 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,23 @@ void	exec_builtin(char **cmd, t_mini *mini);
  */
 void	exec_pipe(t_tree *tree, t_mini *mini);
 
+/**
+ * @brief Finds the full path to the given command by searching through
+ * the directories specified.
+ *
+ * @param directories An array of directory paths to search through.
+ * @param command The command to find the full path for.
+ * @return The full path to the command, or NULL if the command was not found.
+ */
 char	*get_cmd_path(char **directories, char *command);
 
+/**
+ * @brief Finds the full path to the given command by searching through
+ * the directories specified.
+ *
+ * @param command The command to find the full path for.
+ * @return The full path to the command, or NULL if the command was not found.
+ */
 char	*command_path(char *command);
 
 #endif

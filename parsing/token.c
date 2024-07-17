@@ -84,8 +84,6 @@ void	handle_word(char *input, int *i, t_token **token_list, int *is_next_cmd)
 	free(value);
 	add_back_token(token_list, new_token);
 	*is_next_cmd = 0;
-	if (input[*i] && is_meta_char(input[*i]))
-		handle_meta_char(input, i, token_list, is_next_cmd);
 	*i += skip_ws(&input[*i]);
 }
 
@@ -114,7 +112,7 @@ void	tokenize(char *input, t_token **token_list)
 		while (input[i] != '\0')
 		{
 			i += skip_ws(&input[i]);
-			if (input[i] == '\0')
+			if (input[i] == '\0)'
 				break ;
 			token_type(input, &i, token_list, &is_next_cmd);
 		}

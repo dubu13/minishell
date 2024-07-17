@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:44:42 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/16 17:13:54 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/17 14:09:29 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,11 +135,11 @@ void	in_rdirect(t_tree *tree, t_mini *mini)
 	fd_temp = dup(STDIN_FILENO);
 	if (fd_in > 0 && dup2(fd_in, STDIN_FILENO) < 0)
 		free_and_exit("minishell: error in dup2", mini, "1");
+	close(fd_in);
 	free(tree->in);
 	tree->in = NULL;
 	exec_node(tree, mini);
 	if (dup2(fd_temp, STDIN_FILENO) < 0)
 		free_and_exit("minishell: error in dup2", mini, "1");
-	close(fd_in);
 	close(fd_temp);
 }

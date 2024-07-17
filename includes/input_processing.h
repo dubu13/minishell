@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 03:16:30 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/16 16:26:26 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/17 16:03:43 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,23 @@ char	*handle_backslash(char **temp, char *new_value);
  */
 char	*handle_regular_char(char **temp, char *new_value);
 
+/**
+ * Expands the input string by handling various types of expansions, \
+ * such as environment variable expansion, single quotes, and double quotes.
+ *
+ * @param temp A pointer to the current input string.
+ * @param new_value The new value to be processed.
+ * @param mini The minishell struct.
+ * @return The expanded input string.
+ */
 char	*expander(char **temp, char *new_value, t_mini *mini);
+
+/**
+ * Converts a string to lowercase.
+ *
+ * @param str The string to be converted to lowercase.
+ * @return The lowercase version of the input string.
+ */
+char	*ft_str_tolower(char *str);
 
 #endif

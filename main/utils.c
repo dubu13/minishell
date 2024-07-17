@@ -59,3 +59,16 @@ char	*remove_quotes(char *str)
 	free(str);
 	return (new_str);
 }
+
+char	*ft_str_tolower(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		str[i] = ft_tolower(str[i]);
+		i++;
+	}
+	return (str);
+}

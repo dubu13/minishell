@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 19:45:49 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/16 16:42:38 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/16 18:31:38 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char	**create_cmd_array(t_token *token, int cmd_count, int i)
 	{
 		if (current_token->value[0] == '\0')
 			current_token = current_token->next;
+		if (current_token->type == PIPE)
+			break ;
 		if (current_token->prev)
 		{
 			if (current_token->prev->type == RDIR_IN || \
@@ -33,9 +35,10 @@ char	**create_cmd_array(t_token *token, int cmd_count, int i)
 				current_token->prev->type == RDIR_HEREDOC)
 				current_token = current_token->next;
 		}
-		if (current_token && (current_token->type == CMD || current_token->type == WORD))
+		if (current_token && (current_token->type == CMD || \
+					current_token->type == WORD))
 			cmd_array[i++] = ft_strdup(current_token->value);
-		if (current_token)
+		if (current_token && current_token->type != PIPE)
 			current_token = current_token->next;
 	}
 	return (cmd_array);

@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 20:12:58 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/16 16:42:55 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/16 18:31:04 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_tree	*create_node(t_mini *mini, t_token *token)
 		return (error(E_ALLOC, NULL), NULL);
 	count_tokens(token, counts);
 	if (token->type == CMD)
-    cmd_node(mini, token, node, counts);
+		cmd_node(mini, token, node, counts);
 	return (node);
 }
 

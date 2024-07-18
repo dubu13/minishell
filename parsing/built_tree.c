@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 20:12:58 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/18 21:49:10 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/18 22:44:49 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,48 +50,26 @@ t_tree	*create_node(t_mini *mini, t_token *token)
 	return (node);
 }
 
-t_tree	*process_token(t_mini *mini, \
-	t_tree *root, t_tree **current, t_token *token)
+static int	check_syntax(t_token *token, t_mini *mini)
 {
-	t_tree	*new_node;
-	t_tree	*pipe_node;
-	t_token	*empty_token;
-
-	empty_token = NULL;
-	if ((token->type == RDIR_IN || token->type == RDIR_OUT || \
-				token->type == RDIR_APPEND || token->type == RDIR_HEREDOC) \
-					&& !token->prev)
+	while (token)
 	{
-		empty_token = create_token(CMD, "");
-		add_front(&token, empty_token);
-		token = empty_token;
-	}
-	if (token->type == CMD)
-	{
-		new_node = create_node(mini, token);
-		if (!new_node)
-			return (error(E_ALLOC, NULL), NULL);
-		if (empty_token)
+		if ((token->type >= RDIR_IN && token->type <= RDIR_APPEND) \
+				&& !token->next)
 		{
-			free(empty_token->value);
-			free(empty_token);
+			error(E_SYNTAX, "near unexpected token 'newline'");
+			mini->exit_status = 258;
+			return (0);
 		}
+		if ((!token->prev || !token->next) && token->type == PIPE)
+		{
+			error(E_SYNTAX, "near unexpected token '|'");
+			mini->exit_status = 258;
+			return (0);
+		}
+		token = token->next;
 	}
-	if (!root)
-	{
-		root = new_node;
-		*current = root;
-	}
-	else if (token->type == PIPE)
-	{
-		pipe_node = create_node(mini, token);
-		if (!pipe_node)
-			return (free_binary(root), error(E_ALLOC, NULL), NULL);
-		root = handle_pipe(root, current, pipe_node);
-	}
-	else if (token->type == CMD)
-		*current = handle_non_pipe(current, new_node);
-	return (root);
+	return (1);
 }
 
 t_tree	*build_tree(t_mini *mini, t_token **tokens)
@@ -99,33 +77,15 @@ t_tree	*build_tree(t_mini *mini, t_token **tokens)
 	t_tree	*root;
 	t_tree	*current;
 	t_token	*token;
-	t_token	*check;
 
 	if (!*tokens)
 		return (NULL);
+	if (!check_syntax(*tokens, mini))
+		return (NULL);
 	root = NULL;
 	token = *tokens;
-	check = token;
-	while (check)
-	{
-		if ((check->type == RDIR_IN || check->type == RDIR_HEREDOC \
-			|| check->type == RDIR_OUT || check->type == RDIR_APPEND)
-			&& !check->next)
-		{
-			error(E_SYNTAX, "near unexpected token 'newline'");
-			mini->exit_status = 258;
-			return (NULL);
-		}
-		check = check->next;
-	}
 	while (token)
 	{
-		if ((!token->prev || !token->next) && token->type == PIPE)
-		{
-			error(E_SYNTAX, "near unexpected token '|'");
-			mini->exit_status = 258;
-			return (NULL);
-		}
 		root = process_token(mini, root, &current, token);
 		if (!root)
 			return (free_binary(root), error(E_ALLOC, NULL), NULL);

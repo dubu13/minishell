@@ -6,7 +6,7 @@
 /*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 03:17:18 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/16 16:43:15 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/18 22:39:09 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,10 @@ char	**create_out_array(t_token *token, int out_count);
  * @return An array of append redirection paths.
  */
 char	**create_append_array(t_token *token, int append_count);
+
+t_tree	*process_token(t_mini *mini, t_tree *root, \
+			t_tree **current, t_token *token);
+
+t_tree	*create_node(t_mini *mini, t_token *token);
 
 #endif

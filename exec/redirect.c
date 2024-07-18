@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:44:42 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/18 18:29:37 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/18 20:18:35 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	heredoc(t_tree *tree, t_mini *mini)
 	int		fd[2];
 	int		fd_temp;
 
+	handle_signal();
 	fd_temp = dup(STDIN_FILENO);
 	if (pipe(fd) == -1)
 		free_and_exit("error in pipe", mini, "1");

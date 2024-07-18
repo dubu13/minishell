@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 00:55:23 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/18 21:51:18 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/18 22:12:09 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	handle_rdir(t_tree *node, t_token *token)
 	if (found_token && found_token->next)
 		node->limit = ft_strdup(found_token->next->value);
 }
-
 
 t_tree	*handle_non_pipe(t_tree **current, t_tree *new_node)
 {

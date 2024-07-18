@@ -6,7 +6,7 @@
 #    By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/31 15:40:08 by dhasan            #+#    #+#              #
-#    Updated: 2024/07/18 22:08:51 by dhasan           ###   ########.fr        #
+#    Updated: 2024/07/18 22:40:13 by dkremer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS = \
 	parsing/built_tree_utils.c \
 	parsing/built_tree_arrays.c \
 	parsing/expander_utils.c \
+	parsing/token_processing.c \
 	parsing/node_utils.c \
 	parsing/parse.c \
 	parsing/token_utils.c \
@@ -47,6 +48,7 @@ SRCS = \
 	exec/execution.c \
 	exec/redirect.c \
 	exec/pipe.c \
+	exec/pipe_utils.c \
 	main/env_utils.c \
 	main/free.c \
 	main/signal.c \

@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:14:50 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/16 23:06:08 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/18 15:28:44 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	exec_cmd(t_tree *tree, t_mini *mini)
 
 void	exec_node(t_tree *node, t_mini *mini)
 {
+	signal(SIGINT, handle_signal_exec);
+	signal(SIGQUIT, handle_signal_exec);
 	if (!node)
 		return ;
 	if (node->type == PIPE)

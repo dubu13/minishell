@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 03:16:30 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/17 16:03:43 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/18 15:29:33 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@ int		is_str_closed(char *str);
  * Handles signals received by the minishell program.
  */
 void	handle_signal(void);
+
+/**
+ * Handles signals received by the minishell program during execution.
+ *
+ * @param sig The signal received.
+ * @param mini The minishell struct.
+ */
+void	handle_signal_exec(int sig);
 
 /**
  * Retrieves user input and handles various types of character processing.

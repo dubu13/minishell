@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 05:02:18 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/17 14:06:45 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/18 15:11:22 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,41 +33,53 @@ static void	execute_parent_process(int pipefd[2], pid_t pid, \
 		free_and_exit("waitpid", mini, "1");
 }
 
-void create_output_files(t_tree *node, t_mini *mini)
+void	create_output_files(t_tree *node, t_mini *mini)
 {
-    if (!node)
-        return;
+	int	fd_out;
+	int	fd_temp;
 
-    if (node->out)
-    {
-        char **files = node->out;
-        while (*files)
-        {
-            int fd = open(*files, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-            if (fd < 0)
-                msg_for_rdir(*files, mini, 1);
-            else
-                close(fd);
-            files++;
-        }
-    }
-
-    if (node->append)
-    {
-        char **files = node->append;
-        while (*files)
-        {
-            int fd = open(*files, O_WRONLY | O_CREAT | O_APPEND, 0644);
-            if (fd < 0)
-                msg_for_rdir(*files, mini, 1);
-            else
-                close(fd);
-            files++;
-        }
-    }
-
-    create_output_files(node->left, mini);
-    create_output_files(node->right, mini);
+	if (!node)
+		return ;
+	fd_temp = dup(STDOUT_FILENO);
+	if (node->out)
+	{
+		char **out_files = node->out;
+		while (*out_files)
+		{
+			fd_out = open(*out_files, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			if (fd_out < 0 && access(*out_files, F_OK) < 0)
+				msg_for_rdir(*node->out, mini, 1);
+			else
+			{
+				if (dup2(fd_out, STDOUT_FILENO) < 0)
+					free_and_exit("minishell: error in dup2", mini, "1");
+				close(fd_out);
+			}
+			out_files++;
+		}
+	}
+	if (node->append)
+	{
+		char **out_files = node->append;
+		while (*out_files)
+		{
+			fd_out = open(*out_files, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			if (fd_out < 0 && access(*out_files, F_OK) < 0)
+				msg_for_rdir(*node->append, mini, 1);
+			else
+			{
+				if (dup2(fd_out, STDOUT_FILENO) < 0)
+					free_and_exit("error in dup2", mini, "1");
+				close(fd_out);
+			}
+			out_files++;
+		}
+	}
+	create_output_files(node->left, mini);
+	create_output_files(node->right, mini);
+	if (dup2(fd_temp, STDOUT_FILENO) < 0)
+		free_and_exit("minishell: error in dup2", mini, "1");
+	close(fd_temp);
 }
 
 void	exec_pipe(t_tree *tree, t_mini *mini)
@@ -76,8 +88,7 @@ void	exec_pipe(t_tree *tree, t_mini *mini)
 	pid_t	pid;
 	int		fd_temp;
 
-    create_output_files(tree->left, mini);
-    create_output_files(tree->right, mini);
+    create_output_files(tree, mini);
 	fd_temp = dup(STDIN_FILENO);
 	if (fd_temp == -1)
 		free_and_exit("dup", mini, "1");

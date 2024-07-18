@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 15:42:14 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/16 14:42:56 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/18 16:28:33 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	error(t_error_type type, char *input)
 {
+	ft_putstr_fd("minishell: ", 2);
 	if (type == E_SYNTAX)
 	{
 		ft_putstr_fd("syntax error: ", 2);

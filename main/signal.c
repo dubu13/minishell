@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:15:13 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/10 12:10:44 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/18 15:45:49 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,13 @@ void	handle_signal(void)
 	rl_catch_signals = 0;
 	signal(SIGINT, sig_action);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+void	handle_signal_exec(int sig)
+{
+	rl_catch_signals = 0;
+	if (sig == SIGINT)
+		write(1, "\n", 1);
+	if (sig == SIGQUIT)
+		write(1, "Quit: 3\n", 10);
 }

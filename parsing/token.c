@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 20:13:06 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/15 21:44:16 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/18 15:01:46 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	tokenize(char *input, t_token **token_list)
 		while (input[i] != '\0')
 		{
 			i += skip_ws(&input[i]);
-			if (input[i] == '\0)'
+			if (input[i] == '\0')
 				break ;
 			token_type(input, &i, token_list, &is_next_cmd);
 		}

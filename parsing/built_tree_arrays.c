@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   built_tree_arrays.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 19:45:49 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/16 18:31:38 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/18 22:46:23 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	skip_redirections(t_token **current_token)
+{
+	if ((*current_token)->prev)
+	{
+		if ((*current_token)->prev->type == RDIR_IN
+			|| (*current_token)->prev->type == RDIR_OUT
+			|| (*current_token)->prev->type == RDIR_APPEND
+			|| (*current_token)->prev->type == RDIR_HEREDOC)
+		{
+			*current_token = (*current_token)->next;
+		}
+	}
+}
 
 char	**create_cmd_array(t_token *token, int cmd_count, int i)
 {
@@ -29,18 +43,11 @@ char	**create_cmd_array(t_token *token, int cmd_count, int i)
 			if (!current_token)
 				break ;
 		}
-		if (current_token->type == PIPE)
+		if (!current_token || current_token->type == PIPE)
 			break ;
-		if (current_token->prev)
-		{
-			if (current_token->prev->type == RDIR_IN || \
-				current_token->prev->type == RDIR_OUT || \
-				current_token->prev->type == RDIR_APPEND || \
-				current_token->prev->type == RDIR_HEREDOC)
-				current_token = current_token->next;
-		}
-		if (current_token && (current_token->type == CMD || \
-					current_token->type == WORD))
+		skip_redirections(&current_token);
+		if (current_token && (current_token->type == CMD \
+			|| current_token->type == WORD))
 			cmd_array[i++] = ft_strdup(current_token->value);
 		if (current_token && current_token->type != PIPE)
 			current_token = current_token->next;

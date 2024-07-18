@@ -29,7 +29,7 @@ void	cmd_node(t_mini *mini, t_token *token, t_tree *node, int *counts)
 		if (!node->append)
 			msg_for_cmd_node(node, mini);
 	}
-	if (token->next && (token->next->type == RDIR_IN || token->next->type == RDIR_HEREDOC))
+	if (find_token(token, RDIR_IN) || find_token(token, RDIR_HEREDOC))
 		handle_rdir(node, token);
 }
 
@@ -105,25 +105,29 @@ t_tree	*build_tree(t_mini *mini, t_token **tokens)
 	t_tree	*root;
 	t_tree	*current;
 	t_token	*token;
+	t_token *check;
 
 	if (!*tokens)
 		return (NULL);
 	root = NULL;
-	current = NULL;
 	token = *tokens;
+	check = token;
+	while (check)
+	{
+		if ((check->type == RDIR_IN || check->type == RDIR_HEREDOC ||
+			check->type == RDIR_OUT || check->type == RDIR_APPEND) && !check->next)
+		{
+			error(E_SYNTAX, "near unexpected token 'newline'");
+			mini->exit_status = 258;
+			return (NULL);
+		}
+		check = check->next;
+	}
 	while (token)
 	{
 		if ((!token->prev || !token->next) && token->type == PIPE)
 		{
 			error(E_SYNTAX, "near unexpected token '|'");
-			mini->exit_status = 258;
-			return (NULL);
-		}
-		else if ((token->type == RDIR_IN || token->type == RDIR_OUT || \
-				token->type == RDIR_APPEND || token->type == RDIR_HEREDOC) \
-				&& !token->next)
-		{
-			error(E_SYNTAX, "near unexpected token 'newline'");
 			mini->exit_status = 258;
 			return (NULL);
 		}

@@ -101,4 +101,13 @@ void			count_tokens(t_token *token, int *counts);
  */
 t_token_type	set_type(int *is_next_cmd);
 
+/**
+ * @brief Finds the first token in the token list that matches the given type.
+ *
+ * @param token The head of the token list to search.
+ * @param type The type of token to search for.
+ * @return The first token in the list that matches the given type, or NULL if not found.
+ */
+t_token	*find_token(t_token *token, t_token_type type);
+
 #endif

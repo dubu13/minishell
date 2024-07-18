@@ -108,7 +108,7 @@ char	*handle_regular_char(char **temp, char *new_value);
  * @param mini The minishell struct.
  * @return The expanded input string.
  */
-char	*expander(char **temp, char *new_value, t_mini *mini);
+char	*expander(char **temp, char *new_value, t_mini *mini, t_token *token);
 
 /**
  * Converts a string to lowercase.

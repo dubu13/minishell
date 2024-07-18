@@ -12,8 +12,13 @@
 
 #include "../includes/minishell.h"
 
-char	*expander(char **temp, char *new_value, t_mini *mini)
+char	*expander(char **temp, char *new_value, t_mini *mini, t_token *token)
 {
+	if (token && token->prev && token->prev->type == RDIR_HEREDOC)
+    {
+        new_value = ft_strjoin(new_value, *temp);
+        *temp += ft_strlen(*temp);
+    }
 	if (**temp == '\'')
 		new_value = handle_single_quote(temp, new_value);
 	else if (**temp == '\"')
@@ -35,7 +40,7 @@ void	process_token_value(t_token *token, t_mini *mini)
 	new_value = ft_strdup("");
 	temp = token->value;
 	while (*temp)
-		new_value = expander(&temp, new_value, mini);
+		new_value = expander(&temp, new_value, mini, token);
 	free(token->value);
 	token->value = new_value;
 }

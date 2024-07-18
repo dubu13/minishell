@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-void	read_heredoc(t_tree *tree, int fd[2], t_mini *mini)
+void	read_heredoc(t_tree *tree, int fd[2], t_mini *mini, t_token *token)
 {
 	char	*read;
 	char	*expanded;
@@ -21,7 +21,7 @@ void	read_heredoc(t_tree *tree, int fd[2], t_mini *mini)
 	while (1)
 	{
 		read = readline("> ");
-		if (!read || !ft_strncmp(read, tree->limit, ft_strlen(tree->limit)))
+		if (!read || !ft_strncmp(read, tree->limit, ft_strlen(tree->limit) + 1))
 		{
 			free(read);
 			break ;
@@ -29,7 +29,7 @@ void	read_heredoc(t_tree *tree, int fd[2], t_mini *mini)
 		temp = read;
 		expanded = ft_strdup("");
 		while (*temp)
-			expanded = expander(&temp, expanded, mini);
+			expanded = expander(&temp, expanded, mini, token);
 		if (expanded)
 		{
 			write(fd[1], expanded, ft_strlen(expanded));
@@ -48,7 +48,7 @@ void	heredoc(t_tree *tree, t_mini *mini)
 	fd_temp = dup(STDIN_FILENO);
 	if (pipe(fd) == -1)
 		free_and_exit("error in pipe", mini, "1");
-	read_heredoc(tree, fd, mini);
+	read_heredoc(tree, fd, mini, mini->token_list);
 	if (dup2(fd[0], STDIN_FILENO) == -1)
 		free_and_exit("error in dup2", mini, "1");
 	if (close(fd[0]) == -1 || close(fd[1]) == -1)

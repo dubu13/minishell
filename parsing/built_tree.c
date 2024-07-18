@@ -100,6 +100,14 @@ t_tree	*process_token(t_mini *mini, \
 	return (root);
 }
 
+/**
+ * Recursively builds a syntax tree from a list of tokens.
+ *
+ * @param mini The minishell context.
+ * @param tokens The list of tokens to build the tree from.
+ * @return The root of the syntax tree, or NULL on error.
+ */
+t_tree *build_tree(t_mini *mini, t_token **tokens);
 t_tree	*build_tree(t_mini *mini, t_token **tokens)
 {
 	t_tree	*root;
@@ -115,8 +123,14 @@ t_tree	*build_tree(t_mini *mini, t_token **tokens)
 	{
 		if ((!token->prev || !token->next) && token->type == PIPE)
 		{
-			ft_putendl_fd("minishell: \
-syntax error near unexpected token '|'", 2);
+			error(E_SYNTAX, "near unexpected token '|'");
+			mini->exit_status = 258;
+			return (NULL);
+		}
+		else if ((token->type == RDIR_IN || token->type == RDIR_OUT || \
+				token->type == RDIR_APPEND || token->type == RDIR_HEREDOC) && !token->next)
+		{
+			error(E_SYNTAX, "near unexpected token 'newline'");
 			mini->exit_status = 258;
 			return (NULL);
 		}

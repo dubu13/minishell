@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 15:40:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/09 17:44:06 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/18 20:34:43 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ char	*get_input(t_mini *mini)
 	char	*input;
 	char	*prompt;
 
-	handle_signal();
 	if (isatty(STDIN_FILENO))
 	{
 		rl_on_new_line();

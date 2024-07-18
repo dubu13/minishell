@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:19:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/15 17:39:25 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/18 20:17:02 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	main(void)
 		return (EXIT_FAILURE);
 	while (1)
 	{
+		handle_signal();
 		parse(mini);
 		if (!mini->input)
 			break ;

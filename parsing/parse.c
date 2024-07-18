@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 20:15:45 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/15 19:49:00 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/18 20:09:12 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 char	*expander(char **temp, char *new_value, t_mini *mini, t_token *token)
 {
 	if (token && token->prev && token->prev->type == RDIR_HEREDOC)
-    {
-        new_value = ft_strjoin(new_value, *temp);
-        *temp += ft_strlen(*temp);
-    }
+	{
+		new_value = ft_strjoin(new_value, *temp);
+		*temp += ft_strlen(*temp);
+	}
 	if (**temp == '\'')
 		new_value = handle_single_quote(temp, new_value);
 	else if (**temp == '\"')

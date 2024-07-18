@@ -6,22 +6,11 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 00:55:23 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/18 16:34:02 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/18 21:51:18 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-t_tree	*initialize_node(t_token *token)
-{
-	t_tree	*node;
-
-	node = ft_calloc(sizeof(t_tree), 1);
-	if (!node)
-		return (NULL);
-	node->type = token->type;
-	return (node);
-}
 
 void	count_tokens(t_token *token, int *counts)
 {
@@ -90,7 +79,7 @@ void	handle_rdir(t_tree *node, t_token *token)
 	if (found_token && found_token->next)
 		node->in = ft_strdup(found_token->next->value);
 	found_token = find_token(token, RDIR_HEREDOC);
-    if (found_token && found_token->next)
+	if (found_token && found_token->next)
 		node->limit = ft_strdup(found_token->next->value);
 }
 

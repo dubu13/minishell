@@ -1,16 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_token.c                                     :+:      :+:    :+:   */
+/*   node_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:21:04 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/08 13:26:32 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/18 21:51:08 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+t_tree	*initialize_node(t_token *token)
+{
+	t_tree	*node;
+
+	node = ft_calloc(sizeof(t_tree), 1);
+	if (!node)
+		return (NULL);
+	node->type = token->type;
+	return (node);
+}
+
+void	add_front(t_token **lst, t_token *new)
+{
+	new->next = *lst;
+	*lst = new;
+}
 
 t_token	*create_token(t_token_type type, char *value)
 {

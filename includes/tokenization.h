@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 03:16:57 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/13 03:17:03 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/18 22:00:22 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,17 @@ t_token_type	set_type(int *is_next_cmd);
  *
  * @param token The head of the token list to search.
  * @param type The type of token to search for.
- * @return The first token in the list that matches the given type, or NULL if not found.
+ * @return The first token in the list that matches the given type,
+ * 			or NULL if not found.
  */
-t_token	*find_token(t_token *token, t_token_type type);
+t_token			*find_token(t_token *token, t_token_type type);
+
+/**
+ * @brief Adds a new token to the front of the token list.
+ *
+ * @param lst A pointer to the head of the token list.
+ * @param new The new token to add to the list.
+ */
+void			add_front(t_token **lst, t_token *new);
 
 #endif

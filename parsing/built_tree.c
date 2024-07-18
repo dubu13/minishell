@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 20:12:58 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/18 16:34:52 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/18 21:49:10 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,6 @@ t_tree	*create_node(t_mini *mini, t_token *token)
 	if (token->type == CMD)
 		cmd_node(mini, token, node, counts);
 	return (node);
-}
-
-void	add_front(t_token **lst, t_token *new)
-{
-	new->next = *lst;
-	*lst = new;
 }
 
 t_tree	*process_token(t_mini *mini, \
@@ -105,7 +99,7 @@ t_tree	*build_tree(t_mini *mini, t_token **tokens)
 	t_tree	*root;
 	t_tree	*current;
 	t_token	*token;
-	t_token *check;
+	t_token	*check;
 
 	if (!*tokens)
 		return (NULL);
@@ -114,8 +108,9 @@ t_tree	*build_tree(t_mini *mini, t_token **tokens)
 	check = token;
 	while (check)
 	{
-		if ((check->type == RDIR_IN || check->type == RDIR_HEREDOC ||
-			check->type == RDIR_OUT || check->type == RDIR_APPEND) && !check->next)
+		if ((check->type == RDIR_IN || check->type == RDIR_HEREDOC \
+			|| check->type == RDIR_OUT || check->type == RDIR_APPEND)
+			&& !check->next)
 		{
 			error(E_SYNTAX, "near unexpected token 'newline'");
 			mini->exit_status = 258;

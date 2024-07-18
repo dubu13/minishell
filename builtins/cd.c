@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:40:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/13 04:59:33 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/18 17:10:56 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*get_newpath(char *input, t_mini *mini)
 		printf("%s\n", new_path);
 	}
 	else
-		new_path = ft_strdup(input);
+		new_path = input;
 	if (!new_path)
 		builtin_msg(E_CD, "path not set");
 	return (new_path);

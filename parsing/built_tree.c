@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 20:12:58 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/16 18:31:04 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/18 16:34:52 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,6 @@ t_tree	*process_token(t_mini *mini, \
 	return (root);
 }
 
-/**
- * Recursively builds a syntax tree from a list of tokens.
- *
- * @param mini The minishell context.
- * @param tokens The list of tokens to build the tree from.
- * @return The root of the syntax tree, or NULL on error.
- */
-t_tree *build_tree(t_mini *mini, t_token **tokens);
 t_tree	*build_tree(t_mini *mini, t_token **tokens)
 {
 	t_tree	*root;
@@ -128,7 +120,8 @@ t_tree	*build_tree(t_mini *mini, t_token **tokens)
 			return (NULL);
 		}
 		else if ((token->type == RDIR_IN || token->type == RDIR_OUT || \
-				token->type == RDIR_APPEND || token->type == RDIR_HEREDOC) && !token->next)
+				token->type == RDIR_APPEND || token->type == RDIR_HEREDOC) \
+				&& !token->next)
 		{
 			error(E_SYNTAX, "near unexpected token 'newline'");
 			mini->exit_status = 258;

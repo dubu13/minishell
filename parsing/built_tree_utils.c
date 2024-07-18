@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 00:55:23 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/11 20:15:10 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/18 16:34:02 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_tree	*handle_pipe(t_tree *root, t_tree **current, t_tree *pipe_node)
 
 t_token	*find_token(t_token *token, t_token_type type)
 {
-	while(token->next)
+	while (token->next)
 	{
 		if (token->type == type)
 			return (token);
@@ -80,12 +80,12 @@ t_token	*find_token(t_token *token, t_token_type type)
 	return (NULL);
 }
 
-void handle_rdir(t_tree *node, t_token *token)
+void	handle_rdir(t_tree *node, t_token *token)
 {
-	t_token *found_token;
+	t_token	*found_token;
 
 	if (!token)
-		return;
+		return ;
 	found_token = find_token(token, RDIR_IN);
 	if (found_token && found_token->next)
 		node->in = ft_strdup(found_token->next->value);

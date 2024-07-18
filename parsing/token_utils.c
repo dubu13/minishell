@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:22:12 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/05 19:02:40 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/18 16:35:16 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	skip_ws(char *input)
 	int	i;
 
 	i = 0;
-	while (input[i]\
+	while (input[i] \
 		&& ((input[i] == '\t' || input[i] == '\n') || input[i] == ' '))
 		i++;
 	return (i);

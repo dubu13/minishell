@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 03:17:51 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/17 16:06:07 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/18 21:54:52 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,7 @@ char	*get_cmd_path(char **directories, char *command);
  * @return The full path to the command, or NULL if the command was not found.
  */
 char	*command_path(char *command);
+
+void	create_output_files(t_tree *node, t_mini *mini);
 
 #endif

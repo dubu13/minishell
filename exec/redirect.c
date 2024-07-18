@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:44:42 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/18 20:18:35 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/18 21:56:15 by dkremer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	read_heredoc(t_tree *tree, int fd[2], t_mini *mini)
 		temp = read;
 		expanded = ft_strdup("");
 		while (*temp)
-			expanded = expander(&temp, expanded, mini);;
+			expanded = expander(&temp, expanded, mini);
 		if (expanded)
 		{
 			write(fd[1], expanded, ft_strlen(expanded));

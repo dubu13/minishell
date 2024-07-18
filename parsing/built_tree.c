@@ -29,7 +29,7 @@ void	cmd_node(t_mini *mini, t_token *token, t_tree *node, int *counts)
 		if (!node->append)
 			msg_for_cmd_node(node, mini);
 	}
-	else
+	if (token->next && (token->next->type == RDIR_IN || token->next->type == RDIR_HEREDOC))
 		handle_rdir(node, token);
 }
 

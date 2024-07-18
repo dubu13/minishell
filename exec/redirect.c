@@ -12,18 +12,6 @@
 
 #include "../includes/minishell.h"
 
-void	handle_signal_heredoc(int sig)
-{
-	rl_catch_signals = 0;
-	if (sig == SIGINT)
-	{
-		write(1, "^C\n", 3);
-	}
-	if (sig == SIGQUIT)
-	{
-	}
-}
-
 void	read_heredoc(t_tree *tree, int fd[2], t_mini *mini)
 {
 	char	*read;
@@ -32,8 +20,6 @@ void	read_heredoc(t_tree *tree, int fd[2], t_mini *mini)
 
 	while (1)
 	{
-		signal(SIGINT, handle_signal_heredoc);
-		signal(SIGQUIT, handle_signal_heredoc);
 		read = readline("> ");
 		if (!read || !ft_strncmp(read, tree->limit, ft_strlen(tree->limit) + 1))
 		{
@@ -43,7 +29,7 @@ void	read_heredoc(t_tree *tree, int fd[2], t_mini *mini)
 		temp = read;
 		expanded = ft_strdup("");
 		while (*temp)
-			expanded = expander(&temp, expanded, mini, token);
+			expanded = expander(&temp, expanded, mini);;
 		if (expanded)
 		{
 			write(fd[1], expanded, ft_strlen(expanded));
@@ -62,7 +48,7 @@ void	heredoc(t_tree *tree, t_mini *mini)
 	fd_temp = dup(STDIN_FILENO);
 	if (pipe(fd) == -1)
 		free_and_exit("error in pipe", mini, "1");
-	read_heredoc(tree, fd, mini, mini->token_list);
+	read_heredoc(tree, fd, mini);
 	if (dup2(fd[0], STDIN_FILENO) == -1)
 		free_and_exit("error in dup2", mini, "1");
 	if (close(fd[0]) == -1 || close(fd[1]) == -1)

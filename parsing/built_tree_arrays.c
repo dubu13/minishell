@@ -24,7 +24,11 @@ char	**create_cmd_array(t_token *token, int cmd_count, int i)
 	while (current_token && current_token->type != PIPE)
 	{
 		if (current_token->value[0] == '\0' && !current_token->prev)
+		{
 			current_token = current_token->next;
+			if (!current_token)
+				break ;
+		}
 		if (current_token->type == PIPE)
 			break ;
 		if (current_token->prev)

@@ -90,7 +90,7 @@ void	handle_rdir(t_tree *node, t_token *token)
 	if (found_token && found_token->next)
 		node->in = ft_strdup(found_token->next->value);
 	found_token = find_token(token, RDIR_HEREDOC);
-	if (found_token && found_token->next)
+    if (found_token && found_token->next)
 		node->limit = ft_strdup(found_token->next->value);
 }
 

@@ -12,13 +12,8 @@
 
 #include "../includes/minishell.h"
 
-char	*expander(char **temp, char *new_value, t_mini *mini, t_token *token)
+char	*expander(char **temp, char *new_value, t_mini *mini)
 {
-	if (token && token->prev && token->prev->type == RDIR_HEREDOC)
-    {
-        new_value = ft_strjoin(new_value, *temp);
-        *temp += ft_strlen(*temp);
-    }
 	if (**temp == '\'')
 		new_value = handle_single_quote(temp, new_value);
 	else if (**temp == '\"')
@@ -40,7 +35,7 @@ void	process_token_value(t_token *token, t_mini *mini)
 	new_value = ft_strdup("");
 	temp = token->value;
 	while (*temp)
-		new_value = expander(&temp, new_value, mini, token);
+		new_value = expander(&temp, new_value, mini);
 	free(token->value);
 	token->value = new_value;
 }
@@ -78,8 +73,8 @@ void	parse(t_mini *mini)
 	else
 	{
 		tokenize(mini->input, &mini->token_list);
-		handle_env_var(mini);
 		tmp = mini->token_list;
+		handle_env_var(mini);
 		mini->binary_tree = build_tree(mini, &tmp);
 		free_token_list(&mini->token_list);
 		exec_node(mini->binary_tree, mini);

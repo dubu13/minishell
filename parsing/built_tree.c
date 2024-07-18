@@ -29,7 +29,7 @@ void	cmd_node(t_mini *mini, t_token *token, t_tree *node, int *counts)
 		if (!node->append)
 			msg_for_cmd_node(node, mini);
 	}
-	else
+	if (token->next && (token->next->type == RDIR_IN || token->next->type == RDIR_HEREDOC))
 		handle_rdir(node, token);
 }
 
@@ -100,14 +100,6 @@ t_tree	*process_token(t_mini *mini, \
 	return (root);
 }
 
-/**
- * Recursively builds a syntax tree from a list of tokens.
- *
- * @param mini The minishell context.
- * @param tokens The list of tokens to build the tree from.
- * @return The root of the syntax tree, or NULL on error.
- */
-t_tree *build_tree(t_mini *mini, t_token **tokens);
 t_tree	*build_tree(t_mini *mini, t_token **tokens)
 {
 	t_tree	*root;

@@ -33,7 +33,7 @@ char	*get_newpath(char *input, t_mini *mini)
 		printf("%s\n", new_path);
 	}
 	else
-		new_path = ft_strdup(input);
+		new_path = input;
 	if (!new_path)
 		builtin_msg(E_CD, "path not set");
 	return (new_path);

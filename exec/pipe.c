@@ -24,13 +24,15 @@ static void	execute_child_process(int pipefd[2], t_tree *tree, t_mini *mini)
 static void	execute_parent_process(int pipefd[2], pid_t pid, \
 	t_tree *tree, t_mini *mini)
 {
+	int status;
+
+	if (waitpid(pid, &status, 0) == -1)
+		free_and_exit("waitpid", mini, "1");
 	if (dup2(pipefd[0], STDIN_FILENO) == -1)
 		close_and_exit(pipefd, "dup2", mini, "1");
 	close(pipefd[1]);
 	exec_node(tree->right, mini);
 	close(pipefd[0]);
-	if (waitpid(pid, NULL, 0) == -1)
-		free_and_exit("waitpid", mini, "1");
 }
 
 void	create_output_files(t_tree *node, t_mini *mini)
@@ -46,7 +48,7 @@ void	create_output_files(t_tree *node, t_mini *mini)
 		char **out_files = node->out;
 		while (*out_files)
 		{
-			fd_out = open(*out_files, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			fd_out = open(*out_files, O_CREAT, 0644);
 			if (fd_out < 0 && access(*out_files, F_OK) < 0)
 				msg_for_rdir(*node->out, mini, 1);
 			else
@@ -63,7 +65,7 @@ void	create_output_files(t_tree *node, t_mini *mini)
 		char **out_files = node->append;
 		while (*out_files)
 		{
-			fd_out = open(*out_files, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			fd_out = open(*out_files, O_CREAT, 0644);
 			if (fd_out < 0 && access(*out_files, F_OK) < 0)
 				msg_for_rdir(*node->append, mini, 1);
 			else

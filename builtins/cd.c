@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:40:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/18 17:10:56 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/19 19:22:54 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,12 @@
 int	cd_path(char *new_path, char *old_path, t_mini *mini)
 {
 	if (chdir(new_path) == -1)
-		return (builtin_msg(E_CD, "no such file or directory"), EXIT_FAILURE);
+	{
+		if (access(new_path, F_OK) == -1)
+			return (builtin_msg(E_CD, "no such file or directory"), EXIT_FAILURE);
+		else
+			return (builtin_msg(E_CD, "not a directory"), EXIT_FAILURE);
+	}
 	update_env("OLDPWD", old_path, mini);
 	update_env("PWD", new_path, mini);
 	return (0);

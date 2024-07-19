@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 15:40:40 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/18 20:34:43 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/19 19:27:13 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,21 @@ char	*get_input(t_mini *mini)
 		input = readline(prompt);
 		free(prompt);
 		if (!input)
+		{
+			free(input);
+			input = NULL;
 			return (NULL);
+		}
 	}
 	else
 	{
 		input = get_next_line(STDIN_FILENO);
 		if (!input)
+		{
+			free(input);
+			input = NULL;
 			error(E_ALLOC, NULL);
+		}
 	}
 	if (input && *input && isatty(STDIN_FILENO))
 		add_history(input);

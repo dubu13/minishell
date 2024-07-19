@@ -6,14 +6,15 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 20:15:45 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/18 20:09:12 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/19 19:39:06 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*expander(char **temp, char *new_value, t_mini *mini)
+char	*expander(char **temp, char *new_value, t_mini *mini, t_token *token)
 {
+	(void)token;
 	if (**temp == '\'')
 		new_value = handle_single_quote(temp, new_value);
 	else if (**temp == '\"')
@@ -35,7 +36,7 @@ void	process_token_value(t_token *token, t_mini *mini)
 	new_value = ft_strdup("");
 	temp = token->value;
 	while (*temp)
-		new_value = expander(&temp, new_value, mini);
+		new_value = expander(&temp, new_value, mini, token);
 	free(token->value);
 	token->value = new_value;
 }
@@ -64,7 +65,10 @@ void	parse(t_mini *mini)
 		return ;
 	}
 	if (!ft_strncmp(mini->input, "", 1))
+	{
+		free(mini->input);
 		return ;
+	}
 	if (!is_str_closed(mini->input))
 	{
 		mini->exit_status = 1;
@@ -78,5 +82,7 @@ void	parse(t_mini *mini)
 		mini->binary_tree = build_tree(mini, &tmp);
 		free_token_list(&mini->token_list);
 		exec_node(mini->binary_tree, mini);
+		if (mini->input)
+			free(mini->input);
 	}
 }

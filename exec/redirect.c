@@ -6,11 +6,24 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:44:42 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/19 18:19:48 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/19 19:08:31 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	handle(int sig)
+{
+	if (sig == SIGINT)
+		write(1, "\n", 1);
+}
+
+void	handle_signal_heredoc(int fd)
+{
+	rl_catch_signals = 0;
+	signal(SIGINT, handle);
+	close(fd);
+}
 
 void	read_heredoc(t_tree *tree, int fd[2], t_mini *mini)
 {
@@ -29,7 +42,7 @@ void	read_heredoc(t_tree *tree, int fd[2], t_mini *mini)
 		temp = read;
 		expanded = ft_strdup("");
 		while (*temp)
-			expanded = expander(&temp, expanded, mini);
+			expanded = expander(&temp, expanded, mini, mini->token_list);
 		if (expanded)
 		{
 			write(fd[1], expanded, ft_strlen(expanded));
@@ -45,7 +58,6 @@ void	heredoc(t_tree *tree, t_mini *mini)
 	int		fd[2];
 	int		fd_temp;
 
-	handle_signal();
 	fd_temp = dup(STDIN_FILENO);
 	if (pipe(fd) == -1)
 		free_and_exit("error in pipe", mini, "1");

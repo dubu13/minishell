@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 03:16:30 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/18 15:29:33 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/19 19:06:12 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ char	*handle_regular_char(char **temp, char *new_value);
  * @param mini The minishell struct.
  * @return The expanded input string.
  */
-char	*expander(char **temp, char *new_value, t_mini *mini);
+char	*expander(char **temp, char *new_value, t_mini *mini, t_token *token);
 
 /**
  * Converts a string to lowercase.

@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:15:13 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/18 20:21:08 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/19 14:10:52 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ void	handle_signal_exec(int sig)
 	if (sig == SIGINT)
 		write(1, "\n", 1);
 	if (sig == SIGQUIT)
-		write(1, "Quit: 3\n", 10);
+		write(1, "Quit: 3\n", 8);
 }

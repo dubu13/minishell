@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 15:11:37 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/15 22:10:21 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/19 18:32:31 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,19 @@ void	ft_exit(char *input, t_mini *mini)
 	printf("exit\n");
 	exit_code = mini->exit_status;
 	error = false;
+
 	if (input)
 	{
-		exit_code = ft_atoull(input, &error);
-		if ((!is_digit(input) && input) || error)
+		if (*input == '\0')
+			exit_code = 0;
+		else
 		{
-			builtin_msg(E_EXIT, input);
-			exit_code = 255;
+			exit_code = ft_atoull(input, &error);
+			if ((!is_digit(input) && input) || error)
+			{
+				builtin_msg(E_EXIT, input);
+				exit_code = 255;
+			}
 		}
 	}
 	free_mini(mini);

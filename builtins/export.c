@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 18:31:12 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/13 12:22:28 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/19 18:45:31 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ void	export_w_arg(char *key, char *env, t_mini *mini)
 		{
 			if (ft_strchr(env, '='))
 				update_env(key, ft_strchr(env, '=') + 1, mini);
-			else
-				update_env(key, NULL, mini);
+			// else
+			// 	update_env(key, NULL, mini);
 		}
 		else
 			mini->env = new_env(mini->env, env);

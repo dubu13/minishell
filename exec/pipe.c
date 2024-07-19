@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 05:02:18 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/18 21:55:12 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/19 20:22:57 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	exec_pipe(t_tree *tree, t_mini *mini)
 	if (pipe(pipefd) == -1)
 		free_and_exit("pipe", mini, "1");
 	pid = fork();
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	if (pid == -1)
 		close_and_exit(pipefd, "fork", mini, "1");
 	else if (pid == 0)

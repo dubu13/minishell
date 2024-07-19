@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 19:06:47 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/19 14:26:35 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/19 20:20:39 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	wait_for_child(pid_t pid, t_mini *mini)
 {
 	int	status;
 
+
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		mini->exit_status = WEXITSTATUS(status);
@@ -83,5 +84,7 @@ void	external_command(char **cmd, t_mini *mini)
 		return ;
 	}
 	pid = fork();
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	handle_fork_result(pid, cmd_path, cmd, mini);
 }

@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:44:42 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/18 21:56:15 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/19 17:31:10 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,10 @@ void	in_rdirect(t_tree *tree, t_mini *mini)
 		if (access(tree->in, F_OK) < 0)
 			msg_for_rdir(tree->in, mini, 1);
 		else
-			free_and_exit("minishell: error in open", mini, "1");
+		{
+			printf("minishell: %s: permission denied\n", tree->in);
+			mini->exit_status = 1;
+		}
 	}
 	fd_temp = dup(STDIN_FILENO);
 	if (fd_in > 0 && dup2(fd_in, STDIN_FILENO) < 0)

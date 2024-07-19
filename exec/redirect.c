@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:44:42 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/19 17:31:10 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/19 18:19:48 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,11 @@ void	append_rdirect(t_tree *tree, t_mini *mini)
 			msg_for_rdir(*tree->append, mini, 1);
 		else
 		{
-			if (dup2(fd_out, STDOUT_FILENO) < 0)
-				free_and_exit("error in dup2", mini, "1");
+			if (dup2(fd_out, STDIN_FILENO) < 0)
+			{
+				printf("minishell: %s: permission denied\n", *out_files);
+				mini->exit_status = 1;
+			}
 			close(fd_out);
 		}
 		out_files++;
@@ -107,7 +110,10 @@ void	out_rdirect(t_tree *tree, t_mini *mini)
 		else
 		{
 			if (dup2(fd_out, STDOUT_FILENO) < 0)
-				free_and_exit("minishell: error in dup2", mini, "1");
+			{
+				printf("minishell: %s: permission denied\n", *out_files);
+				mini->exit_status = 1;
+			}
 			close(fd_out);
 		}
 		out_files++;
@@ -122,27 +128,36 @@ void	out_rdirect(t_tree *tree, t_mini *mini)
 
 void	in_rdirect(t_tree *tree, t_mini *mini)
 {
-	int	fd_in;
-	int	fd_temp;
+	int		fd_in;
+	int		fd_temp;
+	char	**out_files;
 
-	fd_in = open(tree->in, O_RDONLY);
-	if (fd_in < 0)
+	out_files = tree->in;
+	fd_temp = dup(STDIN_FILENO);
+	while (*out_files)
 	{
-		if (access(tree->in, F_OK) < 0)
-			msg_for_rdir(tree->in, mini, 1);
+		fd_in = open(*out_files, O_RDONLY, 0644);
+		if (fd_in < 0 && access(*out_files, F_OK) < 0)
+		{
+			msg_for_rdir(*out_files, mini, 1);
+			out_files = NULL;
+			break ;
+		}
 		else
 		{
-			printf("minishell: %s: permission denied\n", tree->in);
-			mini->exit_status = 1;
+			if (dup2(fd_in, STDIN_FILENO) < 0)
+			{
+				printf("minishell: %s: permission denied\n", *out_files);
+				mini->exit_status = 1;
+			}
+			close(fd_in);
 		}
+		out_files++;
 	}
-	fd_temp = dup(STDIN_FILENO);
-	if (fd_in > 0 && dup2(fd_in, STDIN_FILENO) < 0)
-		free_and_exit("minishell: error in dup2", mini, "1");
-	close(fd_in);
-	free(tree->in);
+	free_array(tree->in);
 	tree->in = NULL;
-	exec_node(tree, mini);
+	if (out_files)
+		exec_node(tree, mini);
 	if (dup2(fd_temp, STDIN_FILENO) < 0)
 		free_and_exit("minishell: error in dup2", mini, "1");
 	close(fd_temp);

@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 00:55:23 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/18 22:12:09 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/19 17:48:16 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	count_tokens(t_token *token, int *counts)
 			counts[1]++;
 		else if (current_token->type == RDIR_APPEND)
 			counts[2]++;
+		else if (current_token->type == RDIR_IN)
+			counts[3]++;
 		current_token = current_token->next;
 	}
 }
@@ -75,9 +77,9 @@ void	handle_rdir(t_tree *node, t_token *token)
 
 	if (!token)
 		return ;
-	found_token = find_token(token, RDIR_IN);
-	if (found_token && found_token->next)
-		node->in = ft_strdup(found_token->next->value);
+	// found_token = find_token(token, RDIR_IN);
+	// if (found_token && found_token->next)
+	// 	node->in = ft_strdup(found_token->next->value);
 	found_token = find_token(token, RDIR_HEREDOC);
 	if (found_token && found_token->next)
 		node->limit = ft_strdup(found_token->next->value);

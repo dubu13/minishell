@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   binary_tree.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 03:17:18 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/18 22:39:09 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/19 17:45:56 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	**create_cmd_array(t_token *token, int cmd_count, int i);
 char	**create_out_array(t_token *token, int out_count);
 
 /**
- * @brief Creates an array of append redirection paths from 
+ * @brief Creates an array of append redirection paths from
  *          the given token list.
  *
  * @param token The head of the token list.
@@ -98,5 +98,7 @@ t_tree	*process_token(t_mini *mini, t_tree *root, \
 			t_tree **current, t_token *token);
 
 t_tree	*create_node(t_mini *mini, t_token *token);
+
+char	**create_in_array(t_token *token, int in_count);
 
 #endif

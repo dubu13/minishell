@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_types.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkremer <dkremer@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 03:28:48 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/13 03:28:49 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/19 17:45:22 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_tree
 {
 	t_token_type	type;
 	char			**cmd;
-	char			*in;
+	char			**in;
 	char			**out;
 	char			**append;
 	char			*limit;

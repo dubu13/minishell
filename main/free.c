@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 12:50:06 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/12 19:47:06 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/19 18:22:58 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	free_tree(t_tree *tree)
 		if (tree->cmd)
 			free_array(tree->cmd);
 		if (tree->in)
-			free(tree->in);
+			free_array(tree->in);
 		if (tree->out)
 			free_array(tree->out);
 		if (tree->limit)

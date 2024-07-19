@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 20:12:58 by dkremer           #+#    #+#             */
-/*   Updated: 2024/07/18 22:44:49 by dkremer          ###   ########.fr       */
+/*   Updated: 2024/07/19 17:44:16 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,25 @@ void	cmd_node(t_mini *mini, t_token *token, t_tree *node, int *counts)
 		if (!node->append)
 			msg_for_cmd_node(node, mini);
 	}
-	if (find_token(token, RDIR_IN) || find_token(token, RDIR_HEREDOC))
+	if (counts[3] > 0)
+	{
+		node->in = create_in_array(token, counts[3]);
+		if (!node->in)
+			msg_for_cmd_node(node, mini);
+	}
+	if (find_token(token, RDIR_HEREDOC))
 		handle_rdir(node, token);
 }
 
 t_tree	*create_node(t_mini *mini, t_token *token)
 {
 	t_tree	*node;
-	int		counts[3];
+	int		counts[4];
 
 	counts[0] = 0;
 	counts[1] = 0;
 	counts[2] = 0;
+	counts[3] = 0;
 	node = initialize_node(token);
 	if (!node)
 		return (error(E_ALLOC, NULL), NULL);

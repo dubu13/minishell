@@ -6,23 +6,16 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:44:42 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/19 19:08:31 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/19 20:11:46 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	handle(int sig)
-{
-	if (sig == SIGINT)
-		write(1, "\n", 1);
-}
-
-void	handle_signal_heredoc(int fd)
+void	handle_signal_heredoc()
 {
 	rl_catch_signals = 0;
-	signal(SIGINT, handle);
-	close(fd);
+	close(STDIN_FILENO);
 }
 
 void	read_heredoc(t_tree *tree, int fd[2], t_mini *mini)
@@ -31,6 +24,7 @@ void	read_heredoc(t_tree *tree, int fd[2], t_mini *mini)
 	char	*expanded;
 	char	*temp;
 
+	signal(SIGINT, handle_signal_heredoc);
 	while (1)
 	{
 		read = readline("> ");
@@ -51,6 +45,7 @@ void	read_heredoc(t_tree *tree, int fd[2], t_mini *mini)
 		write(fd[1], "\n", 1);
 		free(read);
 	}
+
 }
 
 void	heredoc(t_tree *tree, t_mini *mini)

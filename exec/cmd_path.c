@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:39:07 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/16 14:40:24 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/19 14:26:42 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*get_cmd_path(char **directories, char *command)
 	return (NULL);
 }
 
-char	*command_path(char *command)
+char	*command_path(char *command, t_mini *mini)
 {
 	char	**directories;
 	char	*path;
@@ -51,7 +51,7 @@ char	*command_path(char *command)
 		else
 			return (NULL);
 	}
-	directories = ft_split(getenv("PATH"), ':');
+	directories = ft_split(get_env(mini->env, "PATH"), ':');
 	if (!directories)
 		return (ft_putendl_fd \
 		("minishell: Path environment variable not found", 2), NULL);

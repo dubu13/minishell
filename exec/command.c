@@ -6,7 +6,7 @@
 /*   By: dhasan <dhasan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 19:06:47 by dhasan            #+#    #+#             */
-/*   Updated: 2024/07/16 14:47:27 by dhasan           ###   ########.fr       */
+/*   Updated: 2024/07/19 14:26:35 by dhasan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	external_command(char **cmd, t_mini *mini)
 
 	if (!cmd)
 		return ;
-	cmd_path = command_path(cmd[0]);
+	cmd_path = command_path(cmd[0], mini);
 	if (!cmd_path)
 	{
 		env_var_msg(cmd[0], mini);
